@@ -1,5 +1,7 @@
 <?php
+
 //debug($posts);
+
 ?>
 <!-- /.container <div class="container">-->
 

@@ -16,7 +16,7 @@ class AdminController extends CI_Controller
 
 		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
 		$datos = comprobar_login();
-		if (!empty($datos) && $datos['rol'] == 1) {
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
 				'vista' => 'admin/index.php',
 				'params' => $datos,
@@ -24,18 +24,17 @@ class AdminController extends CI_Controller
 				'titulo' => 'Inicio',
 			);
 			$this->layouts->view($vista);
-		} else {
+		} else {//si no se consigue verificar correctamente, te manda al inicio
 			header("Location: /");
 		}
 	}
 
 	public function panel_control()
 	{
-		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
 		$datos = comprobar_login();
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
-				'vista' => 'admin/index.php',
+				'vista' => 'admin/listados.php',
 				'params' => $datos,
 				'layout' => 'ly_admin.php',
 				'titulo' => 'Administración',
@@ -48,7 +47,6 @@ class AdminController extends CI_Controller
 
 	public function perfil_admin()
 	{
-		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
 		$datos = comprobar_login();
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
@@ -63,6 +61,53 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function listado_usuarios()
+	{
+
+		$info = $this->BackEndModel->Lista('usuarios');
+
+		//debug($info);
+	
+		$datos = array(
+			'usuarios' => $info
+		);
+
+		$vista = array(
+			'vista' => 'admin/listado_usuarios.php',
+			'params' => $datos,
+			'layout' => 'ly_admin.php',
+			'titulo' => 'Usuarios',
+		);
+
+		$this->layouts->view($vista);
+	}
+
+	public function editar_usuario()
+	{
+		//debug($this->uri);
+		//se extrae el id de la uri y se manda a la base de datos para que devuelva su registro
+		$info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
+		debug($info['data']);
+		/*
+		$datos = array(
+			'usuarios' => $info
+		);
+
+		$vista = array(
+			'vista' => 'admin/listado_usuarios.php',
+			'params' => $datos,
+			'layout' => 'ly_admin.php',
+			'titulo' => 'Usuarios',
+		);
+
+		$this->layouts->view($vista);
+		*/
+	}
+
+
+
+
+	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/
 	public function registro()
 	{
 		$datos = array();
@@ -77,6 +122,7 @@ class AdminController extends CI_Controller
 		$this->layouts->view($vista);
 	}
 
+	
 	public function add_autor()
 	{
 		/*Ponemos los datos que llegan en el post 

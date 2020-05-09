@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-# nuevas rutas
+# RUTAS PARA TODOS LOS USUARIOS
 $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
@@ -26,8 +26,20 @@ $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 # ADMIN
 $route['admin'] = 'AdminController/index';
 $route['admin/inicio'] = 'AdminController/index';
-$route['admin/panel-control'] = 'AdminController/panel_control';
 $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
+$route['admin/panel-control'] = 'AdminController/panel_control';
+# - usuarios
+$route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
+$route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
+$route['update-usuario'] = 'AdminController/update_usuario';
+$route['delete-usuario/(:num)'] = 'AdminController/delete_usuario';
+
+# - post
+$route['admin/panel-control/post'] = 'AdminController/listado_post';
+
+$route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios';
+
+
 
 
 $route['default_controller'] = 'UserController/index';

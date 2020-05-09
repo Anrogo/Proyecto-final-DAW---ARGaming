@@ -68,6 +68,24 @@ class BackEndModel extends CI_Model
 
   }
 
+  public function Lista($tabla)
+  {
+
+    $sql = "select * from $tabla order by id_usuario asc";
+    return ( $this->ExecuteArrayResults( $sql ));
+
+  }
+
+  public function ListarUsuario($usuario_id)
+  {
+
+    $sql = "select * from usuarios where id_usuario = ?";
+    $params = array( $usuario_id);
+    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
+  }
+
+  /*---------- FUNCIONES ANTIGUAS --------------------*/
+
   public function ListPosts()
   {
 

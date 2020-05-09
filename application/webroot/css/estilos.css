@@ -33,19 +33,19 @@ footer {
 	width: 100px;
 }
 
-
 .navbar {
 	margin-bottom: 0px;
 }
 
 .portada {
 	background-color: #428BCA;
-	color: #fff;
+	color: #e2e2e2;
 	padding: 20px;
+	height:450px;
 }
 
-.portada .titulo-blog {
-	font-size: 50px;
+.img-slider {
+	height:400px;
 }
 
 .contenido {

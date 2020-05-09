@@ -114,7 +114,7 @@ footer {
 		text-align: center;
 	}
 
-	.iconos-rss {
+	.iconos-rrss {
 		max-width: 30%;
 	}
 }
@@ -122,6 +122,12 @@ footer {
 @media (max-width:768px) {
 	.padre {
 		margin-bottom: 2px;
+	}
+	footer .padre2 {
+		height: 100px;
+	}
+	.iconos-rrss {
+		width: 40%;
 	}
 }
 

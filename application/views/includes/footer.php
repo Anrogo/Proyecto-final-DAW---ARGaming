@@ -7,26 +7,26 @@
                         <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo" alt="Logotipo"></a>
                     </div>
                     <div class="col-6 gray padre2">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center mb-1">
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/facebook.png" class="img-fluid iconos-rss" alt="Facebook" title="Facebook"></a>
+                                <a href="https://facebook.com"><img src="/images/facebook.png" class="img-fluid iconos-rrss" alt="Facebook" title="Facebook"></a>
                             </div>
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/instagram.png" class="img-fluid iconos-rss" alt="Instagram" title="Instagram"></a>
+                                <a href="https://instagram.com"><img src="/images/instagram.png" class="img-fluid iconos-rrss" alt="Instagram" title="Instagram"></a>
                             </div>
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/whatsapp-2.png" class="img-fluid iconos-rss" alt="Whatsapp" title="Whatsapp"></a>
+                                <a href="https://web.whatsapp.com"><img src="/images/whatsapp-2.png" class="img-fluid iconos-rrss" alt="Whatsapp" title="Whatsapp"></a>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/twitch-2.png" class="img-fluid iconos-rss" alt="Twitch" title="Twitch"></a>
+                                <a href="https://twitch.tv"><img src="/images/twitch-2.png" class="img-fluid iconos-rrss" alt="Twitch" title="Twitch"></a>
                             </div>
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/twitter.png" class="img-fluid iconos-rss" alt="Twitter" title="Twitter"></a>
+                                <a href="https://twitter.com"><img src="/images/twitter.png" class="img-fluid iconos-rrss" alt="Twitter" title="Twitter"></a>
                             </div>
                             <div class="col-4 hijo">
-                                <a href="/"><img src="/images/youtube.png" class="img-fluid iconos-rss" alt="Youtube" title="Youtube"></a>
+                                <a href="https://youtube.com"><img src="/images/youtube.png" class="img-fluid iconos-rrss" alt="Youtube" title="Youtube"></a>
                             </div>
                         </div>
                     </div>

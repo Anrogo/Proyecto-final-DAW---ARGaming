@@ -14,31 +14,52 @@ class AdminController extends CI_Controller
 	public function index()
 	{
 
-		$datos = array();
-
-		$vista = array(
-			'vista' => 'admin/index.php',
-			'params' => $datos,
-			'layout' => 'ly_admin.php',
-			'titulo' => 'Inicio',
-		);
-
-		$this->layouts->view($vista);
+		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
+		$datos = comprobar_login();
+		if (!empty($datos) && $datos['rol'] == 1) {
+			$vista = array(
+				'vista' => 'admin/index.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Inicio',
+			);
+			$this->layouts->view($vista);
+		} else {
+			header("Location: /");
+		}
 	}
 
 	public function panel_control()
 	{
-		if ($this->session->userdata('logueado')) {
-            $datos = array();
-            $datos['nombre'] = $this->session->userdata('nombre');
-            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario normal';
-            $vista = array(
-                'vista' => 'admin/inicio.php',
-                'params' => $datos,
-                'layout' => 'ly_admin.php',
-                'titulo' => 'Administración',
-            );
+		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
+		$datos = comprobar_login();
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+			$vista = array(
+				'vista' => 'admin/index.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Administración',
+			);
 			$this->layouts->view($vista);
+		} else {
+			header("Location: /");
+		}
+	}
+
+	public function perfil_admin()
+	{
+		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
+		$datos = comprobar_login();
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+			$vista = array(
+				'vista' => 'admin/inicio.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => 'Usuario logueado',
+			);
+			$this->layouts->view($vista);
+		} else {
+			header("Location: /");
 		}
 	}
 
@@ -54,7 +75,6 @@ class AdminController extends CI_Controller
 		);
 
 		$this->layouts->view($vista);
-		
 	}
 
 	public function add_autor()
@@ -159,7 +179,7 @@ class AdminController extends CI_Controller
 		$post = $this->BackEndModel->ListOnePost($this->uri->segment(2));
 
 		$authors = $this->BackEndModel->ListAuthors();
-		
+
 		$datos = array(
 			'post' => $post['data'],
 			'authors' => $authors
@@ -177,7 +197,7 @@ class AdminController extends CI_Controller
 
 	public function update()
 	{
-		 foreach ($_POST as $key => $value) {
+		foreach ($_POST as $key => $value) {
 			$datos[$key] = $value;
 		}
 
@@ -189,10 +209,10 @@ class AdminController extends CI_Controller
 
 		$where['id'] = $datos['id'];
 		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-		unset( $datos['id']);
-		
+		unset($datos['id']);
+
 		$this->BackEndModel->update('posts', $datos, $where);
-		
+
 		header('Location: /list');
 	}
 
@@ -200,7 +220,7 @@ class AdminController extends CI_Controller
 	{
 		//debug($this->uri);
 		$author = $this->BackEndModel->ListOneAuthor($this->uri->segment(2));
-	
+
 		$datos = array(
 			'autor' => $author['data']
 		);
@@ -217,7 +237,7 @@ class AdminController extends CI_Controller
 
 	public function update_autor()
 	{
-		 foreach ($_POST as $key => $value) {
+		foreach ($_POST as $key => $value) {
 			$datos[$key] = $value;
 		}
 
@@ -229,17 +249,17 @@ class AdminController extends CI_Controller
 
 		$where['id'] = $datos['id'];
 		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-		unset( $datos['id']);
-		
+		unset($datos['id']);
+
 		$this->BackEndModel->update('authors', $datos, $where);
-		
+
 		header('Location: /autores');
 	}
 
 	public function delete()
 	{
 		$where['id'] = $this->uri->segment(2);
-		
+
 		$this->BackEndModel->delete('posts', $where);
 
 		header('Location: /list');
@@ -248,7 +268,7 @@ class AdminController extends CI_Controller
 	public function delete_autor()
 	{
 		$where['id'] = $this->uri->segment(2);
-		
+
 		$this->BackEndModel->delete('authors', $where);
 
 		header('Location: /autores');

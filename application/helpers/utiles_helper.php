@@ -10,3 +10,13 @@
     echo "</pre>";
     echo "<br>";
   }
+
+  function comprobar_login(){
+
+    $datos = array();
+    if ($_SESSION['logueado']) {
+      $datos['nombre'] = $_SESSION['nombre'];
+      $datos['rol'] = $_SESSION['rol'] == 1 ? 'administrador' : 'usuario normal';
+    }
+    return $datos;
+  }

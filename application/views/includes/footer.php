@@ -1,12 +1,12 @@
-<div class="container-fluid">
+<div class="container">
     <footer class="footer">
         <div class="row padre2">
             <div class="col-12 padre2">
-                <div class="row">
-                    <div class="col-6 padre2">
-                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo" alt="Logotipo"></a>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-6 padre2 align-items-center">
+                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo2" alt="Logotipo"></a>
                     </div>
-                    <div class="col-6 gray padre2">
+                    <div class="col-6 gray padre2 text-center">
                         <div class="row justify-content-center mb-1">
                             <div class="col-4 hijo">
                                 <a href="https://facebook.com"><img src="/images/facebook.png" class="img-fluid iconos-rrss" alt="Facebook" title="Facebook"></a>

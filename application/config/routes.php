@@ -24,7 +24,10 @@ $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 
 
 # ADMIN
+$route['admin'] = 'AdminController/index';
+$route['admin/inicio'] = 'AdminController/index';
 $route['admin/panel-control'] = 'AdminController/panel_control';
+$route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 
 
 $route['default_controller'] = 'UserController/index';

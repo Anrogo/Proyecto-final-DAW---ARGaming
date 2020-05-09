@@ -10,7 +10,7 @@
                             </svg>Acceso</a>
                     </div>
                     <div class="col-sm-6 hijo">
-                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo" alt="Logotipo"></a>
+                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo1" alt="Logotipo"></a>
                     </div>
                     <div class="col-6 col-sm-3 text-center hijo">
                         <a href="/user/registro" class="btn btn-lg btn-outline-primary botones"><svg class="bi bi-person-plus-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

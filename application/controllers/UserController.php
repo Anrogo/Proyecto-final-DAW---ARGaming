@@ -13,26 +13,37 @@ class UserController extends CI_Controller
 
 	public function index()
 	{
+		/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
+		$datos = comprobar_login();
+		if(!empty($datos)){
+			$datos['title'] = 'Información de usuario';
+			$vista = array(
+				'vista' =>  $datos['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => 'Estás logueado',
+			);
+			$this->layouts->view($vista);
+		} else {// si no estuviera logueado muestra la página de inicio con normalidad, quitando ciertas opciones de la cabecera
+			// $posts = $this->FrontEndModel->list_all_posts();
 
-       // $posts = $this->FrontEndModel->list_all_posts();
+			$datos = array(
+				//'posts' => $posts,
+				'title' => 'No hay post disponibles en este momento, disculpe las molestias.'
+			);
+			
+			//debug($datos);
+			//echo "**".$datos['posts'][0]['display_name']."**";
+			
+			$vista = array(
+				'vista' => 'web/index.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Inicio - ARGaming',
+			);
 
-		$datos = array(
-			//'posts' => $posts,
-			'title' => 'No hay post disponibles en este momento, disculpe las molestias.'
-        );
-		
-		//debug($datos);
-		//echo "**".$datos['posts'][0]['display_name']."**";
-		
-		$vista = array(
-			'vista' => 'web/index.php',
-			'params' => $datos,
-			'layout' => 'ly_home.php',
-			'titulo' => 'Inicio - ARGaming',
-		);
-
-		$this->layouts->view($vista);
-		
+			$this->layouts->view($vista);
+		}	
 	}
 
 

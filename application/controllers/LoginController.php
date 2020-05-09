@@ -82,18 +82,9 @@ class LoginController extends CI_Controller
 
     public function inicio_logueado()
     {
-        if ($this->session->userdata('logueado')) {
-            $datos = array();
-            $datos['nombre'] = $this->session->userdata('nombre');
-            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario normal';
-            /*
-            $vista = array(
-                'vista' => 'user/logueado.php',
-                'params' => $datos,
-                'layout' => 'ly_admin.php',
-                'titulo' => 'Estás logueado',
-            );
-            */
+        /* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
+        $datos = comprobar_login();
+        if(!empty($datos)){
             $datos['title'] = 'Información de usuario';
             $vista = array(
                 'vista' =>  $datos['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',

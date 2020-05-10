@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto nav-justified w-75">
                 <li class="nav-item active">
-                    <a href="#" class="nav-link">Listar datos de <span class="sr-only">(current)</span></a>
+                    <span class="text-white">Listar datos de <span class="sr-only">(current)</span></span>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="/admin/panel-control/usuarios" class="nav-link">Usuarios</a>

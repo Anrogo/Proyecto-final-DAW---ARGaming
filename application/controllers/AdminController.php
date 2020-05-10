@@ -71,7 +71,8 @@ class AdminController extends CI_Controller
 		$datos = array(
 			'usuarios' => $info
 		);
-
+		
+		
 		$vista = array(
 			'vista' => 'admin/listado_usuarios.php',
 			'params' => $datos,
@@ -80,31 +81,53 @@ class AdminController extends CI_Controller
 		);
 
 		$this->layouts->view($vista);
+		
 	}
 
 	public function editar_usuario()
 	{
-		//debug($this->uri);
-		//se extrae el id de la uri y se manda a la base de datos para que devuelva su registro
+		//Se extrae el id de la uri y se manda a la base de datos para que devuelva su registro
 		$info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
-		debug($info['data']);
-		/*
+		
 		$datos = array(
-			'usuarios' => $info
+			//se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
+			'usuarios' => $info['data'] 
 		);
-
+		//debug($datos);
+		
 		$vista = array(
-			'vista' => 'admin/listado_usuarios.php',
+			'vista' => 'admin/editar_usuario.php',
 			'params' => $datos,
 			'layout' => 'ly_admin.php',
-			'titulo' => 'Usuarios',
+			'titulo' => 'Editar usuario',
 		);
 
 		$this->layouts->view($vista);
-		*/
+		
 	}
 
+	public function actualizar_usuario()
+	{
+		foreach ($_POST as $key => $value) {
+			$datos[$key] = $value;
+		}
+		
+		if (isset($datos['enabled'])) {
+			$datos['enabled'] = 1;
+		} else {
+			$datos['enabled'] = 0;
+		}
 
+		$where['id_usuario'] = $datos['id'];
+		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+		unset($datos['id']);
+		
+		debug($datos);
+
+		$this->BackEndModel->update('usuarios', $datos, $where);
+
+		header('Location: /admin/panel-control/usuarios');
+	}
 
 
 	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/

@@ -39,7 +39,7 @@
 <!-- Page Content -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 text-lett">
+      <div class="col-lg-12 text-left">
         <h2 class="mt-5">Actualizar post</h2>
       </div>
     </div>
@@ -53,7 +53,7 @@
           <div class="form-group row">
             <label for="autor" class="col-lg-2 col-form-label">Autor</label>
              
-              <div class="col-lg-8 text-lett">
+              <div class="col-lg-8 text-left">
               <select class="form-control" name="author_id" id="author_id">
                  <?php
                   foreach ( $authors as $author) 
@@ -77,7 +77,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Categoria</label>
             
-              <div class="col-lg-8 text-lett">
+              <div class="col-lg-8 text-left">
               <select class="form-control" name="category_id" id="category_id">
                 <option value=1 <?php echo $nivel_1; ?>>Nivel 1</option>
                 <option value=2 <?php echo $nivel_2; ?>>Nivel 2</option>
@@ -90,7 +90,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Título</label>
              
-              <div class="col-lg-8 text-lett">
+              <div class="col-lg-8 text-left">
                 <input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>">
             </div>
            
@@ -99,7 +99,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Slug</label>
              
-              <div class="col-lg-8 text-lett">
+              <div class="col-lg-8 text-left">
                 <input type="text" class="form-control" id="slug" name="slug" value="<?php echo $slug; ?>">
             </div>
            
@@ -108,7 +108,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Breve</label>
              
-              <div class="col-lg-10 text-lett">
+              <div class="col-lg-10 text-left">
                  <textarea class="form-control" rows="3" id="brief" name="brief"><?php echo $brief; ?></textarea>
             </div>
              
@@ -117,7 +117,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Texto</label>
              
-              <div class="col-lg-10 text-lett">
+              <div class="col-lg-10 text-left">
                  <textarea class="form-control" rows="3" id="text" name="text"><?php echo $text; ?></textarea>
             </div>
              
@@ -126,7 +126,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Creado</label>
              
-              <div class="col-lg-3 text-lett">
+              <div class="col-lg-3 text-left">
                 <input type="text" class="form-control" id="created" name="created" value="<?php echo $created; ?>">
             </div>
             
@@ -135,7 +135,7 @@
           <div class="form-group row">
             <label for="categoria" class="col-lg-2 col-form-label">Activado</label>
              
-              <div class="col-lg-3 text-lett">
+              <div class="col-lg-3 text-left">
                 <input type="checkbox"  id="enabled" name="enabled" <?php echo $enabled; ?>>
             </div>
             

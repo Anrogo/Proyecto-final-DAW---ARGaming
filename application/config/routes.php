@@ -31,7 +31,7 @@ $route['admin/panel-control'] = 'AdminController/panel_control';
 # - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
 $route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
-$route['update-usuario'] = 'AdminController/update_usuario';
+$route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
 $route['delete-usuario/(:num)'] = 'AdminController/delete_usuario';
 
 # - post

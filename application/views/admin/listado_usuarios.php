@@ -4,7 +4,7 @@
       <h1 class="">Listado de usuarios</h1>
     </div>
     <div class="col-3 text-center">
-      <a href="#" class="btn btn-primary">Nuevo Usuario</a>
+      <a href="/admin/nuevo-usuario" class="btn btn-primary">Nuevo Usuario</a>
     </div>
     <div class="col-4 text-center">
       <form class="form-inline my-2 my-lg-0">
@@ -59,7 +59,7 @@
                     <td>' . $admin . '</td>
                     <td>' . $activo . '</td>
                     <td><a href="/editar-usuario/' . $usuario['id_usuario'] . '"><img src="/images/edit.png" width=20px></a></td>
-                    <td><a href="#" OnClick="delete-usuario(' . $usuario['id_usuario'] . ')"><img src="/images/delete_2.png"  width=20px></a></td>
+                    <td><a href="#" OnClick="/delete-usuario(' . $usuario['id_usuario'] . ')"><img src="/images/delete_2.png"  width=20px></a></td>
                   </tr>';
           }
 

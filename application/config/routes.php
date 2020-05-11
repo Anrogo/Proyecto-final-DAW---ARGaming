@@ -30,9 +30,11 @@ $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 $route['admin/panel-control'] = 'AdminController/panel_control';
 # - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
+$route['admin/nuevo-usuario'] = 'AdminController/registro_usuario';
+$route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
 $route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
-$route['delete-usuario/(:num)'] = 'AdminController/delete_usuario';
+$route['admin/delete-usuario/(:num)'] = 'AdminController/delete_usuario';
 
 # - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';

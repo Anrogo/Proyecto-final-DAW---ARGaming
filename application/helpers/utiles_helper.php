@@ -14,7 +14,7 @@
   function comprobar_login(){
 
     $datos = array();
-    if (isset($_SESSION['logueado'])) {
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === TRUE) {
       $datos['nombre'] = $_SESSION['nombre'];
       $datos['rol'] = $_SESSION['rol'] == 1 ? 'administrador' : 'usuario normal';
     }

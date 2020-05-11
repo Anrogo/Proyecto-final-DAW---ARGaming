@@ -24,7 +24,7 @@ class AdminController extends CI_Controller
 				'titulo' => 'Inicio',
 			);
 			$this->layouts->view($vista);
-		} else {//si no se consigue verificar correctamente, te manda al inicio
+		} else { //si no se consigue verificar correctamente, te manda al inicio
 			header("Location: /");
 		}
 	}
@@ -67,12 +67,12 @@ class AdminController extends CI_Controller
 		$info = $this->BackEndModel->Lista('usuarios');
 
 		//debug($info);
-	
+
 		$datos = array(
 			'usuarios' => $info
 		);
-		
-		
+
+
 		$vista = array(
 			'vista' => 'admin/listado_usuarios.php',
 			'params' => $datos,
@@ -81,20 +81,53 @@ class AdminController extends CI_Controller
 		);
 
 		$this->layouts->view($vista);
-		
+	}
+
+	public function registro_usuario()
+	{
+
+		$datos = array();
+
+		$vista = array(
+			'vista' => 'admin/nuevo_usuario.php',
+			'params' => $datos,
+			'layout' => 'ly_admin.php',
+			'titulo' => 'Añadir nuevo usuario',
+		);
+
+		$this->layouts->view($vista);
+	}
+
+	public function registrar_nuevo_usuario()
+	{
+		foreach ($_POST as $key => $value) {
+			$datos[$key] = $value;
+		}
+		if ($datos['password'] == $datos['password_confirm']){
+			//Es necesario pasar la contraseña cifrada previamente, así que utilizamos la función md5 para cifrarla
+			$datos['password'] = md5($datos['password']);
+			unset($datos['password_confirm']);
+		} else {
+			header('Location: /admin/panel-control/nuevo-usuario/error');
+		}
+		debug($datos);
+
+		$this->BackEndModel->insert('usuarios', $datos);
+
+		//header('Location: /admin/panel-control/usuarios');
 	}
 
 	public function editar_usuario()
 	{
 		//Se extrae el id de la uri y se manda a la base de datos para que devuelva su registro
 		$info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
-		
+
 		$datos = array(
 			//se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
-			'usuarios' => $info['data'] 
+			'usuarios' => $info['data']
 		);
 		//debug($datos);
-		
+
 		$vista = array(
 			'vista' => 'admin/editar_usuario.php',
 			'params' => $datos,
@@ -103,7 +136,6 @@ class AdminController extends CI_Controller
 		);
 
 		$this->layouts->view($vista);
-		
 	}
 
 	public function actualizar_usuario()
@@ -111,18 +143,12 @@ class AdminController extends CI_Controller
 		foreach ($_POST as $key => $value) {
 			$datos[$key] = $value;
 		}
-		
-		if (isset($datos['enabled'])) {
-			$datos['enabled'] = 1;
-		} else {
-			$datos['enabled'] = 0;
-		}
 
 		$where['id_usuario'] = $datos['id'];
 		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
 		unset($datos['id']);
-		
-		debug($datos);
+
+		//debug($datos);
 
 		$this->BackEndModel->update('usuarios', $datos, $where);
 
@@ -145,7 +171,7 @@ class AdminController extends CI_Controller
 		$this->layouts->view($vista);
 	}
 
-	
+
 	public function add_autor()
 	{
 		/*Ponemos los datos que llegan en el post 

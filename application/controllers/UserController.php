@@ -46,6 +46,56 @@ class UserController extends CI_Controller
 		}	
 	}
 
+	public function prueba_form(){
+
+		$datos = array();
+
+		$vista = array(
+			'vista' => 'web/prueba_form.php',
+			'params' => $datos,
+			'layout' => 'ly_home_basico.php',
+			'titulo' => 'Añadir nuevo usuario',
+		);
+
+		$this->layouts->view($vista);
+	}
+
+	public function registro_usuario()
+	{
+
+		$datos = array();
+
+		$vista = array(
+			'vista' => 'web/nuevo_usuario.php',
+			'params' => $datos,
+			'layout' => 'ly_home.php',
+			'titulo' => 'Añadir nuevo usuario',
+		);
+
+		$this->layouts->view($vista);
+	}
+
+	public function registrar_nuevo_usuario()
+	{
+		foreach ($_POST as $key => $value) {
+			$datos[$key] = $value;
+		}
+		//debug($datos);
+
+		if ($datos['password'] == $datos['password_confirm']){
+			//Es necesario pasar la contraseña cifrada previamente, así que utilizamos la función md5 para cifrarla
+			$datos['password'] = md5($datos['password']);
+			unset($datos['password_confirm']);
+		}
+		
+		//$datos['password'] = md5($datos['password']);
+		
+		//debug($datos);
+		
+		$this->BackEndModel->insert('usuarios', $datos);
+
+		header('Location: /inicio');
+	}
 
 	public function juegos(){
 		
@@ -85,7 +135,6 @@ class UserController extends CI_Controller
 		);
 
 		$this->layouts->view($vista);
-		
 	}
 
 	public function contacto(){
@@ -97,7 +146,7 @@ class UserController extends CI_Controller
 		);
 
 		$vista = array(
-			'vista' => 'web/index.php',
+			'vista' => 'web/contacto.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
 			'titulo' => 'Contacto',

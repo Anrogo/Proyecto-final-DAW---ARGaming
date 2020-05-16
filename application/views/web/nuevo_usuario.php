@@ -6,7 +6,7 @@
                     <span class="font-italic">Nuevo usuario</span>
                 </div>
                 <div class="card-body">
-                    <form id="form_registro" action="/admin/registrar-usuario" method="POST">
+                    <form id="form_registro" action="/registrar-usuario" method="POST">
                         <span class="error" id="cont_error"></span>
                         <div class="form-group">
                             <label for="nombre">Nombre de usuario</label>
@@ -34,13 +34,7 @@
                         </div>
                         <div class="radio">
                             <input type="hidden" name="estado" value="1" checked>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre">Rol del usuario</label>
-                            <select name="rol" id="rol" class="form-control">
-                                <option value="0" selected>Estándar</option>
-                                <option value="1">Administrador</option>
-                            </select><span class="error" id="campo7"></span>
+                            <input type="hidden" name="rol" value="0" checked>
                         </div>
                         <input type="submit" value="Completar registro" id="submit" class="btn btn-primary">
                     </form>

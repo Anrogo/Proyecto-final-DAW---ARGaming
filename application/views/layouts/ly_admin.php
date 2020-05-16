@@ -42,8 +42,8 @@
     ?>
 
 
-    <!-- jQuery Version 1.11.1 -->
-    <script src="/bootstrap/js/jquery.js"></script>
+    <!-- jQuery Version 3.4.1 -->
+    <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>

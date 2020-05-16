@@ -27,7 +27,7 @@ class LoginController extends CI_Controller
         $vista = array(
             'vista' => 'user/login.php',
             'params' => $datos,
-            'layout' => 'ly_home.php',
+            'layout' => 'ly_login.php',
             'titulo' => 'Página de login',
         );
 
@@ -43,7 +43,7 @@ class LoginController extends CI_Controller
         # Se puede utilizar cualquiera, como sha1 o mezcla
         $datos['password'] = md5($_POST['password']);
 
-        //debug($_POST);
+        debug($_POST);
         /* 
 		Enviamos los datos al modelo que hará la consulta a la base
 		de datos y nos devolverá un Array con los datos del usuario 
@@ -55,8 +55,8 @@ class LoginController extends CI_Controller
         if (empty($usuario)) {
 
             header("Location: /login/error");
+
         } else {
-            //header("Location: /");
 
             echo "<pre>";
             print_r($usuario);
@@ -103,7 +103,7 @@ class LoginController extends CI_Controller
         if ($this->session->userdata('logueado')) {
             $datos = array();
             $datos['nombre'] = $this->session->userdata('nombre');
-            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario normal';
+            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
             $vista = array(
                 'vista' => 'user/logueado.php',
                 'params' => $datos,

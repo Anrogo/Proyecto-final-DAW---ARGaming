@@ -7,6 +7,12 @@ $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 
+$route['registro'] = "FormController/Index";
+
+
+#$route['nuevo-usuario'] = 'UserController/registro_usuario';
+#$route['registrar-usuario'] = 'UserController/registrar_nuevo_usuario';
+
 $route['contacto'] = "UserController/contacto";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
@@ -22,7 +28,6 @@ $route['inicio'] = 'LoginController/inicio_logueado';
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';
 $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 
-
 # ADMIN
 $route['admin'] = 'AdminController/index';
 $route['admin/inicio'] = 'AdminController/index';
@@ -34,11 +39,12 @@ $route['admin/nuevo-usuario'] = 'AdminController/registro_usuario';
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
 $route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
-$route['admin/delete-usuario/(:num)'] = 'AdminController/delete_usuario';
+$route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 
 # - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';
 
+# - comentarios
 $route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios';
 
 

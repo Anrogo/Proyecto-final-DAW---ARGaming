@@ -1,34 +1,25 @@
-<div class="container">
-
-  <div class="row justify-content-center">
-    <div class="col-md-4 col-md-offset-4 col-lg-4">
-    <br><br>
-      <h2 class="">Inicio de sesión</h2>
-      <?php
+<div class="wrapper">
+<form class="login" action="/login2" method="POST">
+<p class="title">Inicio de sesión</p>
+<?php
 
         # Si existe la variable error que envia el controlardo mostraremos el error.
         if ( isset( $error))
         {
-          echo "<div class='error'>$error</div>";
+          echo "<p class='error'>$error</p>";
         }
 
       ?>
-     <!--  <form class="form-signin" method="POST" action="/login/login"> -->
-      <form action="/login2" method="POST">
-        <div class="form-group">
-          <label for="username">Usuario</label>
-          <input type="text" name="username" id="username" class="form-control" placeholder="nombre de usuario / nombre@email.es" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" name="password" id="password" class="form-control" required>
-        </div>
-        
-        <input type="submit" class="btn btn-outline-success" value="Iniciar sesión">
-      </form>
-    </div>
-
-  </div>
-
-</div> <!-- /container -->
+<input type="text" name="username" placeholder="Nombre de usuario" title="Introduzca su nombre de usuario" autofocus />
+<i class="fas fa-user"></i>
+<input type="password" name="password" placeholder="Contraseña" title="Introduzca su contraseña"/>
+<i class="fas fa-key"></i>
+<a href="#">Ha olvidado su contraseña?</a>
+<button>
+<i class="spinner"></i>
+<span class="state">Iniciar sesión</span>
+</button>
+</form>
+<footer><a target="blank" href="http://boudra.me/">Designed by boudra.me</a></footer>
+</p>
+</div>

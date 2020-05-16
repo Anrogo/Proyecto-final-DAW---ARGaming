@@ -45,7 +45,7 @@
     <?php require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/footer.php"; ?>
 
     <!-- jQuery Version 3.4.1 -->
-    <script src="/bootstrap/js/jquery-3.4.1.slim.min.js" defer></script>
+    <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>
 
     <!-- Popper JS 1.16.0 -->
     <script src="/bootstrap/js/popper.min.js" defer></script>

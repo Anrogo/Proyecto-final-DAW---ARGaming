@@ -103,18 +103,27 @@ class AdminController extends CI_Controller
 		foreach ($_POST as $key => $value) {
 			$datos[$key] = $value;
 		}
+		//debug($datos);
+
 		if ($datos['password'] == $datos['password_confirm']){
 			//Es necesario pasar la contraseña cifrada previamente, así que utilizamos la función md5 para cifrarla
 			$datos['password'] = md5($datos['password']);
 			unset($datos['password_confirm']);
-		} else {
-			header('Location: /admin/panel-control/nuevo-usuario/error');
 		}
-		debug($datos);
-
+		
+		//$datos['password'] = md5($datos['password']);
+		
+		//debug($datos);
+		
 		$this->BackEndModel->insert('usuarios', $datos);
 
-		//header('Location: /admin/panel-control/usuarios');
+		header('Location: /admin/panel-control/usuarios');
+	}
+
+	public function usuario_existente($username,$email)
+	{
+		//$info = $this->BackEndModel->Lista('usuarios');
+
 	}
 
 	public function editar_usuario()
@@ -155,6 +164,16 @@ class AdminController extends CI_Controller
 		header('Location: /admin/panel-control/usuarios');
 	}
 
+	public function eliminar_usuario()
+	{
+		//debug($this->uri);
+
+		$where['id_usuario'] = $this->uri->segment(3);
+
+		$this->BackEndModel->delete('usuarios', $where);
+
+		header('Location: /admin/panel-control/usuarios');
+	}
 
 	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/
 	public function registro()

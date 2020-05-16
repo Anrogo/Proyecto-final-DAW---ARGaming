@@ -1,3 +1,19 @@
+<script type="text/javascript">
+  
+  function eliminar( id )
+  {
+    var ok = confirm( "¿ Seguro de borrar este usuario ? ");
+    if ( !ok)
+    {
+      return false;
+    }
+    else
+    {
+      location.href = "/admin/eliminar-usuario/" + id;
+    }
+  }
+
+</script>
 <div class="container">
   <div class="row mt-4">
     <div class="col-5 text-center">
@@ -59,7 +75,7 @@
                     <td>' . $admin . '</td>
                     <td>' . $activo . '</td>
                     <td><a href="/editar-usuario/' . $usuario['id_usuario'] . '"><img src="/images/edit.png" width=20px></a></td>
-                    <td><a href="#" OnClick="/delete-usuario(' . $usuario['id_usuario'] . ')"><img src="/images/delete_2.png"  width=20px></a></td>
+                    <td><a href="#" OnClick="eliminar(' . $usuario['id_usuario'] . ')"><img src="/images/delete.svg"  width=20px></a></td>
                   </tr>';
           }
 

@@ -64,7 +64,7 @@ foreach($usuarios as $usuario){
                         <div class="form-group">
                             <label for="nombre">Rol del usuario</label>
                             <select name="rol" id="rol" class="form-control">
-                                <option value="0" <?php echo isset($rol0) ? $rol0 : ""; ?>>Básico</option>
+                                <option value="0" <?php echo isset($rol0) ? $rol0 : ""; ?>>Estándar</option>
                                 <option value="1" <?php echo isset($rol1) ? $rol1 : ""; ?>>Administrador</option>
                             </select>
                         </div>

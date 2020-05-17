@@ -7,7 +7,7 @@ $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 
-$route['registro'] = "FormController/Index";
+$route['registro'] = "FormController/registro";
 
 
 #$route['nuevo-usuario'] = 'UserController/registro_usuario';

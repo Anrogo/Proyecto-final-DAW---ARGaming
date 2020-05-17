@@ -52,6 +52,10 @@ footer {
 	border: 2px solid black;
 }
 
+form p {
+	color:red;
+}
+
 .red {
 	background-color: red;
 }

@@ -95,6 +95,9 @@
                 }
             } else {
                 echo $title;
+                echo "<br>";
+                echo $mensaje_confirmacion;
+                echo "<br>";
             }
             ?>
 

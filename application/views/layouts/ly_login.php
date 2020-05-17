@@ -14,7 +14,8 @@
         body {
             font-family: "Open Sans", sans-serif;
             height: 100vh;
-            background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;
+            /*background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;*/
+            background: url("/images/img4.jpg") 50% fixed;
             background-size: cover;
         }
 

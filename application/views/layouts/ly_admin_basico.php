@@ -38,7 +38,7 @@
 <body>
 
     <!-- Navigation -->
-    <?php require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_panel_control.php"; ?>
+    <?php //require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_panel_control.php"; ?>
     
     <!-- Page Content -->
     <?php

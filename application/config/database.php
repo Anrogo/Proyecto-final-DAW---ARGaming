@@ -76,7 +76,7 @@ $query_builder = TRUE;
 $db['default'] = array(
 	# Suponiendo que nuestra base de datos se llama base_de_datos
 	# y estamos conectando a localhost
-	'dsn'	=> 'mysql:host=localhost;dbname=argaming', 
+	'dsn'	=> 'mysql:host=localhost;dbname=argaming_db', 
 	'hostname' => 'localhost',
 	'username' => 'admin', #El nombre de usuario
 	'password' => '1234', #La contraseña del usuario de arriba

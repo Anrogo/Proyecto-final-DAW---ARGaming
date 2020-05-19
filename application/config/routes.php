@@ -7,8 +7,6 @@ $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 
-$route['registro'] = "FormController/registro";
-
 
 #$route['nuevo-usuario'] = 'UserController/registro_usuario';
 #$route['registrar-usuario'] = 'UserController/registrar_nuevo_usuario';
@@ -23,7 +21,7 @@ $route['politica-privacidad'] = "UserController/politica_privacidad";
 $route['login'] = 'LoginController/login';
 $route['login2'] = 'LoginController/login2';
 $route['login/error'] = 'LoginController/login';
-$route['usuario/registro'] = 'LoginController/registro';
+$route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';
 $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
@@ -35,7 +33,7 @@ $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 $route['admin/panel-control'] = 'AdminController/panel_control';
 # - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
-$route['admin/nuevo-usuario'] = 'AdminController/registro_usuario';
+$route['admin/nuevo-usuario'] = "FormController/registro_admin";
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
 $route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';

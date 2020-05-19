@@ -23,37 +23,45 @@
                         <div class="carousel-item active">
                             <img src="images/img2.jpg" class="img-slider">
                             <div class="carousel-caption">
+                                <!--
                                 <h3>PRIMER TÍTULO</h3>
                                 <p>
                                     Esta es la descripción de la imagen 1
                                 </p>
+                                -->
                             </div>
                         </div>
                         <div class="carousel-item">
                             <img src="images/moto_racer.jpg" class="img-slider">
                             <div class="carousel-caption">
+                                <!--    
                                 <h3>SEGUNDO TÍTULO</h3>
                                 <p>
                                     Esta es la descripción de la imagen 2
                                 </p>
+                                -->
                             </div>
                         </div>
                         <div class="carousel-item">
                             <img src="images/banner_image.png" class="img-slider">
                             <div class="carousel-caption">
+                                <!--    
                                 <h3>TERCER TÍTULO</h3>
                                 <p>
                                     Esta es la descripción de la imagen 3
                                 </p>
+                                -->
                             </div>
                         </div>
                         <div class="carousel-item">
                             <img src="images/overwatch.png" class="img-slider">
                             <div class="carousel-caption">
+                                <!--
                                 <h3>CUATRO TÍTULO</h3>
                                 <p>
                                     Esta es la descripción de la imagen 4
                                 </p>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -96,7 +104,7 @@
             } else {
                 echo $title;
                 echo "<br>";
-                echo $mensaje_confirmacion;
+                //echo $mensaje_confirmacion;
                 echo "<br>";
             }
             ?>

@@ -12,10 +12,24 @@
     <!-- Page Title -->
     <title>
         <?php
-            echo $title_for_layout;
+        echo $title_for_layout;
         ?>
     </title>
-    
+
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            height: 100vh;
+            /*background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;*/
+            background: url("/images/img4.jpg") 50% fixed;
+            background-size: cover;
+        }
+    </style>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+
     <!-- Bootstrap Core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -34,15 +48,17 @@
 <body>
 
     <!-- Navigation -->
-    <?php //require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header.php"; ?>
-    
+    <?php //require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header.php"; 
+    ?>
+
     <!-- Page Content -->
     <?php
-        echo $content_for_layout;
+    echo $content_for_layout;
     ?>
 
     <!-- Footer -->
-    <?php //require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/footer.php"; ?>
+    <?php //require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/footer.php"; 
+    ?>
 
     <!-- jQuery Version 3.4.1 -->
     <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>

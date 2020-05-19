@@ -199,6 +199,11 @@
             color:red;
         }
 
+        .text-return {
+            color:white!important;
+            font-size:12px;
+        }
+
     </style>
     <script>
         window.console = window.console || function(t) {};

@@ -82,7 +82,7 @@ class AdminController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-
+/*
 	public function registro_usuario()
 	{
 
@@ -125,7 +125,7 @@ class AdminController extends CI_Controller
 		//$info = $this->BackEndModel->Lista('usuarios');
 
 	}
-
+*/
 	public function editar_usuario()
 	{
 		//Se extrae el id de la uri y se manda a la base de datos para que devuelva su registro

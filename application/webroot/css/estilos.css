@@ -26,6 +26,7 @@ footer {
 
 .error {
 	color: red;
+	font-size:14px;
 	padding-bottom: 10px;
 }
 
@@ -58,10 +59,6 @@ footer {
 
 .contenido {
 	border: 2px solid black;
-}
-
-form p {
-	color: red;
 }
 
 .red {
@@ -108,6 +105,10 @@ footer {
 
 .minh-100 {
 	height: 18vh;
+}
+
+table caption {
+	caption-side: top!important;
 }
 
 /* ICONOS */

@@ -99,17 +99,25 @@ class UserController extends CI_Controller
 
 	public function juegos(){
 		
-		$titulo = 'LISTADO DE VIDEOJUEGOS';
+		//$titulo = 'LISTADO DE VIDEOJUEGOS';
+
+		//Leemos los datos recibidos en formato json
+		$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=dead&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+
+		//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+		$juegos = json_decode($json, true);
+
+		//$long_array = count($juegos['items']);
 
 		$datos = array(
-			'title' => $titulo
+			'juegos' => $juegos['items'],
 		);
 		
 		//debug($datos);
 		//echo "**".$datos['posts'][0]['display_name']."**";
 		
 		$vista = array(
-			'vista' => 'web/index.php',
+			'vista' => 'web/listado-videojuegos.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
 			'titulo' => 'Videojuegos',

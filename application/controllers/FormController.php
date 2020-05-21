@@ -135,7 +135,7 @@ class FormController extends CI_Controller
             array(
                 'field' => 'password',
                 'label' => 'contraseña',
-                'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{8,16}$/]',
+                'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
                 'errors' => array(
                     'required' => 'Es obligatorio añadir una %s válida',
                     'min_length' => 'La %s debe tener al menos 8 caracteres',
@@ -265,7 +265,7 @@ class FormController extends CI_Controller
             array(
                 'field' => 'password',
                 'label' => 'contraseña',
-                'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{8,16}$/]',
+                'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
                 'errors' => array(
                     'required' => 'Es obligatorio añadir una %s válida',
                     'min_length' => 'La %s debe tener al menos 8 caracteres',
@@ -287,7 +287,7 @@ class FormController extends CI_Controller
                 'rules' => 'required|in_list[0,1]',
                 'errors' => array(
                     'required' => 'El rol es obligatorio',
-                    'in_list' => 'El rol debe ser 0:usuario estándar o 1:administrador'
+                    'in_list' => 'El rol debe ser únicamente 0: "usuario estándar" o 1: "administrador"'
                 ),
             )
         );
@@ -307,16 +307,7 @@ class FormController extends CI_Controller
 
             $this->BackEndModel->insert('usuarios', $datos);
 
-            $datos = array();
-
-		    $vista = array(
-                'vista' => 'admin/listado_usuarios.php',
-                'params' => $datos,
-                'layout' => 'ly_admin.php',
-                'titulo' => 'Usuario añadido',
-            );
-            
-            $this->layouts->view($vista);
+            header('Location: /admin/panel-control/usuarios');
 
         } else {
 

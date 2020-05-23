@@ -14,7 +14,6 @@
                     ?>
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="th-sm">Activo</th>
                                     <th class="th-sm">ID</th>
                                     <th class="th-sm">Título</th>
                                     <th class="th-sm">Descripción</th>
@@ -39,7 +38,6 @@
 
                             //Y se muestran en forma de lista
                             echo "<tr id=\"" . $id . "\">
-                        <td><input type=\"checkbox\" name=\"activo\" id=\"activo\" checked></td>
                         <td>" . $id . "</td>
                         <td>" . $titulo . "</td>
                         <td>" . $snippet . " </td>

@@ -157,7 +157,7 @@ class AdminController extends CI_Controller
 		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
 		unset($datos['id']);
 
-		//debug($datos);
+		debug($datos);
 
 		$this->BackEndModel->update('usuarios', $datos, $where);
 

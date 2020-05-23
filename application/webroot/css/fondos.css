@@ -1,0 +1,13 @@
+.registro {
+    background: url("/images/fondos/ac-unity.jpg");
+    background-size: cover;
+}
+
+.contacto {
+    background: url("/images/fondos/overwatch3.jpg");
+    background-size: cover;
+}
+
+.card {
+    background-color: #ffffffc2!important;
+}

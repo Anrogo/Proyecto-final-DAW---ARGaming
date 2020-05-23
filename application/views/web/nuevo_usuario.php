@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-10">
             <div class="card">
                 <div class="card-header">
@@ -9,7 +9,7 @@
                     <form id="form_registro" action="#" method="POST">
                         <div class="form-group">
                             <label for="nombre">Nombre de usuario</label>
-                            <input type="text" name="username" id="username" class="form-control" value="<?php echo set_value('username'); ?>">
+                            <input type="text" name="username" id="username" class="form-control input" value="<?php echo set_value('username'); ?>">
                             <?php
                             echo form_error('username', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo set_value('nombre'); ?>">
+                            <input type="text" name="nombre" id="nombre" class="form-control input" value="<?php echo set_value('nombre'); ?>">
                             <?php
                             echo form_error('nombre', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label for="apellidos">Apellidos</label>
-                            <input type="text" name="apellidos" id="apellidos" class="form-control" value="<?php echo set_value('apellidos'); ?>">
+                            <input type="text" name="apellidos" id="apellidos" class="form-control input" value="<?php echo set_value('apellidos'); ?>">
                             <?php
                             echo form_error('apellidos', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nombre">Correo</label>
-                            <input type="text" name="email" id="email" class="form-control" value="<?php echo set_value('email'); ?>">
+                            <input type="text" name="email" id="email" class="form-control input" value="<?php echo set_value('email'); ?>">
                             <?php
                             echo form_error('email', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
@@ -44,7 +44,7 @@
                                 <label for="nombre">Crea una contraseña</label>
                             </div>
                             <div class="col-12 col-md-6">
-                                <input type="password" name="password" id="password" class="form-control" value="<?php echo set_value('password'); ?>">
+                                <input type="password" name="password" id="password" class="form-control input" value="<?php echo set_value('password'); ?>">
                             </div>
                             <!--<i class="fas fa-eye"></i>-->
                             <div class="col-3 mt-1 mt-md-0" id="botones-pass">
@@ -60,7 +60,7 @@
                                 <label for="nombre">Confirmar contraseña</label>
                             </div>
                             <div class="col-12 col-md-6">
-                                <input type="password" name="password_confirm" id="password_confirm" class="form-control" value="<?php echo set_value('password_confirm'); ?>">
+                                <input type="password" name="password_confirm" id="password_confirm" class="form-control input" value="<?php echo set_value('password_confirm'); ?>">
                             </div>
                             <?php
                             echo form_error('password_confirm', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                         </div>
                         <input type="submit" value="Completar registro" id="submit" class="btn btn-primary">
                     </form>
-                    <div class="text-center">
+                    <div class="text-center cancelar">
                         <a href="/" class="text-black">Cancelar y volver a la página de inicio</a>
                     </div>
                 </div>

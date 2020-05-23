@@ -16,12 +16,18 @@
                     <li data-target="#demo1" data-slide-to="1"></li>
                     <li data-target="#demo1" data-slide-to="2"></li>
                     <li data-target="#demo1" data-slide-to="3"></li>
+                    <li data-target="#demo1" data-slide-to="4"></li>
+                    <li data-target="#demo1" data-slide-to="5"></li>
+                    <li data-target="#demo1" data-slide-to="6"></li>
+                    <li data-target="#demo1" data-slide-to="7"></li>
+                    <li data-target="#demo1" data-slide-to="8"></li>
+                    <li data-target="#demo1" data-slide-to="9"></li>
                 </ul>
 
                 <!--IMÁGENES-->
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="images/img2.jpg" class="img-slider">
+                        <img src="/images/slider/cod-slider.jpg" class="img-slider">
                         <div class="carousel-caption">
                             <!--
                                 <h3>PRIMER TÍTULO</h3>
@@ -32,7 +38,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="images/moto_racer.jpg" class="img-slider">
+                        <img src="/images/slider/ac-slider.jpg" class="img-slider">
                         <div class="carousel-caption">
                             <!--    
                                 <h3>SEGUNDO TÍTULO</h3>
@@ -43,7 +49,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="images/banner_image.png" class="img-slider">
+                        <img src="images/slider/dark-souls-slider.jpg" class="img-slider">
                         <div class="carousel-caption">
                             <!--    
                                 <h3>TERCER TÍTULO</h3>
@@ -54,12 +60,78 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="images/overwatch.png" class="img-slider">
+                        <img src="images/slider/fornite-slider.jpg" class="img-slider">
                         <div class="carousel-caption">
                             <!--
-                                <h3>CUATRO TÍTULO</h3>
+                                <h3>CUARTO TÍTULO</h3>
                                 <p>
                                     Esta es la descripción de la imagen 4
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/overwatch2-slider.png" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>QUINTO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 5
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/minecraft2-slider.jpg" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>SEXTO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 6
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/csgo-slider.png" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>SÉPTIMO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 7
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/overwatch-slider.png" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>OCTAVO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 8
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/skyrim-slider.jpg" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>NOVENO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 9
+                                </p>
+                                -->
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/slider/moto-racer-slider.jpg" class="img-slider">
+                        <div class="carousel-caption">
+                            <!--
+                                <h3>DÉCIMO TÍTULO</h3>
+                                <p>
+                                    Esta es la descripción de la imagen 10
                                 </p>
                                 -->
                         </div>
@@ -85,19 +157,22 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered">
-                    <caption class="text-center">
-                        Listado de videojuegos
-                    </caption>
+           
+                    
                     <?php
-                    if(isset($juegos)){
-                        
-                    } else {
-                        echo $title;
-                    }
-                        ?>
-                            </tbody>
+                        if(isset($juegos)){
+                    ?> 
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-bordered">
+                                <caption class="text-center">
+                                Listado de videojuegos
+                                </caption>
+                    <?php
+                        } else {
+                            echo $title;
+                        }
+                    ?>
+                        </tbody>
                 </table>
 
             </div>

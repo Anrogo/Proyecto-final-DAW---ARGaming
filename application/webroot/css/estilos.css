@@ -6,6 +6,7 @@ body {
 
 
 footer {
+	background-color: #428BCA;
 	margin-top: 30px;
 	border-top: 1px solid #c4c4c4;
 	height: 100%;
@@ -99,8 +100,8 @@ footer {
 	color: #fff;
 }
 
-footer {
-	background-color: #428BCA;
+.cancelar {
+	font-size:14px;
 }
 
 .minh-100 {
@@ -109,6 +110,18 @@ footer {
 
 table caption {
 	caption-side: top!important;
+}
+
+/* FORMULARIOS */
+.input {
+	border:none!important;
+	border-bottom:2px solid black!important;
+	background-color: #ffffff85!important;
+}
+
+.input:focus {
+	background-color: #ffffff!important;
+	border-bottom:0px!important;
 }
 
 /* ICONOS */

@@ -11,7 +11,7 @@ $route['lista-post'] = "UserController/post";
 #$route['nuevo-usuario'] = 'UserController/registro_usuario';
 #$route['registrar-usuario'] = 'UserController/registrar_nuevo_usuario';
 
-$route['contacto'] = "UserController/contacto";
+$route['contacto'] = "FormController/contacto";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
@@ -24,6 +24,7 @@ $route['login/error'] = 'LoginController/login';
 $route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';
+$route['editar-perfil/(:num)'] = 'FormController/editar_usuario';
 $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 
 # ADMIN
@@ -35,7 +36,7 @@ $route['admin/panel-control'] = 'AdminController/panel_control';
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
 $route['admin/nuevo-usuario'] = "FormController/registro_admin";
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
-$route['editar-usuario/(:num)'] = 'AdminController/editar_usuario';
+$route['editar-usuario/(:num)'] = 'FormController/editar_admin';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
 $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 

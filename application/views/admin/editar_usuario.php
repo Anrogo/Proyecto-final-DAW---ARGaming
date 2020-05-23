@@ -28,7 +28,7 @@ foreach($usuarios as $usuario){
                     <span class="font-italic text-uppercase"><?php echo "(ID: ".$usuario['id_usuario'].") - ".$usuario['username']; ?></span>
                 </div>
                 <div class="card-body">
-                    <form action="/actualizar-usuario" method="POST">
+                    <form action="#" method="POST">
                         <input type="hidden" name="id" id="id" value="<?php echo $usuario['id_usuario']; ?>">
                         <div class="form-group">
                             <label for="imagen">Imagen de perfil</label>
@@ -38,18 +38,50 @@ foreach($usuarios as $usuario){
                         <div class="form-group">
                             <label for="nombre">Nombre de usuario</label>
                             <input type="text" name="username" id="username" class="form-control" value="<?php echo $usuario['username']?>">
+                            <?php
+                            echo form_error('username', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $usuario['nombre']?>">
+                            <?php
+                            echo form_error('nombre', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="apellidos">Apellidos</label>
                             <input type="text" name="apellidos" id="apellidos" class="form-control" value="<?php echo $usuario['apellidos']?>">
+                            <?php
+                            echo form_error('apellidos', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Correo</label>
                             <input type="email" name="email" id="email" class="form-control" value="<?php echo $usuario['email']?>">
+                            <?php
+                            echo form_error('email', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-6 col-md-3">
+                                <label for="nombre">Nueva contraseña</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <!--<i class="fas fa-eye"></i>-->
+                            <div class="col-3 mt-1 mt-md-0" id="botones-pass">
+                                <span id="ver-pass" class="btn btn-outline-secondary" title="Mostrar contraseña">Mostrar</span>
+                            </div>
+                            <?php
+                            echo form_error('password', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Fecha de creación</label>
@@ -67,6 +99,10 @@ foreach($usuarios as $usuario){
                                 <option value="0" <?php echo isset($rol0) ? $rol0 : ""; ?>>Estándar</option>
                                 <option value="1" <?php echo isset($rol1) ? $rol1 : ""; ?>>Administrador</option>
                             </select>
+                            <?php
+                            echo form_error('rol', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>', '</div>'); ?>
                         </div>
                         <input type="submit" value="Guardar cambios" class="btn btn-outline-info">
                     </form>

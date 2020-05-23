@@ -156,7 +156,7 @@ class UserController extends CI_Controller
 		$vista = array(
 			'vista' => 'web/contacto.php',
 			'params' => $datos,
-			'layout' => 'ly_home.php',
+			'layout' => 'ly_contacto.php',
 			'titulo' => 'Contacto',
 		);
 

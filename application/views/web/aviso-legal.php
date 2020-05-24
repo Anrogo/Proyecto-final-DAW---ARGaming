@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row">
 
-        <div class="col s12">
+        <div class="col-12">
 
             <article id="content">
                 <header style="padding-left:0">

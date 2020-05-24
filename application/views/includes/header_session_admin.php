@@ -39,7 +39,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto nav-justified w-75">
+        <ul class="navbar-nav mr-auto nav-justified w-50">
             <li class="nav-item active">
                 <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
             </li>

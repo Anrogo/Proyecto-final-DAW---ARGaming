@@ -32,8 +32,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 hijo">
-                <ul class="list-group list-group-horizontal-md">
+            <div class="col-12 text-center">
+                <ul class="list-group list-group-horizontal-md justify-content-center">
                     <li class="list-group-item"><a href="/creador-blog">Creador</a></li>
                     <li class="list-group-item"><a href="/aviso-legal">Aviso legal</a></li>
                     <li class="list-group-item"><a href="/politica-privacidad">Políticas de privacidad y RGPD</a></li>

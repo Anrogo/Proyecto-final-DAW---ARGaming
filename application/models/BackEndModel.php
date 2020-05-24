@@ -50,7 +50,7 @@ class BackEndModel extends CI_Model
 
   public function update( $tabla, $datos, $where)
   {
-    $this->db->update( $tabla, $datos, $where);
+    $this->db->update( $tabla, $datos, $where); 
   }
 
   public function delete( $tabla, $where)

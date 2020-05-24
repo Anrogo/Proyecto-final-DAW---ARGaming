@@ -16,6 +16,7 @@ class AdminController extends CI_Controller
 
 		/* El inicio de sesión se verifica en la funcion comprobar_login(), ubicada en utiles_helper */
 		$datos = comprobar_login();
+
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
 				'vista' => 'admin/index.php',
@@ -23,7 +24,9 @@ class AdminController extends CI_Controller
 				'layout' => 'ly_admin.php',
 				'titulo' => 'Inicio',
 			);
+
 			$this->layouts->view($vista);
+
 		} else { //si no se consigue verificar correctamente, te manda al inicio
 			header("Location: /");
 		}
@@ -32,6 +35,7 @@ class AdminController extends CI_Controller
 	public function panel_control()
 	{
 		$datos = comprobar_login();
+
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
 				'vista' => 'admin/listados.php',
@@ -40,6 +44,7 @@ class AdminController extends CI_Controller
 				'titulo' => 'Administración',
 			);
 			$this->layouts->view($vista);
+
 		} else {
 			header("Location: /");
 		}
@@ -48,41 +53,50 @@ class AdminController extends CI_Controller
 	public function perfil_admin()
 	{
 		$datos = comprobar_login();
+
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
+
 			$vista = array(
 				'vista' => 'admin/inicio.php',
 				'params' => $datos,
 				'layout' => 'ly_session.php',
 				'titulo' => 'Usuario logueado',
 			);
+
 			$this->layouts->view($vista);
+
 		} else {
+
 			header("Location: /");
 		}
 	}
 
 	public function listado_usuarios()
 	{
+		$datos = comprobar_login();
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
 
-		$info = $this->BackEndModel->Lista('usuarios');
+			$info = $this->BackEndModel->Lista('usuarios');
+			//debug($info);
+			$datos = array(
+				'usuarios' => $info
+			);
 
-		//debug($info);
+			$vista = array(
+				'vista' => 'admin/listado_usuarios.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Usuarios',
+			);
 
-		$datos = array(
-			'usuarios' => $info
-		);
+			$this->layouts->view($vista);
 
+		} else {
 
-		$vista = array(
-			'vista' => 'admin/listado_usuarios.php',
-			'params' => $datos,
-			'layout' => 'ly_admin.php',
-			'titulo' => 'Usuarios',
-		);
-
-		$this->layouts->view($vista);
+			header("Location: /");
+		}
 	}
-/*
+	/*
 	public function registro_usuario()
 	{
 
@@ -125,8 +139,8 @@ class AdminController extends CI_Controller
 		//$info = $this->BackEndModel->Lista('usuarios');
 
 	}
-*/
-	public function editar_usuario()
+
+	public function editar_admin()
 	{
 		//Se extrae el id de la uri y se manda a la base de datos para que devuelva su registro
 		$info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
@@ -146,34 +160,62 @@ class AdminController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-
+*/
 	public function actualizar_usuario()
 	{
-		foreach ($_POST as $key => $value) {
-			$datos[$key] = $value;
+		$datos = comprobar_login();
+
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+			foreach ($_POST as $key => $value) {
+				$datos[$key] = $value;
+				//el campo que esté vacío no se incluye en la actualización:
+				if ($datos[$key] == null) {
+					unset($datos[$key]);
+				}
+			}
+			if (isset($datos['password']) && !empty($datos['password'])) {
+				$datos['password'] = md5($datos['password']);
+			} else {
+				unset($datos['password']);
+			}
+
+			$where['id_usuario'] = $datos['id'];
+			//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+			unset($datos['id']);
+
+			//debug($datos);
+
+			$this->BackEndModel->update('usuarios', $datos, $where);
+
+			header('Location: /admin/panel-control/usuarios');
+
+		} else {
+
+			header('Location: /');
+
 		}
-
-		$where['id_usuario'] = $datos['id'];
-		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-		unset($datos['id']);
-
-		debug($datos);
-
-		$this->BackEndModel->update('usuarios', $datos, $where);
-
-		header('Location: /admin/panel-control/usuarios');
 	}
 
 	public function eliminar_usuario()
 	{
-		//debug($this->uri);
+		$datos = comprobar_login();
 
-		$where['id_usuario'] = $this->uri->segment(3);
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+			//debug($this->uri);
 
-		$this->BackEndModel->delete('usuarios', $where);
+			$where['id_usuario'] = $this->uri->segment(3);
 
-		header('Location: /admin/panel-control/usuarios');
+			$this->BackEndModel->delete('usuarios', $where);
+
+			header('Location: /admin/panel-control/usuarios');
+		
+		} else {
+
+			header('Location: /');
+
+		}
 	}
+
 
 	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/
 	public function registro()

@@ -39,7 +39,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto nav-justified w-75">
+            <ul class="navbar-nav mr-auto nav-justified w-50">
                 <li class="nav-item active">
                     <span class="text-white">Listar datos de <span class="sr-only">(current)</span></span>
                 </li>

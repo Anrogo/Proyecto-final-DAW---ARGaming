@@ -109,6 +109,21 @@ foreach($usuarios as $usuario){
                 </div>
             </div>
             <br>
+            <script src="/bootstrap/js/jquery-3.4.1.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#ver-pass').on('click', function() {
+                        $('#password').attr('type', 'text');
+                        if ($('#ocultar-pass').length == 0) {
+                            $('#botones-pass').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass').text('Ocultar'));
+                        }
+                        $('#ocultar-pass').on('click', function() {
+                            $('#password').attr('type', 'password');
+                            $('#ocultar-pass').remove();
+                        });
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

@@ -13,7 +13,7 @@
     <i class="fas fa-user"></i>
     <input type="password" name="password" placeholder="Contraseña" title="Introduzca su contraseña" />
     <i class="fas fa-key"></i>
-    <a href="#">Ha olvidado su contraseña?</a>
+    <a href="resetear-password">Ha olvidado su contraseña?</a>
     <button>
       <i class="spinner"></i>
       <span class="state">Iniciar sesión</span>

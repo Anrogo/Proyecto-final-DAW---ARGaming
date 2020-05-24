@@ -10,7 +10,7 @@
                             </svg>Acceso</a>
                     </div>
                     <div class="col-sm-6 hijo">
-                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo1" alt="Logotipo"></a>
+                        <a href="/"><img src="/images/logotipo.png" class="img-fluid logotipo" alt="Logotipo"></a>
                     </div>
                     <div class="col-6 col-sm-3 text-center hijo">
                         <a href="/registro" class="btn btn-lg btn-outline-primary botones"><svg class="bi bi-person-plus-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto nav-justified w-50">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
                     </li>

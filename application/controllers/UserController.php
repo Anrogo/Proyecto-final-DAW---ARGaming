@@ -1,10 +1,10 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserController extends CI_Controller 
+class UserController extends CI_Controller
 {
 
-    function __construct()
+	function __construct()
 	{
 		parent::__construct();
 
@@ -15,13 +15,88 @@ class UserController extends CI_Controller
 	{
 		/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
 		$datos = comprobar_login();
-		if(!empty($datos)){
-			$datos['title'] = 'Información de usuario';
+		if (!empty($datos)) {
+			$datos['title'] = 'No hay post disponibles en este momento, disculpe las molestias';
 			$vista = array(
 				'vista' =>  $datos['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
 				'params' => $datos,
 				'layout' => 'ly_session.php',
-				'titulo' => 'Estás logueado',
+				'titulo' => 'Inicio - logueado'
+			);
+			$this->layouts->view($vista);
+		} else { // si no estuviera logueado muestra la página de inicio con normalidad, quitando ciertas opciones de la cabecera
+			// $posts = $this->FrontEndModel->list_all_posts();
+
+			$datos = array(
+				//'posts' => $posts,
+				'title' => 'No hay post disponibles en este momento, disculpe las molestias.'
+			);
+
+			//debug($datos);
+			//echo "**".$datos['posts'][0]['display_name']."**";
+
+			$vista = array(
+				'vista' => 'web/index.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Inicio - ARGaming'
+			);
+
+			$this->layouts->view($vista);
+		}
+	}
+
+	public function error_404()
+	{
+		$datos = array();
+
+		//Cuando no se encuentre una ruta correcta redirigirá aquí:
+		$vista = array(
+			'vista' => 'web/error-404.php',
+			'params' => $datos,
+			'layout' => 'ly_admin_basico.php',
+			'titulo' => 'Error 404'
+		);
+
+		$this->layouts->view($vista);
+	}
+	/*
+	public function cargar_pagina($pag,$datos,$titulo){
+		$verif = comprobar_login();
+		$paginas = array(
+			'inicio' => $verif['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
+			'login' => 'user/login.php',
+			'perfil-usuario' => 'web/logueado.php',
+			'creador' => 'web/creador-blog.php',
+			'juegos' => 'web/listado-videojuegos.php',
+			'post' => 'web/index.php',
+			'aviso-legal' => 'web/aviso-legal.php',
+			'politica-cookies' => 'web/politica-cookies.php',
+			'politica-privacidad' => 'web/politica-privacidad.php'
+		);
+
+		$layout = array(
+			'inicio' => '',
+			'login' => 'ly_login.php',
+			'perfil-usuario' => '',
+			'creador' => '',
+			'juegos' => '',
+			'post' => '',
+			'aviso-legal' => '',
+			'politica-cookies' => '',
+			'politica-privacidad' => ''
+		);
+
+		$pag = 'inicio';
+		/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper 
+		$verif = comprobar_login();
+		if(!empty($verif)){
+			$datos['vacio'] = 'No hay post disponibles en este momento, disculpe las molestias';
+			$vista = array(
+				'vista' =>  $paginas[$pag],
+				'params' => $datos,
+				'layout' => $layout[$pag] == '' ? 'ly_session.php' : $layout[$pag],
+				'titulo' => $titulo
 			);
 			$this->layouts->view($vista);
 		} else {// si no estuviera logueado muestra la página de inicio con normalidad, quitando ciertas opciones de la cabecera
@@ -36,30 +111,17 @@ class UserController extends CI_Controller
 			//echo "**".$datos['posts'][0]['display_name']."**";
 			
 			$vista = array(
-				'vista' => 'web/index.php',
+				'vista' => $paginas[$pag],
 				'params' => $datos,
-				'layout' => 'ly_home.php',
-				'titulo' => 'Inicio - ARGaming',
+				'layout' => $layout[$pag] == '' ? 'ly_home.php' : $layout[$pag],
+				'titulo' => $titulo
 			);
 
 			$this->layouts->view($vista);
 		}	
-	}
+	} */
 
-	public function prueba_form(){
-
-		$datos = array();
-
-		$vista = array(
-			'vista' => 'web/prueba_form.php',
-			'params' => $datos,
-			'layout' => 'ly_home_basico.php',
-			'titulo' => 'Añadir nuevo usuario',
-		);
-
-		$this->layouts->view($vista);
-	}
-
+	/*
 	public function registro_usuario()
 	{
 
@@ -69,7 +131,7 @@ class UserController extends CI_Controller
 			'vista' => 'web/nuevo_usuario.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
-			'titulo' => 'Añadir nuevo usuario',
+			'titulo' => 'Añadir nuevo usuario'
 		);
 
 		$this->layouts->view($vista);
@@ -96,56 +158,91 @@ class UserController extends CI_Controller
 
 		header('Location: /inicio');
 	}
+	*/
 
-	public function juegos(){
-		
-		//$titulo = 'LISTADO DE VIDEOJUEGOS';
-
+	public function juegos()
+	{
 		//Leemos los datos recibidos en formato json
 		$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=dead&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
 
 		//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
 		$juegos = json_decode($json, true);
 
-		//$long_array = count($juegos['items']);
-
+		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(
 			'juegos' => $juegos['items'],
 		);
-		
-		//debug($datos);
-		//echo "**".$datos['posts'][0]['display_name']."**";
-		
-		$vista = array(
-			'vista' => 'web/listado-videojuegos.php',
-			'params' => $datos,
-			'layout' => 'ly_home.php',
-			'titulo' => 'Videojuegos',
-		);
 
-		$this->layouts->view($vista);
-		
+		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+		$verif = comprobar_login();
+
+		//debug($verif);
+
+		if (!empty($verif)) {
+
+			$datos['rol'] = $verif['rol'];
+
+			$vista = array(
+				'vista' => 'web/listado-videojuegos.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => 'Videojuegos - logueado'
+			);
+
+			$this->layouts->view($vista);
+
+		} else {
+
+			$vista = array(
+				'vista' => 'web/listado-videojuegos.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Videojuegos'
+			);
+
+			$this->layouts->view($vista);
+		}
 	}
 
-	public function post(){
+	public function post()
+	{
+		$posts = $this->FrontEndModel->Lista('post','id_post');
 
-		$titulo = 'LISTADO DE POST';
-
+		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(
-			'title' => $titulo
+			'posts' => $posts,
 		);
+		//debug($datos);
+		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+		$verif = comprobar_login();
 
-		$vista = array(
-			'vista' => 'web/index.php',
-			'params' => $datos,
-			'layout' => 'ly_home.php',
-			'titulo' => 'Post',
-		);
+		if(!empty($verif)){
 
-		$this->layouts->view($vista);
+			$datos['rol'] = $verif['rol'];			
+
+			$vista = array(
+				'vista' => 'web/lista-post.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => 'Post'
+			);
+
+			$this->layouts->view($vista);
+
+		} else {
+
+			$vista = array(
+				'vista' => 'web/lista-post.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Post'
+			);
+
+			$this->layouts->view($vista);
+		}
 	}
-
-	public function contacto(){
+	/*
+	public function contactar(){
 
 		$titulo = 'FORMULARIO DE CONTACTO';
 
@@ -157,13 +254,15 @@ class UserController extends CI_Controller
 			'vista' => 'web/contacto.php',
 			'params' => $datos,
 			'layout' => 'ly_contacto.php',
-			'titulo' => 'Contacto',
+			'titulo' => 'Contacto'
 		);
 
 		$this->layouts->view($vista);
 	}
+	*/
 
-	public function aviso_legal(){
+	public function aviso_legal()
+	{
 
 		$titulo = 'POLITICA DE COOKIES';
 
@@ -175,13 +274,14 @@ class UserController extends CI_Controller
 			'vista' => 'web/aviso-legal.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
-			'titulo' => 'Aviso legal',
+			'titulo' => 'Aviso legal'
 		);
 
 		$this->layouts->view($vista);
 	}
 
-	public function politica_cookies(){
+	public function politica_cookies()
+	{
 
 		$titulo = 'POLITICA DE COOKIES';
 
@@ -193,13 +293,14 @@ class UserController extends CI_Controller
 			'vista' => 'web/politica-cookies.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
-			'titulo' => 'Política de cookies',
+			'titulo' => 'Política de cookies'
 		);
 
 		$this->layouts->view($vista);
 	}
 
-	public function politica_privacidad(){
+	public function politica_privacidad()
+	{
 
 		$titulo = 'POLITICA DE PRIVACIDAD';
 
@@ -211,13 +312,14 @@ class UserController extends CI_Controller
 			'vista' => 'web/politica-privacidad.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
-			'titulo' => 'Política de privacidad y RGPD',
+			'titulo' => 'Política de privacidad y RGPD'
 		);
 
 		$this->layouts->view($vista);
 	}
 
-	public function creador_blog(){
+	public function creador_blog()
+	{
 
 		$titulo = 'Portafolio del creador';
 
@@ -229,7 +331,7 @@ class UserController extends CI_Controller
 			'vista' => 'web/creador-blog.php',
 			'params' => $datos,
 			'layout' => 'ly_home.php',
-			'titulo' => 'Creador del blog',
+			'titulo' => 'Creador del blog'
 		);
 
 		$this->layouts->view($vista);
@@ -238,7 +340,7 @@ class UserController extends CI_Controller
 
 
 
-    /*
+	/*
     public function post()
     {
         $post_id = $this->uri->segment(2);
@@ -285,6 +387,4 @@ class UserController extends CI_Controller
 
 	}
 	*/
-
-
 }

@@ -165,7 +165,7 @@ class FormController extends CI_Controller
         $this->form_validation->set_rules($config);
 
         if ($this->form_validation->run() == TRUE) {
-
+//Si la validación es correcta se mandan los datos para insertar el nuevo registro
             foreach ($_POST as $key => $value) {
                 $datos[$key] = $value;
             }
@@ -190,7 +190,9 @@ class FormController extends CI_Controller
             );
 
             $this->layouts->view($vista);
+
         } else {
+//si la validación falla por cualquier circunstancia se queda en el formulario y se muestran los errores
 
             $datos = array();
 
@@ -202,6 +204,116 @@ class FormController extends CI_Controller
             );
 
             $this->layouts->view($vista);
+        }
+    }
+
+    public function editar_perfil()
+    {
+        $this->load->helper(array('form', 'url'));
+
+        $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+        $config = array(
+            array(
+                'field' => 'username',
+                'label' => 'nombre de usuario',
+                'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                'errors' => array(
+                    'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
+                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                ),
+            ),
+            array(
+                'field' => 'nombre',
+                'label' => 'nombre',
+                'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                'errors' => array(
+                    'required' => 'El %s es obligatorio',
+                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                ),
+            ),
+            array(
+                'field' => 'apellidos',
+                'label' => 'apellidos',
+                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                'errors' => array(
+                    'required' => 'Los %s son obligatorios, al menos el primero.',
+                    'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
+                    'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
+                    'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
+                ),
+            ),
+            array(
+                'field' => 'email',
+                'label' => 'correo',
+                'rules' => 'trim|required|valid_email',
+                'errors' => array(
+                    'required' => 'El correo es obligatorio',
+                    'valid_email' => 'El correo debe tener un formato válido'
+                ),
+            ),
+            array(
+                'field' => 'password',
+                'label' => 'contraseña',
+                'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
+                'errors' => array(
+                    'min_length' => 'La %s debe tener al menos 8 caracteres',
+                    'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
+                ),
+            )
+        );
+
+        $this->form_validation->set_rules($config);
+
+        if ($this->form_validation->run() == TRUE) {
+
+            $datos_nuevos = array();
+
+            foreach ($_POST as $key => $value) {
+                $datos_nuevos[$key] = $value;
+                if($datos_nuevos[$key] == null){
+                    unset($datos_nuevos[$key]);
+                }
+            }
+
+            if (!empty($datos_nuevos['password'])) {
+                $datos_nuevos['password'] = md5($datos_nuevos['password']);
+            }
+
+            //debug($datos_nuevos);
+            $where['id_usuario'] = $datos_nuevos['id'];
+            //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+            unset($datos_nuevos['id']);            
+    
+            $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+            header('Location: /admin/panel-control/usuarios');
+
+        } else {
+
+            $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
+
+            $datos = array(
+                //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
+                'usuarios' => $info['data']
+            );
+            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+            
+            //debug($datos);
+            
+            $vista = array(
+                'vista' => 'user/editar_perfil.php',
+                'params' => $datos,
+                'layout' => 'ly_session.php',
+                'titulo' => 'Editar información de '.$_SESSION['nombre_usuario'],
+            );
+
+            $this->layouts->view($vista);
+            
         }
     }
 
@@ -272,15 +384,27 @@ class FormController extends CI_Controller
             foreach ($_POST as $key => $value) {
                 $datos[$key] = $value;
             }
+            //debug($datos);
+            $datos = array(
+                'title' => '--Contacto completado--',
+                'mensaje' => 'Mensaje enviado con éxito'
+            );
 
-            header('Location: /');
+            $vista = array(
+                'vista' => 'web/index.php',
+                'params' => $datos,
+                'layout' => 'ly_home.php',
+                'titulo' => 'Contactado',
+            );
+
+            $this->layouts->view($vista);
 
         } else {
 
             $datos = array();
 
             $vista = array(
-                'vista' => 'contacto.php',
+                'vista' => 'web/contacto.php',
                 'params' => $datos,
                 'layout' => 'ly_contacto.php',
                 'titulo' => 'Contactar',
@@ -292,6 +416,7 @@ class FormController extends CI_Controller
 
     public function mensajes_vista($tipo, $texto, $ruta)
     {
+
     }
 
     /*Apartado para las funciones que abarca el adminisrador */
@@ -482,19 +607,23 @@ class FormController extends CI_Controller
 
             foreach ($_POST as $key => $value) {
                 $datos_nuevos[$key] = $value;
+                if($datos_nuevos[$key] == null){
+                    unset($datos_nuevos[$key]);
+                }
             }
 
             if (!empty($datos_nuevos['password'])) {
                 $datos_nuevos['password'] = md5($datos_nuevos['password']);
             }
-            debug($datos_nuevos);
+
+            //debug($datos_nuevos);
             $where['id_usuario'] = $datos_nuevos['id'];
             //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-            unset($datos_nuevos['id']);
-    
-            
+            unset($datos_nuevos['id']);            
     
             $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+            header('Location: /admin/panel-control/usuarios');
 
         } else {
 
@@ -504,7 +633,7 @@ class FormController extends CI_Controller
                 //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
                 'usuarios' => $info['data']
             );
-            debug($datos);
+            //debug($datos);
             $vista = array(
                 'vista' => 'admin/editar_usuario.php',
                 'params' => $datos,

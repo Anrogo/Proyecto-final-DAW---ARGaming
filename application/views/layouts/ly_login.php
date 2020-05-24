@@ -49,7 +49,7 @@
             padding: 10px 20px 20px 20px;
             width: 90%;
             max-width: 320px;
-            background: #ffffff;
+            background: #ffffff9f;
             position: relative;
             padding-bottom: 80px;
             box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
@@ -86,7 +86,7 @@
             border: 1px solid #ddd;
             transition: border-width 0.2s ease;
             border-radius: 2px;
-            color: #ccc;
+            color: #7b8b99;
         }
 
         .login input+i.fas {
@@ -116,6 +116,7 @@
             font-size: 0.8em;
             color: #2196F3;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .login .title {
@@ -144,7 +145,7 @@
             border-radius: 0 0 2px 2px;
             transform: rotateZ(0deg);
             transition: all 0.1s ease-out;
-            border-bottom-width: 7px;
+            border-bottom-width: 2px;
         }
 
         .login button .spinner {
@@ -166,7 +167,8 @@
         }
 
         .login:not(.loading) button:hover {
-            box-shadow: 0px 1px 3px #2196F3;
+            /*box-shadow: 0px 1px 3px #2196F3;*/
+            box-shadow: 0px 0px 4px #000;
         }
 
         .login:not(.loading) button:focus {
@@ -196,14 +198,21 @@
         }
 
         .error {
-            color:red;
+            color: red;
         }
 
         .text-return {
-            color:white!important;
-            font-size:12px;
+            color: white !important;
+            font-size: 12px;
         }
 
+
+        @media (max-width:768px) {
+
+            .wrapper {
+                justify-content: start !important;
+            }
+        }
     </style>
     <script>
         window.console = window.console || function(t) {};

@@ -1,5 +1,5 @@
 body {
-	background-color: #eeeeee;
+	background-color: #eeeeee2e;
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 18px;
 }
@@ -48,14 +48,15 @@ footer {
 }
 
 .portada {
-	background-color: #428BCA;
-	color: #e2e2e2;
+	/*background-color: #428BCA;
+	color: #e2e2e2;*/
 	padding: 20px;
 	height: 450px;
 }
 
 .img-slider {
 	height: 400px;
+	width: 100%;
 }
 
 .contenido {
@@ -141,8 +142,14 @@ table caption {
 	}
 
 	footer .hijo {
-		height: 50px;
+		height: 100px;
 		align-items: unset;
+	}
+}
+
+@media (max-width:992px) {
+	.portada {
+		display:none;
 	}
 }
 
@@ -188,6 +195,10 @@ table caption {
 	.iconos-rrss {
 		width: 60%;
 	}
+
+	.wrapper {
+		justify-content: start!important;
+	}
 }
 
 @media (max-width:576px) {
@@ -199,7 +210,7 @@ table caption {
 		margin: 2px;
 	}
 
-	.logotipo1 {
+	.logotipo {
 		display: none;
 	}
 }

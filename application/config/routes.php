@@ -11,7 +11,7 @@ $route['lista-post'] = "UserController/post";
 #$route['nuevo-usuario'] = 'UserController/registro_usuario';
 #$route['registrar-usuario'] = 'UserController/registrar_nuevo_usuario';
 
-$route['contacto'] = "FormController/contacto";
+$route['contacto'] = "FormController/contactar";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
@@ -24,7 +24,8 @@ $route['login/error'] = 'LoginController/login';
 $route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';
-$route['editar-perfil/(:num)'] = 'FormController/editar_usuario';
+$route['usuario/editar-perfil/(:num)'] = 'FormController/editar_perfil';
+$route['usuario/resetear-password'] = 'FormController/cambiar_password';
 $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 
 # ADMIN
@@ -50,7 +51,7 @@ $route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios
 
 
 $route['default_controller'] = 'UserController/index';
-$route['404_override'] = '';
+$route['404_override'] = 'UserController/error_404';
 $route['translate_uri_dashes'] = FALSE;
 
 

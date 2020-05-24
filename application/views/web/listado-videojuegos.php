@@ -25,11 +25,7 @@
 
                         <?php
                         foreach ($juegos as $juego) {
-                            /*
-                            echo '<pre>';
-                            print_r($juego);
-                            echo '</pre>';
-                        */
+
                             //Se procesan los datos recibidos
                             $id = $juego['id'];
                             $titulo = $juego['title'];

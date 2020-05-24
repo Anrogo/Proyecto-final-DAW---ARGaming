@@ -90,3 +90,7 @@ VALUES
 (NULL, 'anrogo', 'Antonio', 'Rodríguez González', 'anrogo@email.es', MD5('123456'), current_timestamp(), '1', '1', ''),
 (NULL, 'arodriguez', 'Antonio', 'R G', 'arodriguez@email.es', MD5('123456'), current_timestamp(), '1', '0', '')
 
+-- Registros tabla de post
+INSERT INTO `post` (`id_post`, `id_usuario`, `titulo`, `imagen_post`, `contenido`, `slug`, `creado`, `modificado`, `visitas`, `estado`) 
+VALUES 
+(NULL, '2', 'Bienvenidos al blog ARGaming', 'img6.jpg', 'Hola a todos! Con este post arrancamos el nuevo blog especializado en videojuegos donde podréis encontrar desde los clásicos juegos de PC hasta las últimas novedades de PS4 o Xbox One S. Y mucho más!', 'primer-post-del-blog', current_timestamp(), current_timestamp(), '', '1'); 

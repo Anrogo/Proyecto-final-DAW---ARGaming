@@ -89,6 +89,7 @@ class LoginController extends CI_Controller
                         'nombre' => $info['nombre'],
                         'apellidos' => $info['apellidos'],
                         'email' => $info['email'],
+                        'password_hash' => $info['password'],
                         'activo' => $info['estado'],
                         'rol' => $info['rol'],
                         'logueado' => TRUE
@@ -107,6 +108,7 @@ class LoginController extends CI_Controller
     {
         /* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
         $datos = comprobar_login();
+        //debug($datos);
         if(!empty($datos)){
             $datos['title'] = 'No hay post disponibles en este momento, disculpe las molestias.';
             $vista = array(
@@ -123,13 +125,15 @@ class LoginController extends CI_Controller
 
     public function perfil_usuario()
     {
-
         if ($this->session->userdata('logueado')) {
             $datos = array();
             $datos['nombre'] = $this->session->userdata('nombre');
+            $datos['nombre_usuario'] = $this->session->userdata('nombre_usuario');
+            $datos['password_hash'] = $this->session->userdata('password_hash');
             $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
             $datos['id'] = $this->session->userdata('id');
             //debug($_SESSION);
+            //debug($datos);
             
             $vista = array(
                 'vista' => 'user/perfil-usuario.php',
@@ -176,6 +180,7 @@ class LoginController extends CI_Controller
             'logueado' => FALSE
         );
         $this->session->set_userdata($usuario_data);
+        $_SESSION = array();
         header('Location:/');
     }
 

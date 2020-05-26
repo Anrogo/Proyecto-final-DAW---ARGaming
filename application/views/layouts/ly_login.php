@@ -256,14 +256,13 @@
                     working = false;
                 }, 4000);
             }, 3000);
-            
-            function redireccionarPagina() {
-                location.href = "/login2";
-            }
-            setTimeout("redireccionarPagina()", 1000);
-            */
-        //# sourceURL=pen.js
+        });
+        */
     </script>
+    <?php
+
+        //$this->output->set_header('refresh:10;url=/login2');
+    ?>
 </body>
 
 </html>

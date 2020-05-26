@@ -8,7 +8,7 @@
             <p>
                 Otras opciones que podrían interesarte:
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> <a href="perfil-usuario">Mi perfil</a></li>
+                    <li class="list-group-item"> <a href="/perfil-usuario">Mi perfil</a></li>
                     <li class="list-group-item"> <a href="/lista-juegos">Lista de videojuegos</a></li>
                     <li class="list-group-item"> <a href="/lista-post">Listado de post</a></li>
                     <li class="list-group-item"> <a href="/contacto">Página de contacto</a></li>

@@ -165,7 +165,7 @@ class FormController extends CI_Controller
         $this->form_validation->set_rules($config);
 
         if ($this->form_validation->run() == TRUE) {
-//Si la validación es correcta se mandan los datos para insertar el nuevo registro
+            //Si la validación es correcta se mandan los datos para insertar el nuevo registro
             foreach ($_POST as $key => $value) {
                 $datos[$key] = $value;
             }
@@ -190,9 +190,8 @@ class FormController extends CI_Controller
             );
 
             $this->layouts->view($vista);
-
         } else {
-//si la validación falla por cualquier circunstancia se queda en el formulario y se muestran los errores
+            //si la validación falla por cualquier circunstancia se queda en el formulario y se muestran los errores
 
             $datos = array();
 
@@ -275,7 +274,7 @@ class FormController extends CI_Controller
 
             foreach ($_POST as $key => $value) {
                 $datos_nuevos[$key] = $value;
-                if($datos_nuevos[$key] == null){
+                if ($datos_nuevos[$key] == null) {
                     unset($datos_nuevos[$key]);
                 }
             }
@@ -287,12 +286,11 @@ class FormController extends CI_Controller
             //debug($datos_nuevos);
             $where['id_usuario'] = $datos_nuevos['id'];
             //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-            unset($datos_nuevos['id']);            
-    
+            unset($datos_nuevos['id']);
+
             $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
 
-            header('Location: /admin/panel-control/usuarios');
-
+            header('Location: /perfil-usuario');
         } else {
 
             $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
@@ -302,18 +300,17 @@ class FormController extends CI_Controller
                 'usuarios' => $info['data']
             );
             $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
-            
+
             //debug($datos);
-            
+
             $vista = array(
-                'vista' => 'user/editar_perfil.php',
+                'vista' => 'user/editar-perfil.php',
                 'params' => $datos,
                 'layout' => 'ly_session.php',
-                'titulo' => 'Editar información de '.$_SESSION['nombre_usuario'],
+                'titulo' => 'Editar información de ' . $_SESSION['nombre_usuario'],
             );
 
             $this->layouts->view($vista);
-            
         }
     }
 
@@ -398,7 +395,6 @@ class FormController extends CI_Controller
             );
 
             $this->layouts->view($vista);
-
         } else {
 
             $datos = array();
@@ -414,9 +410,96 @@ class FormController extends CI_Controller
         }
     }
 
-    public function mensajes_vista($tipo, $texto, $ruta)
+    public function cambiar_contraseña()
     {
 
+        $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
+
+        $datos = array(
+            //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
+            'usuarios' => $info['data']
+        );
+        $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+
+        //debug($datos['usuarios'][0]['password']);
+
+        //debug($_SESSION['password_hash']);
+
+        //Siempre que el usuario identificado sea administrador o el cambio de contraseña se realice sobre el mismo usuario que se ha logueado
+        if((comprobar_login() && $_SESSION['rol'] == 1) || (comprobar_login() && $_SESSION['password_hash'] == $datos['usuarios'][0]['password'])){
+
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+            $config = array(
+                array(
+                    'field' => 'password',
+                    'label' => 'contraseña',
+                    'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
+                    'errors' => array(
+                        'min_length' => 'La %s debe tener al menos 8 caracteres',
+                        'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
+                    ),
+                ),
+                array(
+                    'field' => 'password_confirm',
+                    'label' => 'confirmar contraseña',
+                    'rules' => 'trim|matches[password]',
+                    'errors' => array(
+                        'matches' => 'Las contraseñas no coinciden, corrígelas por favor.'
+                    ),
+                ),
+            );
+
+            $this->form_validation->set_rules($config);
+
+            if ($this->form_validation->run() == TRUE) {
+
+                $datos_nuevos = array();
+
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
+                    if ($datos_nuevos[$key] == null) {
+                        unset($datos_nuevos[$key]);
+                    }
+                }
+                $datos_nuevos['password'] = md5($datos_nuevos['password']);
+                $datos_nuevos['password_confirm'] = md5($datos_nuevos['password_confirm']);
+                //debug($datos_nuevos);
+
+                if (!empty($datos_nuevos['password']) && ($datos_nuevos['password'] == $datos_nuevos['password_confirm'])) {
+                    $datos_nuevos['password'] = md5($datos_nuevos['password']);
+                    unset($datos_nuevos['password_confirm']);
+                }
+    
+                $where['id_usuario'] = $datos_nuevos['id'];
+                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                unset($datos_nuevos['id']);
+                //debug($datos_nuevos);
+
+                $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+                header('Location: /');
+            } else {
+
+                $vista = array(
+                    'vista' => 'user/cambiar-contraseña.php',
+                    'params' => $datos,
+                    'layout' => 'ly_session.php',
+                    'titulo' => 'Actualizar contraseña de ' . $datos['usuarios'][0]['username'],
+                );
+
+                $this->layouts->view($vista);
+            }
+
+        } else {
+            header('Location: /');
+        }
+    }
+
+    public function mensajes_vista($tipo, $texto, $ruta)
+    {
     }
 
     /*Apartado para las funciones que abarca el adminisrador */
@@ -607,7 +690,7 @@ class FormController extends CI_Controller
 
             foreach ($_POST as $key => $value) {
                 $datos_nuevos[$key] = $value;
-                if($datos_nuevos[$key] == null){
+                if ($datos_nuevos[$key] == null) {
                     unset($datos_nuevos[$key]);
                 }
             }
@@ -619,12 +702,11 @@ class FormController extends CI_Controller
             //debug($datos_nuevos);
             $where['id_usuario'] = $datos_nuevos['id'];
             //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-            unset($datos_nuevos['id']);            
-    
+            unset($datos_nuevos['id']);
+
             $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
 
             header('Location: /admin/panel-control/usuarios');
-
         } else {
 
             $info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));

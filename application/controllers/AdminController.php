@@ -46,7 +46,7 @@ class AdminController extends CI_Controller
 			$this->layouts->view($vista);
 
 		} else {
-			header("Location: /");
+			header("Location: /error ");
 		}
 	}
 
@@ -55,9 +55,10 @@ class AdminController extends CI_Controller
 		$datos = comprobar_login();
 
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
+			//debug($datos);
 
 			$vista = array(
-				'vista' => 'admin/inicio.php',
+				'vista' => 'admin/perfil_admin.php',
 				'params' => $datos,
 				'layout' => 'ly_session.php',
 				'titulo' => 'Usuario logueado',
@@ -67,7 +68,7 @@ class AdminController extends CI_Controller
 
 		} else {
 
-			header("Location: /");
+			header("Location: /error ");
 		}
 	}
 
@@ -76,7 +77,7 @@ class AdminController extends CI_Controller
 		$datos = comprobar_login();
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 
-			$info = $this->BackEndModel->Lista('usuarios');
+			$info = $this->BackEndModel->Lista('usuarios','id_usuario');
 			//debug($info);
 			$datos = array(
 				'usuarios' => $info
@@ -93,7 +94,7 @@ class AdminController extends CI_Controller
 
 		} else {
 
-			header("Location: /");
+			header("Location: /error ");
 		}
 	}
 	/*
@@ -191,7 +192,7 @@ class AdminController extends CI_Controller
 
 		} else {
 
-			header('Location: /');
+			header('Location: /error');
 
 		}
 	}
@@ -211,11 +212,42 @@ class AdminController extends CI_Controller
 		
 		} else {
 
-			header('Location: /');
+			header('Location: /error');
 
 		}
 	}
 
+	public function listado_post()
+	{
+		$posts = $this->BackEndModel->Lista('post','id_post');
+
+		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+		$datos = array(
+			'posts' => $posts,
+		);
+		//debug($datos);
+		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+		$verif = comprobar_login();
+
+		if(!empty($verif)){
+
+			$datos['rol'] = $verif['rol'];			
+
+			$vista = array(
+				'vista' => 'admin/lista-post.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Lista de post'
+			);
+
+			$this->layouts->view($vista);
+
+		} else {
+
+			header('Location: /error');
+
+		}
+	}
 
 	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/
 	public function registro()

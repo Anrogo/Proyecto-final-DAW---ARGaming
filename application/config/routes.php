@@ -6,11 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
-
-
-#$route['nuevo-usuario'] = 'UserController/registro_usuario';
-#$route['registrar-usuario'] = 'UserController/registrar_nuevo_usuario';
-
 $route['contacto'] = "FormController/contactar";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
@@ -23,9 +18,11 @@ $route['login2'] = 'LoginController/login2';
 $route['login/error'] = 'LoginController/login';
 $route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
+
+# USUARIO
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';
 $route['usuario/editar-perfil/(:num)'] = 'FormController/editar_perfil';
-$route['usuario/resetear-password'] = 'FormController/cambiar_password';
+$route['usuario/cambiar-password/(:num)'] = 'FormController/cambiar_contraseña';
 $route['usuario/cerrar-sesion'] = 'LoginController/cerrar_sesion';
 
 # ADMIN
@@ -33,7 +30,7 @@ $route['admin'] = 'AdminController/index';
 $route['admin/inicio'] = 'AdminController/index';
 $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 $route['admin/panel-control'] = 'AdminController/panel_control';
-# - usuarios
+# Admin - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
 $route['admin/nuevo-usuario'] = "FormController/registro_admin";
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
@@ -41,10 +38,10 @@ $route['editar-usuario/(:num)'] = 'FormController/editar_admin';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
 $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 
-# - post
+# Admin - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';
 
-# - comentarios
+# Admin - comentarios
 $route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios';
 
 

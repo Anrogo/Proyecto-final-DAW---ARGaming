@@ -68,10 +68,10 @@ class BackEndModel extends CI_Model
 
   }
 
-  public function Lista($tabla)
+  public function Lista($tabla,$filtro)
   {
 
-    $sql = "select * from $tabla order by id_usuario asc";
+    $sql = "select * from $tabla order by $filtro asc";
     return ( $this->ExecuteArrayResults( $sql ));
 
   }

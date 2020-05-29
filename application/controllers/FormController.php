@@ -169,7 +169,17 @@ class FormController extends CI_Controller
             foreach ($_POST as $key => $value) {
                 $datos[$key] = $value;
             }
+/*
+            $registro_correo = $this->FrontEndModel->Buscar('usuarios','email',$datos['email']);
 
+			debug($registro_correo);
+
+			if(!empty($registro_correo)){
+				$datos = array(
+					'error' => 'El correo ya existe'
+				);
+			}
+*/
             if ($datos['password'] == $datos['password_confirm']) {
                 $datos['password'] = md5($datos['password']);
                 unset($datos['password_confirm']);
@@ -337,8 +347,8 @@ class FormController extends CI_Controller
                 'label' => 'correo',
                 'rules' => 'trim|required|valid_email',
                 'errors' => array(
-                    'required' => 'El correo es obligatorio',
-                    'valid_email' => 'El correo debe tener un formato válido'
+                    'required' => 'El %s es obligatorio',
+                    'valid_email' => 'El %s debe tener un formato válido'
                 ),
             ),
             array(

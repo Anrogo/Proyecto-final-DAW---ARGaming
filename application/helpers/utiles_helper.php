@@ -1,6 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
   function debug( $var) 
   { 
     $debug = debug_backtrace();
@@ -22,3 +21,4 @@
     }
     return $datos;
   }
+

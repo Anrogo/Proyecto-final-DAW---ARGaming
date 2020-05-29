@@ -46,6 +46,71 @@ class UserController extends CI_Controller
 		}
 	}
 
+	public function cambiar_contraseña_sin_acceso()
+	{
+		$datos = array();
+
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation'); //llamamos a las reglas de validación
+
+		$config = array(
+			array(
+				'field' => 'email',
+				'label' => 'Correo',
+				'rules' => 'trim|required|valid_email',
+				'errors' => array(
+					'required' => 'El %s es obligatorio',
+					'valid_email' => 'El %s debe tener un formato válido'
+				)
+			)
+		);
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() == TRUE) {
+
+			//Si la validación es correcta, y el correo está registrado en la plataforma, se mandan el correo con una nueva contraseña al email solicitado
+			foreach ($_POST as $key => $value) {
+				$datos[$key] = $value;
+			}
+
+			$registro_correo = $this->FrontEndModel->Buscar('usuarios','email',$datos['email']);
+
+			//debug($registro_correo);
+
+			if($registro_correo == null){
+
+				$datos['error'] = 'El correo '.$datos['email'].' no está registrado en nuestra web. Vaya al apartado de registro y rellene sus datos por favor.';
+
+				$vista = array(
+					'vista' => 'web/cambiar-contraseña-sin-acceso.php',
+					'params' => $datos,
+					'layout' => 'ly_registro.php',
+					'titulo' => 'Conseguir nueva credencial'
+				);
+				//debug($datos);
+				$this->layouts->view($vista);
+
+			} else {
+
+				header('Location: /');
+
+			}			
+
+		} else {
+
+			$vista = array(
+				'vista' => 'web/cambiar-contraseña-sin-acceso.php',
+				'params' => $datos,
+				'layout' => 'ly_registro.php',
+				'titulo' => 'Conseguir nueva credencial'
+			);
+
+			$this->layouts->view($vista);
+		}
+	}
+
 	public function error_404()
 	{
 		$datos = array();
@@ -190,7 +255,6 @@ class UserController extends CI_Controller
 			);
 
 			$this->layouts->view($vista);
-
 		} else {
 
 			$vista = array(
@@ -206,7 +270,7 @@ class UserController extends CI_Controller
 
 	public function post()
 	{
-		$posts = $this->FrontEndModel->Lista('post','id_post');
+		$posts = $this->FrontEndModel->Lista('post', 'id_post');
 
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(
@@ -216,9 +280,9 @@ class UserController extends CI_Controller
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
-		if(!empty($verif)){
+		if (!empty($verif)) {
 
-			$datos['rol'] = $verif['rol'];			
+			$datos['rol'] = $verif['rol'];
 
 			$vista = array(
 				'vista' => 'web/lista-post.php',
@@ -228,7 +292,6 @@ class UserController extends CI_Controller
 			);
 
 			$this->layouts->view($vista);
-
 		} else {
 
 			$vista = array(

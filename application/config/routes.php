@@ -11,6 +11,7 @@ $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
 $route['politica-privacidad'] = "UserController/politica_privacidad";
+$route['cambiar-password'] = 'UserController/cambiar_contraseña_sin_acceso';
 
 # LOGIN
 $route['login'] = 'LoginController/login';

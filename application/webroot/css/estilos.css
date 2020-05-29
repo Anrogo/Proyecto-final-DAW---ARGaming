@@ -125,6 +125,10 @@ table caption {
 	border-bottom:0px!important;
 }
 
+.top-100 {
+	margin-top: 100px;
+}
+
 /* ICONOS */
 
 .fa-eye {
@@ -198,6 +202,10 @@ table caption {
 
 	.wrapper {
 		justify-content: start!important;
+	}
+
+	.top-100 {
+		margin-top:0px;
 	}
 }
 

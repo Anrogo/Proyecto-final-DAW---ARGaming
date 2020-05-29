@@ -44,6 +44,14 @@ class FrontEndModel extends CI_Model
 
   }
 
+  public function Buscar($tabla,$campo_clave,$cadena)
+  {
+
+    $sql = "select * from ".$tabla." where ".$campo_clave." ='".$cadena."'";
+    return ( $this->ExecuteArrayResults( $sql ));
+
+  }
+
   # Método para mostrar los post en la página principal solo con parte de la información
   public function list_all_posts()
   {

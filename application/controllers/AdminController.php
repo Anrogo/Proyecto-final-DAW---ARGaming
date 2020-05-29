@@ -249,6 +249,38 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function listado_comentarios()
+	{
+		$comentarios = $this->BackEndModel->Lista('comentarios','id_comentario');
+
+		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+		$datos = array(
+			'comentarios' => $comentarios,
+		);
+		//debug($datos);
+		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+		$verif = comprobar_login();
+
+		if(!empty($verif)){
+
+			$datos['rol'] = $verif['rol'];			
+
+			$vista = array(
+				'vista' => 'admin/lista-comentarios.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Lista de comentarios'
+			);
+
+			$this->layouts->view($vista);
+
+		} else {
+
+			header('Location: /error');
+
+		}
+	}
+
 	/*---------------------- FUNCIONES ANTIGUAS -----------------------------*/
 	public function registro()
 	{

@@ -8,7 +8,7 @@
         }
     }
 </script>
-<!--TABLA/LISTADO DE POST-->
+<!--TABLA/LISTADO DE COMENTARIOS-->
 <div class="container">
 
     <div class="row">

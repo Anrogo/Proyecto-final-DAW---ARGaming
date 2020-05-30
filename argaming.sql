@@ -94,3 +94,9 @@ VALUES
 INSERT INTO `post` (`id_post`, `id_usuario`, `titulo`, `imagen_post`, `contenido`, `slug`, `creado`, `modificado`, `visitas`, `estado`) 
 VALUES 
 (NULL, '2', 'Bienvenidos al blog ARGaming', 'img6.jpg', 'Hola a todos! Con este post arrancamos el nuevo blog especializado en videojuegos donde podréis encontrar desde los clásicos juegos de PC hasta las últimas novedades de PS4 o Xbox One S. Y mucho más!', 'primer-post-del-blog', current_timestamp(), current_timestamp(), '', '1'); 
+
+-- Registros tabla de comentarios
+INSERT INTO `comentarios` (`id_comentario`, `id_post`, `id_usuario`, `texto`, `creado`) 
+VALUES
+(NULL, '1', '4', 'Genial, me ha encantado', current_timestamp()),
+(NULL, '1', '6', 'Gracias por el aporte, me ha parecido una buena publicación para empezar!', current_timestamp())

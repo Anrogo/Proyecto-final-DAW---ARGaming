@@ -30,6 +30,7 @@
                                 <th scope="col">Slug</th>
                                 <th scope="col">Última modificación</th>
                                 <th scope="col">Abierto</th>
+                                <th scope="col">Visitas</th>
                                 <th scope="col">Editar</th>
                                 <th scope="col">Eliminar</th>
                             </tr>
@@ -54,18 +55,18 @@
                             $contenido = strlen($post['contenido']) > 60 ? substr($post['contenido'],0,60)."..." : $post['contenido'];
                             $modificado = $post['modificado'];
                             $link = $post['slug'];
-                            $visitas = $post['visitas'];
+                            $visitas = $post['visitas'] == 0 ? '1' : $visitas;
                             //Y se muestran en forma de lista
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/". $imagen ."\"  width=\"200px\"></td>
-                            <td>" . $titulo . "</td>
+                            <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
                             <td>" . $contenido . " </td>
                             <td><a href=\"post/" . $id . "\">$link</a></td>
                             <td>" . $modificado . " </td>
                             <td>" . $abierto . "</td>
                             <td>" . $visitas . "</td>
-                            <td><a href=\"/editar-post/" . $post['id_post'] . "\"><img src=\"/images/edit.png\" width=20px></a></td>
-                            <td><a href=\"#\" OnClick=\"eliminar(" . $post['id_post'] . ")\"><img src=\"/images/delete.svg\" width=20px></a></td>
+                            <td><a href=\"/editar-post/" . $id . "\"><img src=\"/images/edit.png\" width=20px></a></td>
+                            <td><a href=\"#\" OnClick=\"eliminar(" . $id . ")\"><img src=\"/images/delete.svg\" width=20px></a></td>
                             </tr>";
                         }
                     } else {

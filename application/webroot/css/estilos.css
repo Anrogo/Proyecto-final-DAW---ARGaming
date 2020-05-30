@@ -113,6 +113,10 @@ table caption {
 	caption-side: top!important;
 }
 
+.titulo-comentario {
+	margin-bottom:0!important;
+}
+
 /* FORMULARIOS */
 .input {
 	border:none!important;

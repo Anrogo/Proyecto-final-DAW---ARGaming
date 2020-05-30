@@ -46,7 +46,7 @@
                             //Y se muestran en forma de lista
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/" . $imagen . "\"  width=\"200px\"></td>
-                            <td>" . $titulo . "</td>
+                            <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
                             <td>" . $contenido . " </td>
                             <td><a href=\"post/" . $id . "\">$link</a></td>
                             <td>" . $modificado . " </td>

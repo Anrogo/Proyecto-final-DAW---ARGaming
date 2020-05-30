@@ -479,7 +479,6 @@ class FormController extends CI_Controller
                 //debug($datos_nuevos);
 
                 if (!empty($datos_nuevos['password']) && ($datos_nuevos['password'] == $datos_nuevos['password_confirm'])) {
-                    $datos_nuevos['password'] = md5($datos_nuevos['password']);
                     unset($datos_nuevos['password_confirm']);
                 }
     

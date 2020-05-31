@@ -117,6 +117,15 @@ table caption {
 	margin-bottom:0!important;
 }
 
+.foto-perfil {
+	width: max-content;
+	border: 2px solid #7f7f7f;
+}
+
+.foto-perfil img {
+	width:80px;
+}
+
 /* FORMULARIOS */
 .input {
 	border:none!important;
@@ -126,7 +135,7 @@ table caption {
 
 .input:focus {
 	background-color: #ffffff!important;
-	border-bottom:0px!important;
+	border-bottom: 0px!important;
 }
 
 .top-100 {

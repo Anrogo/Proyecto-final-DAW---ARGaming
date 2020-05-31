@@ -16,6 +16,9 @@ foreach ($usuarios as $usuario) {
                             <input type="hidden" name="id" id="id" value="<?php echo $usuario['id_usuario']; ?>">
                             <div class="form-group">
                                 <label for="imagen">Imagen de perfil</label>
+                                <div class="foto-perfil mb-2">
+                                    <img class="img-fluid" src="/images/fotos_perfil/<?php echo $usuario['imagen_perfil'] ?>" alt="Foto perfil">
+                                </div>
                                 <input class="form-control" type="text" placeholder="" readonly>
                                 <input type="file" class="form-control-file" name="imagen" id="imagen" accept="image/png, .jpeg, .jpg, image/gif">
                             </div>

@@ -36,6 +36,11 @@ class FrontEndModel extends CI_Model
 
   }
 
+  public function insert( $tabla, $datos)
+  {
+    $this->db->insert( $tabla, $datos);
+  }
+
   public function Lista($tabla,$clasif)
   {
 

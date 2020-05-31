@@ -18,6 +18,7 @@
       $datos['rol'] = $_SESSION['rol'] == 1 ? 'administrador' : 'usuario normal';
       $datos['id'] = $_SESSION['id'];
       $datos['password_hash'] = $_SESSION['password_hash'];
+      $datos['imagen_perfil'] = $_SESSION['imagen_perfil'];
     }
     return $datos;
   }

@@ -252,7 +252,7 @@ class FormController extends CI_Controller
                 'errors' => array(
                     'required' => 'Los %s son obligatorios, al menos el primero.',
                     'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
-                    'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
+                    'max_length' => 'Los %s deben tener, como mucho, 50 caracteres de longitud',
                     'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
                 ),
             ),
@@ -287,10 +287,6 @@ class FormController extends CI_Controller
                 if ($datos_nuevos[$key] == null) {
                     unset($datos_nuevos[$key]);
                 }
-            }
-
-            if (!empty($datos_nuevos['password'])) {
-                $datos_nuevos['password'] = md5($datos_nuevos['password']);
             }
 
             //debug($datos_nuevos);

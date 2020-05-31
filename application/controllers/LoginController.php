@@ -92,6 +92,7 @@ class LoginController extends CI_Controller
                         'password_hash' => $info['password'],
                         'activo' => $info['estado'],
                         'rol' => $info['rol'],
+                        'imagen_perfil' => $info['imagen_perfil'],
                         'logueado' => TRUE
                     );
                 }
@@ -132,6 +133,7 @@ class LoginController extends CI_Controller
             $datos['password_hash'] = $this->session->userdata('password_hash');
             $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
             $datos['id'] = $this->session->userdata('id');
+            $datos['imagen_perfil'] = $this->session->userdata('imagen_perfil');
             //debug($_SESSION);
             //debug($datos);
             

@@ -7,12 +7,14 @@ $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 $route['post/(:num)'] = "UserController/ver_post";
+$route['post/(:num)/agregar-comentario'] = 'UserController/ver_post';
 $route['contacto'] = "FormController/contactar";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
 $route['politica-privacidad'] = "UserController/politica_privacidad";
 $route['cambiar-password'] = 'UserController/cambiar_contraseña_sin_acceso';
+
 
 # LOGIN
 $route['login'] = 'LoginController/login';

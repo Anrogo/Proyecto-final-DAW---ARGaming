@@ -249,6 +249,25 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function eliminar_post()
+	{
+		$datos = comprobar_login();
+
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+
+			$where['id_post'] = $this->uri->segment(3);
+
+			$this->BackEndModel->delete('post', $where);
+
+			header('Location: /admin/panel-control/post');
+		
+		} else {
+
+			header('Location: /error');
+
+		}
+	}
+
 	public function listado_comentarios()
 	{
 		$comentarios = $this->BackEndModel->Lista('comentarios','id_comentario');
@@ -257,7 +276,7 @@ class AdminController extends CI_Controller
 		$datos = array(
 			'comentarios' => $comentarios,
 		);
-		//debug($datos);
+
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
@@ -271,9 +290,27 @@ class AdminController extends CI_Controller
 				'layout' => 'ly_admin.php',
 				'titulo' => 'Lista de comentarios'
 			);
-
 			$this->layouts->view($vista);
+		//debug($datos);
+		} else {
 
+			header('Location: /error');
+
+		}
+	}
+
+	public function eliminar_comentario()
+	{
+		$datos = comprobar_login();
+
+		if (!empty($datos) && $datos['rol'] == 'administrador') {
+
+			$where['id_comentario'] = $this->uri->segment(3);
+
+			$this->BackEndModel->delete('comentarios', $where);
+
+			header('Location: /admin/panel-control/comentarios');
+		
 		} else {
 
 			header('Location: /error');

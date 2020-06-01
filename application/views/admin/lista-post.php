@@ -10,7 +10,20 @@
 </script>
 <!--TABLA/LISTADO DE POST-->
 <div class="container">
-
+<div class="row mt-4">
+    <div class="col-5 text-center">
+      <h1 class="">Listado de posts</h1>
+    </div>
+    <div class="col-3 text-center">
+      <a href="/admin/nuevo-post" class="btn btn-primary">Nuevo Post</a>
+    </div>
+    <div class="col-4 text-center">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Busqueda...">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
@@ -19,11 +32,8 @@
                     if (isset($posts)) {
 
                     ?>
-                        <caption class="text-center">
-                            Listado de post
-                        </caption>
-                        <thead class="thead-dark">
-                            <tr>
+                        <thead>
+                            <tr class="table-primary">
                                 <th scope="col">Imagen</th>
                                 <th scope="col">Título</th>
                                 <th scope="col">Descripción</th>
@@ -56,7 +66,8 @@
                             $modificado = $post['modificado'];
                             $link = $post['slug'];
                             $visitas = $post['visitas'] == 0 ? '1' : $visitas;
-                            //Y se muestran en forma de lista
+
+                            //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/". $imagen ."\"  width=\"200px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
@@ -65,7 +76,7 @@
                             <td>" . $modificado . " </td>
                             <td>" . $abierto . "</td>
                             <td>" . $visitas . "</td>
-                            <td><a href=\"/editar-post/" . $id . "\"><img src=\"/images/edit.png\" width=20px></a></td>
+                            <td><a href=\"/admin/editar-post/" . $id . "\"><img src=\"/images/edit.png\" width=20px></a></td>
                             <td><a href=\"#\" OnClick=\"eliminar(" . $id . ")\"><img src=\"/images/delete.svg\" width=20px></a></td>
                             </tr>";
                         }

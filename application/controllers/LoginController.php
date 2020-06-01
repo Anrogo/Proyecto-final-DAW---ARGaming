@@ -24,6 +24,14 @@ class LoginController extends CI_Controller
 
         } else {
 
+            if ($this->uri->segment(2) == !null && $this->uri->segment(2) == 'no-registrado') {
+
+                $datos = array(
+                    'no-registrado' => "Usuario no registrado"
+                );
+
+            }
+
             if ($this->uri->segment(2) == !null && $this->uri->segment(2) == 'error') {
 
                 $datos = array(
@@ -71,6 +79,7 @@ class LoginController extends CI_Controller
             de datos y nos devolverá un Array con los datos del usuario 
             o un array vacío si no hay coincidencia con ningún usuario
             */
+
             $usuario = $this->LoginModel->comprobar_usuario($datos);
 
             //Filtramos los posibles errores según lo que devuelva el modelo

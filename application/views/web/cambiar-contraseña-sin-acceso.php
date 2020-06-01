@@ -25,6 +25,7 @@
                             ?>
                         </div>
                         <input type="submit" value="Enviar" class="btn btn-outline-info  mt-2">
+                        <a href="/" class="btn btn-secondary">Cancelar</a>
                     </form>
                 </div>
             </div>

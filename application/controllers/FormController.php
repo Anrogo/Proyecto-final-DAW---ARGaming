@@ -169,39 +169,55 @@ class FormController extends CI_Controller
             foreach ($_POST as $key => $value) {
                 $datos[$key] = $value;
             }
-/*
-            $registro_correo = $this->FrontEndModel->Buscar('usuarios','email',$datos['email']);
 
-			debug($registro_correo);
+            $registro_username = $this->FrontEndModel->Buscar('usuarios', 'username', $datos['username']);
+            $registro_correo = $this->FrontEndModel->Buscar('usuarios', 'email', $datos['email']);
 
-			if(!empty($registro_correo)){
-				$datos = array(
-					'error' => 'El correo ya existe'
-				);
-			}
-*/
-            if ($datos['password'] == $datos['password_confirm']) {
-                $datos['password'] = md5($datos['password']);
-                unset($datos['password_confirm']);
+            if (!empty($registro_username) || !empty($registro_correo)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+                
+                if (!empty($registro_username)) {
+                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                }
+                if (!empty($registro_correo)) {
+                    $datos['error_correo'] = 'Este correo ya existe';
+                } 
+                    debug($datos);
+                    //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
+                    $vista = array(
+                        'vista' => 'web/nuevo_usuario.php',
+                        'params' => $datos,
+                        'layout' => 'ly_registro.php',
+                        'titulo' => 'Añadir nuevo usuario - ARGaming',
+                    );
+
+                    $this->layouts->view($vista);
+
+            } else {
+
+                if ($datos['password'] == $datos['password_confirm']) {
+                    $datos['password'] = md5($datos['password']);
+                    unset($datos['password_confirm']);
+                }
+
+                $this->BackEndModel->insert('usuarios', $datos);
+
+                $datos = array(
+                    'title' => 'Bienvenido',
+                    'mensaje_confirmacion' => 'El usuario ha sido registrado con éxito'
+                );
+
+                //Se genera la vista una vez el registro se completa con éxito
+                $vista = array(
+                    'vista' => 'web/index.php',
+                    'params' => $datos,
+                    'layout' => 'ly_home.php',
+                    'titulo' => 'Usuario añadido - ARGaming',
+                );
+
+                $this->layouts->view($vista);
             }
-
-            $this->BackEndModel->insert('usuarios', $datos);
-
-            $datos = array(
-                'title' => 'Bienvenido',
-                'mensaje_confirmacion' => 'El usuario ha sido registrado con éxito'
-            );
-
-            $vista = array(
-                'vista' => 'web/index.php',
-                'params' => $datos,
-                'layout' => 'ly_home.php',
-                'titulo' => 'Usuario añadido',
-            );
-
-            $this->layouts->view($vista);
         } else {
-            //si la validación falla por cualquier circunstancia se queda en el formulario y se muestran los errores
+            //si la validación falla por cualquier otra circunstancia se queda en el formulario y se muestran los errores
 
             $datos = array();
 
@@ -432,7 +448,7 @@ class FormController extends CI_Controller
         //debug($_SESSION['password_hash']);
 
         //Siempre que el usuario identificado sea administrador o el cambio de contraseña se realice sobre el mismo usuario que se ha logueado
-        if((comprobar_login() && $_SESSION['rol'] == 1) || (comprobar_login() && $_SESSION['password_hash'] == $datos['usuarios'][0]['password'])){
+        if ((comprobar_login() && $_SESSION['rol'] == 1) || (comprobar_login() && $_SESSION['password_hash'] == $datos['usuarios'][0]['password'])) {
 
             $this->load->helper(array('form', 'url'));
 
@@ -477,7 +493,7 @@ class FormController extends CI_Controller
                 if (!empty($datos_nuevos['password']) && ($datos_nuevos['password'] == $datos_nuevos['password_confirm'])) {
                     unset($datos_nuevos['password_confirm']);
                 }
-    
+
                 $where['id_usuario'] = $datos_nuevos['id'];
                 //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
                 unset($datos_nuevos['id']);
@@ -497,7 +513,6 @@ class FormController extends CI_Controller
 
                 $this->layouts->view($vista);
             }
-
         } else {
             header('Location: /');
         }

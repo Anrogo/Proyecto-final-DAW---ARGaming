@@ -8,6 +8,7 @@ $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 $route['post/(:num)'] = "UserController/ver_post";
 $route['post/(:num)/agregar-comentario'] = 'UserController/ver_post';
+$route['responder-comentario/(:num)'] = 'FormController/responder_comentario';
 $route['contacto'] = "FormController/contactar";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
@@ -20,6 +21,7 @@ $route['cambiar-password'] = 'UserController/cambiar_contraseña_sin_acceso';
 $route['login'] = 'LoginController/login';
 $route['login2'] = 'LoginController/login2';
 $route['login/error'] = 'LoginController/login';
+$route['login/no-registrado'] = 'LoginController/login';
 $route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
 
@@ -44,10 +46,19 @@ $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 
 # Admin - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';
+$route['admin/nuevo-post'] = "FormController/nuevo_post_admin";
+$route['admin/crear-post'] = 'AdminController/registrar_nuevo_post';
+$route['admin/editar-post/(:num)'] = 'FormController/editar_post_admin';
+$route['actualizar-post'] = 'AdminController/actualizar_post';
+$route['admin/eliminar-post/(:num)'] = 'AdminController/eliminar_post';
 
 # Admin - comentarios
 $route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios';
-
+$route['admin/nuevo-comentario'] = "FormController/nuevo_comentario_admin";
+$route['admin/registrar-comentario'] = 'AdminController/registrar_comentario';
+$route['admin/responder-comentario/(:num)'] = 'FormController/responder_comentario_admin';
+$route['actualizar-comentario'] = 'AdminController/actualizar_comentario';
+$route['admin/eliminar-comentario/(:num)'] = 'AdminController/eliminar_comentario';
 
 
 

@@ -225,7 +225,7 @@
     </script>
 </head>
 
-<body translate="no">
+<body>
 
     <!-- Page Content -->
     <?php
@@ -259,10 +259,6 @@
         });
         */
     </script>
-    <?php
-
-        //$this->output->set_header('refresh:10;url=/login2');
-    ?>
 </body>
 
 </html>

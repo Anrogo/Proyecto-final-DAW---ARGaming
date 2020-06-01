@@ -43,7 +43,8 @@
                             $modificado = $post['modificado'];
                             $activo = $post['estado'] == 1 ? 'Activo' : 'Cerrado';
                             $link = $post['slug'];
-                            //Y se muestran en forma de lista
+                            
+                            //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/" . $imagen . "\"  width=\"200px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>

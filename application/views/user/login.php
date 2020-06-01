@@ -7,7 +7,6 @@
     if (isset($error)) {
       echo "<p class='error'>$error</p>";
     }
-
     ?>
     <input type="text" name="username" placeholder="Nombre de usuario" title="Introduzca su nombre de usuario" autofocus />
     <i class="fas fa-user"></i>
@@ -24,5 +23,4 @@
     <a href="/" class="text-return">Cancelar y volver a la página de inicio</a>
   </div>
   <footer><a target="blank" href="http://boudra.me/">Designed by boudra.me</a></footer>
-  </p>
 </div>

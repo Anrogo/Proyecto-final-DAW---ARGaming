@@ -59,7 +59,7 @@ foreach ($usuarios as $usuario) {
                                     <label for="titulo">¿Necesita una nueva contraseña?</label>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                <span class="btn btn-secondary"><a href="/usuario/cambiar-password/<?php echo $usuario['id_usuario'] ?>" class="text-white">Actualizar contraseña</a></span>
+                                <span class="btn btn-secondary"><a href="/usuario/cambiar-password/<?php echo $usuario['id_usuario'] ?>" target="_blank" class="text-white">Actualizar contraseña</a></span>
                                 </div>
                             </div>
                             <div class="form-group">

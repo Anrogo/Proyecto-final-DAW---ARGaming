@@ -56,6 +56,14 @@ class FrontEndModel extends CI_Model
     return ( $this->ExecuteArrayResults( $sql ));
 
   }
+//Buscar coincidencia de dos campos, el primero que no exista y el segundo que sí coincida para que se cumpla
+  public function Buscar_campo_existente($tabla,$campo1,$valor1,$campo2,$valor2)
+  {
+
+    $sql = "select * from ".$tabla." where ".$campo1." != '".$valor1."' and ".$campo2." = '".$valor2."'";
+    return ( $this->ExecuteArrayResults( $sql ));
+
+  }
 
     # Método para mostrar un post cuando se seleccione, a través de su id
     public function Listar_post($post_id)

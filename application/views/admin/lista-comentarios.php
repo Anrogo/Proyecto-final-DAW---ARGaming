@@ -38,7 +38,7 @@
                                 <th scope="col">Post(ID)</th>
                                 <th scope="col">Usuario(ID)</th>
                                 <th scope="col">Texto</th>
-                                <th scope="col">Fecha y hora</th>
+                                <th scope="col">Fecha / hora</th>
                                 <th scope="col">Responder</th>
                                 <th scope="col">Eliminar</th>
                             </tr>
@@ -54,15 +54,24 @@
                             $id_post = $comentario['id_post'];
                             $id_usuario = $comentario['id_usuario'];
                             $texto = strlen($comentario['texto']) > 60 ? substr($comentario['texto'],0,60)."..." : $comentario['texto'];
-                            $fecha_hora = $comentario['creado'];
+                            //$fecha_hora = $comentario['creado'];
+
+                            //formateo la fecha mediante varias funciones para que aparezca en formato "más español"
+                            $fecha_hora = explode(" ", $comentario['creado']);
+                            $fecha = implode("/", array_reverse(explode("-", $fecha_hora[0])));
+                            $hora = $fecha_hora[1];
+
+                            $username = $comentario['username'];
+                            $slug = $comentario['slug'];
+
 
                             //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id_comentario . "\">
                             <td>" . $id_comentario . "</td>
-                            <td>" . $id_post . "</td>
-                            <td>" . $id_usuario . " </td>
-                            <td>" . $texto . "</td>
-                            <td>" . $fecha_hora . " </td>
+                            <td><a href='/post/" . $id_post . "'>" . $slug ."</a></td>
+                            <td><a href='/usuario/" . $id_usuario . "'>" . $username ."</a></td>
+                            <td class=\"col-3\">" . $texto . "</td>
+                            <td>" . $fecha . " - " . $hora . " </td>
                             <td><a href=\"/admin/responder-comentario/" . $comentario['id_comentario'] . "\"><img src=\"/images/edit.png\" width=20px></a></td>
                             <td><a href=\"#\" OnClick=\"eliminar(" . $comentario['id_comentario'] . ")\"><img src=\"/images/delete.svg\" width=20px></a></td>
                             </tr>";

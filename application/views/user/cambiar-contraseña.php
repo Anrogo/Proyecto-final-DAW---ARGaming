@@ -60,7 +60,7 @@ foreach($usuarios as $usuario){
                     $('#ver-pass').on('click', function() {
                         $('#password').attr('type', 'text');
                         if ($('#ocultar-pass').length == 0) {
-                            $('#botones-pass').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass').append('<i class="fas fa-eye-slash"></i>'));
+                            $('#botones-pass').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass').attr('title','Ocultar contraseña').append('<i class="fas fa-eye-slash"></i>'));
                         }
                         $('#ocultar-pass').on('click', function() {
                             $('#password').attr('type', 'password');
@@ -70,7 +70,7 @@ foreach($usuarios as $usuario){
                     $('#ver-pass-conf').on('click', function() {
                         $('#password_confirm').attr('type', 'text');
                         if ($('#ocultar-pass-conf').length == 0) {
-                            $('#botones-pass-conf').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass-conf').append('<i class="fas fa-eye-slash"></i>'));
+                            $('#botones-pass-conf').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass-conf').attr('title','Ocultar contraseña').append('<i class="fas fa-eye-slash"></i>'));
                         }
                         $('#ocultar-pass-conf').on('click', function() {
                             $('#password_confirm').attr('type', 'password');

@@ -305,14 +305,52 @@ class FormController extends CI_Controller
                 }
             }
 
-            //debug($datos_nuevos);
-            $where['id_usuario'] = $datos_nuevos['id'];
-            //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-            unset($datos_nuevos['id']);
+            //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
+            $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'username',$datos_nuevos['username']);
+            $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'email',$datos_nuevos['email']);
 
-            $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+            if (!empty($registro_correo) || !empty($registro_username)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+                
+                if (!empty($registro_username)) {
+                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                }
+                
+                if (!empty($registro_correo)) {
+                    $datos['error_correo'] = 'Este correo ya existe';
+                }
+                //debug($this->uri);
+                $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
 
-            header('Location: /perfil-usuario');
+                $datos['usuarios'] = $info['data'];
+                $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+                //debug($datos);
+
+                $vista = array(
+                    'vista' => 'user/editar-perfil.php',
+                    'params' => $datos,
+                    'layout' => 'ly_session.php',
+                    'titulo' => 'Editar información del usuario' . $_SESSION['nombre_usuario'],
+                );
+
+                $this->layouts->view($vista);
+
+            } else {
+                
+                if($datos_nuevos['rol'] == 'Usuario administrador' && (isset($_SESSION['rol']) &&  $_SESSION['rol'] == 1)){
+                    $datos_nuevos['rol'] = 1;
+                } else {
+                    $datos_nuevos['rol'] = 0;
+                }
+
+                //debug($datos_nuevos);
+                $where['id_usuario'] = $datos_nuevos['id'];
+                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                unset($datos_nuevos['id']);
+                
+                $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+                header('Location: /perfil-usuario');
+            }
         } else {
 
             $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
@@ -522,7 +560,11 @@ class FormController extends CI_Controller
     {
     }
 
-    /*Apartado para las funciones que abarca el adminisrador */
+
+
+
+    /*----------------------Apartado para las funciones que abarca el administrador ---------------------------------------*/
+
     public function registro_admin()
     {
         $this->load->helper(array('form', 'url'));
@@ -610,14 +652,39 @@ class FormController extends CI_Controller
                 $datos[$key] = $value;
             }
 
-            if ($datos['password'] == $datos['password_confirm']) {
-                $datos['password'] = md5($datos['password']);
-                unset($datos['password_confirm']);
+            $registro_username = $this->FrontEndModel->Buscar('usuarios', 'username', $datos['username']);
+            $registro_correo = $this->FrontEndModel->Buscar('usuarios', 'email', $datos['email']);
+
+            if (!empty($registro_username) || !empty($registro_correo)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+                
+                if (!empty($registro_username)) {
+                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                }
+                if (!empty($registro_correo)) {
+                    $datos['error_correo'] = 'Este correo ya existe';
+                } 
+                    debug($datos);
+                    //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
+                    $vista = array(
+                        'vista' => 'admin/editar_usuario.php',
+                        'params' => $datos,
+                        'layout' => 'ly_admin_basico.php',
+                        'titulo' => 'Añadir nuevo usuario - ARGaming',
+                    );
+
+                    $this->layouts->view($vista);
+
+            } else {
+
+                if ($datos['password'] == $datos['password_confirm']) {
+                    $datos['password'] = md5($datos['password']);
+                    unset($datos['password_confirm']);
+                }
+
+                $this->BackEndModel->insert('usuarios', $datos);
+
+                header('Location: /admin/panel-control/usuarios');
             }
-
-            $this->BackEndModel->insert('usuarios', $datos);
-
-            header('Location: /admin/panel-control/usuarios');
         } else {
 
             $datos = array();
@@ -706,36 +773,65 @@ class FormController extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
 
-            $datos_nuevos = array();
-
             foreach ($_POST as $key => $value) {
                 $datos_nuevos[$key] = $value;
                 if ($datos_nuevos[$key] == null) {
                     unset($datos_nuevos[$key]);
                 }
             }
+            //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
+            $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'username',$datos_nuevos['username']);
+            $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'email',$datos_nuevos['email']);
 
-            if (!empty($datos_nuevos['password'])) {
-                $datos_nuevos['password'] = md5($datos_nuevos['password']);
+            if (!empty($registro_correo) || !empty($registro_username)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+                
+                if (!empty($registro_username)) {
+                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                }
+                
+                if (!empty($registro_correo)) {
+                    $datos['error_correo'] = 'Este correo ya existe';
+                }
+
+                $info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
+
+                $datos['usuarios'] = $info['data'];
+
+                debug($datos);
+
+                $vista = array(
+                    'vista' => 'admin/editar_usuario.php',
+                    'params' => $datos,
+                    'layout' => 'ly_admin_basico.php',
+                    'titulo' => 'Editar información del usuario',
+                );
+                $this->layouts->view($vista);
+
+            } else {
+
+                if (!empty($datos_nuevos['password'])) {
+                    $datos_nuevos['password'] = md5($datos_nuevos['password']);
+                }
+
+                //debug($datos_nuevos);
+                $where['id_usuario'] = $datos_nuevos['id'];
+                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                unset($datos_nuevos['id']);
+
+                $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+                header('Location: /admin/panel-control/usuarios');
             }
-
-            //debug($datos_nuevos);
-            $where['id_usuario'] = $datos_nuevos['id'];
-            //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-            unset($datos_nuevos['id']);
-
-            $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
-
-            header('Location: /admin/panel-control/usuarios');
         } else {
-
+            //debug($this->uri);
+            
             $info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
 
             $datos = array(
                 //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
                 'usuarios' => $info['data']
             );
-            //debug($datos);
+            debug($datos);
             $vista = array(
                 'vista' => 'admin/editar_usuario.php',
                 'params' => $datos,

@@ -270,7 +270,7 @@ class AdminController extends CI_Controller
 
 	public function listado_comentarios()
 	{
-		$comentarios = $this->BackEndModel->Lista('comentarios','id_comentario');
+		$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios();
 
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(

@@ -63,7 +63,6 @@ class BackEndModel extends CI_Model
   {
 
     $sql = "Select * From usuarios Where username = '".$datos['username']."' And password = '".$datos['password']."'";
-
     return ( $this->ExecuteArrayResults( $sql ));
 
   }
@@ -75,6 +74,25 @@ class BackEndModel extends CI_Model
     return ( $this->ExecuteArrayResults( $sql ));
 
   }
+
+  public function ListaComentarios($tabla,$filtro)
+  {
+
+    $sql = "select * from $tabla order by $filtro asc";
+    return ( $this->ExecuteArrayResults( $sql ));
+
+  }
+
+   # Método para mostrar todos los comentarios que existen en un post, buscando la coincidencia con usuarios
+   public function Listado_comentarios_post_y_usuarios()
+   {
+ 
+     $sql = "Select comentarios.id_comentario,comentarios.id_post,comentarios.id_usuario,comentarios.texto,comentarios.creado,usuarios.username,usuarios.email,usuarios.imagen_perfil,post.titulo,post.slug
+     From comentarios,usuarios,post
+     WHERE comentarios.id_usuario = usuarios.id_usuario  and comentarios.id_post = post.id_post ";
+     
+     return ( $this->ExecuteArrayResults( $sql ));
+   }
 
   public function ListarUsuario($usuario_id)
   {

@@ -2,6 +2,9 @@
 
 $post = $post[0];
 $autor = $autor[0];
+$creado = explode(" ", $post['creado']);//extrae la fecha y hora de creación
+$fecha_post = implode("/", array_reverse(explode("-", $creado[0])));//función que formatea la fecha, cambia los '-' por '/' y cambia el orden de año, mes y día de inglés a español
+$hora_post = $creado[1];//guarda la hora solamente
 
 ?>
 <!-- Page Content -->
@@ -12,10 +15,10 @@ $autor = $autor[0];
     <!-- Post Content Column -->
     <div class="col-lg-8">
 
-      <!-- Title -->
+      <!-- Titulo -->
       <h1 class="mt-4"><?php echo $post['titulo']; ?></h1>
 
-      <!-- Author -->
+      <!-- Autor -->
       <p class="lead">
         By
         <a href="#"><a href="#<?php echo $post['id_usuario']; ?>"><?php echo ($autor['username'] == '') ? 'Anónimo' : $autor['username']; ?></a></a>
@@ -23,17 +26,17 @@ $autor = $autor[0];
 
       <hr>
 
-      <!-- Date/Time -->
-      <p class="small">Posteado el <?php echo $post['creado']; ?></p>
+      <!-- Fecha / hora -->
+      <p class="small">Posteado el <?php echo $fecha_post . " a las " . $hora_post; ?></p>
 
       <hr>
 
-      <!-- Preview Image -->
+      <!-- Imagen del post -->
       <img class="img-fluid rounded" src="/images/<?php echo $post['imagen_post']; ?>" alt="post">
 
       <hr>
 
-      <!-- Post Content -->
+      <!-- Contenido del post -->
       <p class="lead"></p>
 
       <p>
@@ -43,7 +46,7 @@ $autor = $autor[0];
       </p>
       <hr>
 
-      <!-- Comments Form -->
+      <!-- Formulario para añadir comentario -->
       <div class="card my-4">
         <h5 class="card-header">Deja tu comentario:</h5>
         <div class="card-body">
@@ -82,7 +85,7 @@ $autor = $autor[0];
         $ruta_foto = ($comentario['imagen_perfil'] == '') ? 'http://placehold.it/60x60' : '/images/fotos_perfil/' . $comentario['imagen_perfil'];
       ?>
 
-        <!-- Single Comment -->
+        <!-- Estructura para cada comentario -->
         <div class="media mb-4">
         <div class="foto-perfil mr-2">
             <img class="d-flex img-fluid" src="<?php echo $ruta_foto; ?>" alt="">

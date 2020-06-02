@@ -28,7 +28,10 @@ foreach ($usuarios as $usuario) {
                         <input type="hidden" name="id" id="id" value="<?php echo $usuario['id_usuario']; ?>">
                         <div class="form-group">
                             <label for="imagen">Imagen de perfil</label>
-                            <input class="form-control" type="text" placeholder="" readonly>
+                            <div class="foto-perfil mb-2">
+                                    <img class="img-fluid" src="/images/fotos_perfil/<?php echo $usuario['imagen_perfil'] ?>" alt="Foto perfil">
+                                </div>
+                            <input class="form-control" type="text" placeholder="<?php echo $usuario['imagen_perfil'] ?>" readonly>
                             <input type="file" class="form-control-file" name="imagen" id="imagen" accept="image/png, .jpeg, .jpg, image/gif">
                         </div>
                         <div class="form-group">
@@ -37,7 +40,11 @@ foreach ($usuarios as $usuario) {
                             <?php
                             echo form_error('username', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
-                            </svg>', '</div>'); ?>
+                            </svg>', '</div>'); 
+                            echo isset($error_username) ? '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>'.$error_username.'</div>' : '' ;
+                            ?>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
@@ -61,7 +68,11 @@ foreach ($usuarios as $usuario) {
                             <?php
                             echo form_error('email', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
-                            </svg>', '</div>'); ?>
+                            </svg>', '</div>'); 
+                            echo isset($error_correo) ? '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                            </svg>'.$error_correo.'</div>' : '' ;
+                            ?>
                         </div>
                         <div class="form-row">
                             <div class="col-12 col-md-6">

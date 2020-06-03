@@ -249,6 +249,16 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function registrar_nuevo_post()
+	{
+
+	}
+
+	public function actualizar_post()
+	{
+		
+	}
+
 	public function eliminar_post()
 	{
 		$datos = comprobar_login();

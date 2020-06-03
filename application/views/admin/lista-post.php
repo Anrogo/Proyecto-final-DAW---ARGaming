@@ -65,7 +65,7 @@
                             $contenido = strlen($post['contenido']) > 60 ? substr($post['contenido'],0,60)."..." : $post['contenido'];
                             $modificado = $post['modificado'];
                             $link = $post['slug'];
-                            $visitas = $post['visitas'] == 0 ? '1' : $visitas;
+                            $visitas = $post['visitas'];
 
                             //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id . "\">

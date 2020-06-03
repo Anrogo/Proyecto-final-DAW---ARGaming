@@ -20,7 +20,7 @@ foreach ($usuarios as $usuario) {
                                     <img class="img-fluid" src="/images/fotos_perfil/<?php echo $usuario['imagen_perfil'] ?>" alt="Foto perfil">
                                 </div>
                                 <input class="form-control" type="text" placeholder="<?php echo $usuario['imagen_perfil'] ?>" readonly>
-                                <input type="file" class="form-control-file" name="imagen" id="imagen" accept="image/png, .jpeg, .jpg, image/gif">
+                                <input type="file" class="form-control-file" name="imagen_perfil" id="imagen_perfil" accept="image/png, .jpeg, .jpg, image/gif">
                             </div>
                             <div class="form-group">
                                 <label for="nombre">Nombre de usuario</label>

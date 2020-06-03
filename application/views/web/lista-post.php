@@ -14,7 +14,7 @@
                         </caption>
                         <thead class="thead-dark">
                             <tr>
-                                <th class="th-sm">ID</th>
+                                <th class="th-sm">Imagen</th>
                                 <th class="th-sm">Título</th>
                                 <th class="th-sm">Descripción</th>
                                 <th class="th-sm">Slug</th>

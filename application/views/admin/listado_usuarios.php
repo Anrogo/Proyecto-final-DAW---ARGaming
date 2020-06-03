@@ -36,6 +36,7 @@
         <thead>
           <tr class="table-primary">
             <th scope="col">ID</th>
+            <th scope="col">Foto</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">Nombre</th>
@@ -67,6 +68,7 @@
 
             echo '<tr>
                     <th scope="row">' . $usuario['id_usuario'] . '</th>
+                    <td><img src="/images/fotos_perfil/' . $usuario['imagen_perfil'] . '" class="img-fluid" alt="Foto de perfil"></td>
                     <td align=left>' . $usuario['username'] . '</td>
                     <td align=left>' . $usuario['email'] . '</td>
                     <td align=left>' . $usuario['nombre'] . '</td>

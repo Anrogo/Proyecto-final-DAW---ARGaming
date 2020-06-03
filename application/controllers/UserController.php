@@ -316,7 +316,7 @@
 					'comentarios' => $comentarios,
 				);
 
-				debug($datos);
+				//debug($datos);
 				//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 				$verif = comprobar_login();
 
@@ -348,7 +348,7 @@
 				);
 
 				$this->form_validation->set_rules($config);
-				debug($_POST);
+				//debug($_POST);
 				if ($this->form_validation->run() == TRUE) {
 
 					$datos_nuevos = array();
@@ -369,7 +369,7 @@
 						$comentario['id_usuario'] = $datos_usuario[0]['id_usuario'];
 						$comentario['texto'] = $datos_nuevos['comentario'];
 
-						debug($comentario);
+						//debug($comentario);
 
 						//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
 						//unset($comentarios['id']);

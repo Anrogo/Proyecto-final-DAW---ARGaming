@@ -40,7 +40,7 @@ $route['admin/panel-control'] = 'AdminController/panel_control';
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
 $route['admin/nuevo-usuario'] = "FormController/registro_admin";
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
-$route['editar-usuario/(:num)'] = 'FormController/editar_admin';
+$route['admin/editar-usuario/(:num)'] = 'FormController/editar_admin';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
 $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 

@@ -84,7 +84,7 @@ foreach ($usuarios as $usuario) {
                         </div>
                         <div class="form-group">
                             <label for="nombre">Fecha de creación</label>
-                            <input class="form-control" type="text" value="<?php echo $usuario['creado'] ?>" readonly>
+                            <input class="form-control" type="text" value="<?php echo $usuario['modificado'] ?>" readonly>
                         </div>
                         <div class="radio">
                             <label for="activo" class="radio-inline"><input type="radio" name="estado" value="1" <?php echo isset($activo1) ? $activo1 : ""; ?>> Activo </label>
@@ -93,7 +93,7 @@ foreach ($usuarios as $usuario) {
                             <label for="inactivo" class="radio-inline"><input type="radio" name="estado" value="0" <?php echo isset($activo0) ? $activo0 : ""; ?>> Inactivo </label>
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Rol del usuario</label>
+                            <label for="rol">Rol del usuario</label>
                             <select name="rol" id="rol" class="form-control">
                                 <option value="0" <?php echo isset($rol0) ? $rol0 : ""; ?>>Estándar</option>
                                 <option value="1" <?php echo isset($rol1) ? $rol1 : ""; ?>>Administrador</option>

@@ -75,6 +75,13 @@ class BackEndModel extends CI_Model
 
   }
 
+  public function ListarPost( $post_id)
+  {
+    $sql = "select * from post where id_post = ?";
+    $params = array( $post_id);
+    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
+  }
+
   public function ListaComentarios($tabla,$filtro)
   {
 

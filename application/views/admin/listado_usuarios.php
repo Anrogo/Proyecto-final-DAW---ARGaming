@@ -41,7 +41,7 @@
             <th scope="col">Email</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellidos</th>
-            <th scope="col">Creado</th>
+            <th scope="col">Modificado</th>
             <th scope="col">Admin</th>
             <th scope="col">Activo</th>
             <th scope="col">Editar</th>
@@ -73,10 +73,10 @@
                     <td align=left>' . $usuario['email'] . '</td>
                     <td align=left>' . $usuario['nombre'] . '</td>
                     <td align=left>' . $usuario['apellidos'] . '</td>
-                    <td align=left>' . $usuario['creado'] . '</td>
+                    <td align=left>' . $usuario['modificado'] . '</td>
                     <td>' . $admin . '</td>
                     <td>' . $activo . '</td>
-                    <td><a href="/editar-usuario/' . $usuario['id_usuario'] . '"><img src="/images/edit.png" width=20px></a></td>
+                    <td><a href="/admin/editar-usuario/' . $usuario['id_usuario'] . '"><img src="/images/edit.png" width=20px></a></td>
                     <td><a href="#" OnClick="eliminar(' . $usuario['id_usuario'] . ')"><img src="/images/delete.svg"  width=20px></a></td>
                   </tr>';
           }

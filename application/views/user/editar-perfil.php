@@ -72,7 +72,7 @@ foreach ($usuarios as $usuario) {
                             </div>
                             <div class="form-group">
                                 <label for="nombre">Fecha de creación</label>
-                                <input class="form-control" type="text" value="<?php echo $usuario['creado'] ?>" readonly>
+                                <input class="form-control" type="text" value="<?php echo $usuario['modificado'] ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="nombre">Tipo de usuario</label>

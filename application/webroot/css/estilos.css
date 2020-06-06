@@ -152,6 +152,12 @@ table caption {
 	content: "\f06e";
 }
 
+/* Mensajes de PHP */
+pre {
+	background-color: grey;
+	color:white;
+}
+
 /*MEDIA QUERIES*/
 @media (max-width:1200px) {
 	footer .padre2 {

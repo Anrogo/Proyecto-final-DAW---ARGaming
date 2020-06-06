@@ -10,6 +10,7 @@ $route['post/(:num)'] = "UserController/ver_post";
 $route['post/(:num)/agregar-comentario'] = 'UserController/ver_post';
 $route['responder-comentario/(:num)'] = 'FormController/responder_comentario';
 $route['contacto'] = "FormController/contactar";
+$route['contacto/enviar-email/(:any)'] = "EmailController/enviar/$1";
 $route['creador-blog'] = "UserController/creador_blog";
 $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
@@ -59,7 +60,6 @@ $route['admin/registrar-comentario'] = 'AdminController/registrar_comentario';
 $route['admin/responder-comentario/(:num)'] = 'FormController/responder_comentario_admin';
 $route['actualizar-comentario'] = 'AdminController/actualizar_comentario';
 $route['admin/eliminar-comentario/(:num)'] = 'AdminController/eliminar_comentario';
-
 
 
 $route['default_controller'] = 'UserController/index';

@@ -412,7 +412,7 @@ class FormController extends CI_Controller
             array(
                 'field' => 'asunto',
                 'label' => 'asunto',
-                'rules' => 'trim|required|max_length[40]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;\-\/!¡¿?\s]+$/]',
+                'rules' => 'trim|required|max_length[40]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;"\'\-\/!¡¿?\s]+$/]',
                 'errors' => array(
                     'required' => 'El %s es obligatorio',
                     'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
@@ -423,7 +423,7 @@ class FormController extends CI_Controller
             array(
                 'field' => 'mensaje',
                 'label' => 'mensaje',
-                'rules' => 'trim|required|min_length[4]|max_length[2500]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;\-\/!¡¿?\s]+$/]',
+                'rules' => 'trim|required|min_length[4]|max_length[2500]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;"\'\-\/!¡¿?\s]+$/]',
                 'errors' => array(
                     'required' => 'Los %s son obligatorios, al menos el primero.',
                     'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
@@ -438,22 +438,19 @@ class FormController extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
 
             foreach ($_POST as $key => $value) {
+                $value =str_replace(' ', '-', $value);//Se sustituye cualquier espacio en blanco por una '-'.
+                $value =str_replace(PHP_EOL, 'br', $value);//PHP_EOL son los saltos de línea en php. Los traduzco para poder meterlo en la url
                 $datos[$key] = $value;
             }
-            //debug($datos);
-            $datos = array(
-                'title' => '--Contacto completado--',
-                'mensaje' => 'Mensaje enviado con éxito'
-            );
-
-            $vista = array(
-                'vista' => 'web/index.php',
-                'params' => $datos,
-                'layout' => 'ly_home.php',
-                'titulo' => 'Contactado',
-            );
-
-            $this->layouts->view($vista);
+            debug($datos);
+            //Se guarda una cadena en forma de url con los datos pasados desde formulario. Dependiendo de si se ha dado el teléfono o no, habrá dos posibles urls
+            isset($datos['phone']) 
+            ? $url = urlencode($datos['username'].'&'.$datos['email'].'&'.$datos['phone'].'&'.$datos['asunto'].'&'.$datos['mensaje']) 
+            : $url = urlencode($datos['username'].'&'.$datos['email'].'&'.$datos['asunto'].'&'.$datos['mensaje']) ;
+            
+            //Y la ruta coge de la url los datos y los pasa al controlador pertinente
+            header('Location: contacto/enviar-email/'.$url);
+            //redirect_back();
         } else {
 
             $datos = array();

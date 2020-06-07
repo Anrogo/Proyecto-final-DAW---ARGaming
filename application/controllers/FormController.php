@@ -173,25 +173,24 @@ class FormController extends CI_Controller
             $registro_username = $this->FrontEndModel->Buscar('usuarios', 'username', $datos['username']);
             $registro_correo = $this->FrontEndModel->Buscar('usuarios', 'email', $datos['email']);
 
-            if (!empty($registro_username) || !empty($registro_correo)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
+            if (!empty($registro_username) || !empty($registro_correo)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
                 if (!empty($registro_username)) {
                     $datos['error_username'] = 'Este nombre de usuario ya existe';
                 }
                 if (!empty($registro_correo)) {
                     $datos['error_correo'] = 'Este correo ya existe';
-                } 
-                    debug($datos);
-                    //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
-                    $vista = array(
-                        'vista' => 'web/nuevo_usuario.php',
-                        'params' => $datos,
-                        'layout' => 'ly_registro.php',
-                        'titulo' => 'Añadir nuevo usuario - ARGaming',
-                    );
+                }
+                debug($datos);
+                //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
+                $vista = array(
+                    'vista' => 'web/nuevo_usuario.php',
+                    'params' => $datos,
+                    'layout' => 'ly_registro.php',
+                    'titulo' => 'Añadir nuevo usuario - ARGaming',
+                );
 
-                    $this->layouts->view($vista);
-
+                $this->layouts->view($vista);
             } else {
 
                 if ($datos['password'] == $datos['password_confirm']) {
@@ -234,144 +233,279 @@ class FormController extends CI_Controller
 
     public function editar_perfil()
     {
-        $this->load->helper(array('form', 'url'));
+        $verif = comprobar_login();
 
-        $this->load->library('form_validation'); //llamamos a las reglas de validación
+        if (!empty($verif) && $verif['id'] == $this->uri->segment(3)) {
 
-        $config = array(
-            array(
-                'field' => 'username',
-                'label' => 'nombre de usuario',
-                'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
-                'errors' => array(
-                    'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+            $config = array(
+                array(
+                    'field' => 'username',
+                    'label' => 'nombre de usuario',
+                    'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'nombre',
-                'label' => 'nombre',
-                'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                array(
+                    'field' => 'nombre',
+                    'label' => 'nombre',
+                    'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'apellidos',
-                'label' => 'apellidos',
-                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'Los %s son obligatorios, al menos el primero.',
-                    'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
-                    'max_length' => 'Los %s deben tener, como mucho, 50 caracteres de longitud',
-                    'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
+                array(
+                    'field' => 'apellidos',
+                    'label' => 'apellidos',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'Los %s son obligatorios, al menos el primero.',
+                        'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
+                        'max_length' => 'Los %s deben tener, como mucho, 50 caracteres de longitud',
+                        'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'email',
-                'label' => 'correo',
-                'rules' => 'trim|required|valid_email',
-                'errors' => array(
-                    'required' => 'El correo es obligatorio',
-                    'valid_email' => 'El correo debe tener un formato válido'
+                array(
+                    'field' => 'email',
+                    'label' => 'correo',
+                    'rules' => 'trim|required|valid_email',
+                    'errors' => array(
+                        'required' => 'El correo es obligatorio',
+                        'valid_email' => 'El correo debe tener un formato válido'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'password',
-                'label' => 'contraseña',
-                'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
-                'errors' => array(
-                    'min_length' => 'La %s debe tener al menos 8 caracteres',
-                    'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
-                ),
-            )
-        );
+                array(
+                    'field' => 'password',
+                    'label' => 'contraseña',
+                    'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
+                    'errors' => array(
+                        'min_length' => 'La %s debe tener al menos 8 caracteres',
+                        'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
+                    ),
+                )
+            );
 
-        $this->form_validation->set_rules($config);
+            $this->form_validation->set_rules($config);
 
-        if ($this->form_validation->run() == TRUE) {
+            if ($this->form_validation->run() == TRUE) {
 
-            $datos_nuevos = array();
+                $datos_nuevos = array();
 
-            foreach ($_POST as $key => $value) {
-                $datos_nuevos[$key] = $value;
-                if ($datos_nuevos[$key] == null) {
-                    unset($datos_nuevos[$key]);
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
+                    if ($datos_nuevos[$key] == null) {
+                        unset($datos_nuevos[$key]);
+                    }
                 }
-            }
 
-            //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
-            $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'username',$datos_nuevos['username']);
-            $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'email',$datos_nuevos['email']);
+                //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
+                $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'username', $datos_nuevos['username']);
+                $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'email', $datos_nuevos['email']);
 
-            if (!empty($registro_correo) || !empty($registro_username)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
-                if (!empty($registro_username)) {
-                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                if (!empty($registro_correo) || !empty($registro_username)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
+                    if (!empty($registro_username)) {
+                        $datos['error_username'] = 'Este nombre de usuario ya existe';
+                    }
+
+                    if (!empty($registro_correo)) {
+                        $datos['error_correo'] = 'Este correo ya existe';
+                    }
+                    //debug($this->uri);
+                    $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
+
+                    $datos['usuarios'] = $info['data'];
+                    $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+                    //debug($datos);
+
+                    $vista = array(
+                        'vista' => 'user/editar-perfil.php',
+                        'params' => $datos,
+                        'layout' => 'ly_session.php',
+                        'titulo' => 'Editar información del usuario' . $_SESSION['nombre_usuario'],
+                    );
+
+                    $this->layouts->view($vista);
+                } else {
+
+                    if ($datos_nuevos['rol'] == 'Usuario administrador' && (isset($_SESSION['rol']) &&  $_SESSION['rol'] == 1)) {
+                        $datos_nuevos['rol'] = 1;
+                    } else {
+                        $datos_nuevos['rol'] = 0;
+                    }
+
+                    //debug($datos_nuevos);
+                    $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
+                    $where['id_usuario'] = $datos_nuevos['id'];
+                    //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                    unset($datos_nuevos['id']);
+
+                    $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+                    header('Location: /perfil-usuario');
                 }
-                
-                if (!empty($registro_correo)) {
-                    $datos['error_correo'] = 'Este correo ya existe';
-                }
-                //debug($this->uri);
+            } else {
+
                 $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
 
-                $datos['usuarios'] = $info['data'];
+                $datos['usuarios'] = $info['data']; //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
+
                 $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+
                 //debug($datos);
 
                 $vista = array(
                     'vista' => 'user/editar-perfil.php',
                     'params' => $datos,
                     'layout' => 'ly_session.php',
-                    'titulo' => 'Editar información del usuario' . $_SESSION['nombre_usuario'],
+                    'titulo' => 'Editar información de ' . $_SESSION['nombre_usuario'],
                 );
 
                 $this->layouts->view($vista);
-
-            } else {
-                
-                if($datos_nuevos['rol'] == 'Usuario administrador' && (isset($_SESSION['rol']) &&  $_SESSION['rol'] == 1)){
-                    $datos_nuevos['rol'] = 1;
-                } else {
-                    $datos_nuevos['rol'] = 0;
-                }
-
-                //debug($datos_nuevos);
-                $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
-                $where['id_usuario'] = $datos_nuevos['id'];
-                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-                unset($datos_nuevos['id']);
-                
-                $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
-
-                header('Location: /perfil-usuario');
             }
         } else {
-
-            $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
-
-            $datos['usuarios'] = $info['data'];//se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
-            
-            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
-
-            //debug($datos);
-
-            $vista = array(
-                'vista' => 'user/editar-perfil.php',
-                'params' => $datos,
-                'layout' => 'ly_session.php',
-                'titulo' => 'Editar información de ' . $_SESSION['nombre_usuario'],
-            );
-
-            $this->layouts->view($vista);
+            header('Location: /error');
         }
     }
+
+    public function nuevo_post()
+    {
+        $verif = comprobar_login();
+        //debug($verif);
+        if (!empty($verif)) {
+
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+            $config = array(
+                array(
+                    'field' => 'username',
+                    'label' => 'nombre de usuario',
+                    'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'titulo',
+                    'label' => 'título del post',
+                    'rules' => 'trim|required|min_length[3]|max_length[100]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;:"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'slug',
+                    'label' => 'slug',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z0-9\-]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatoria.',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 50 caracteres de longitud',
+                        'regex_match' => 'El %s no puede contener espacios ni caracteres especiales solo guiones (-).'
+                    ),
+                ),
+                array(
+                    'field' => 'contenido',
+                    'label' => 'contenido',
+                    'rules' => 'trim|required|min_length[20]|max_length[5000]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;:"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio, de lo contrario, ¿qué sentido tendría crear este post?.',
+                        'min_length' => 'El %s debe tener al menos 20 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 5000 caracteres de longitud o causaría problemas en base de datos',
+                        'regex_match' => 'El %s puede contener todo tipo de caracteres y símbolos excepto alguno que has añadido, revísalo por favor.'
+                    ),
+                ),
+                array(
+                    'field' => 'imagen_post',
+                    'label' => 'imagen',
+                    'rules' => 'trim',
+                    'errors' => array(),
+                ),
+            );
+
+            $this->form_validation->set_rules($config);
+
+            $datos['username'] = $_SESSION['nombre_usuario'];
+            $datos['rol'] = $verif['rol'];
+
+            if ($this->form_validation->run() == TRUE) {
+
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
+                }
+                debug($datos_nuevos);
+                $registro_titulo = $this->FrontEndModel->Buscar('post', 'titulo', $datos_nuevos['titulo']);
+                $registro_slug = $this->FrontEndModel->Buscar('post', 'slug', $datos_nuevos['slug']);
+
+                if (!empty($registro_titulo) || !empty($registro_slug)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
+                    if (!empty($registro_titulo)) {
+                        $datos['error_titulo'] = 'Este título coincide con otro';
+                    }
+                    if (!empty($registro_slug)) {
+                        $datos['error_slug'] = 'Este slug está en uso';
+                    }
+
+                    $vista = array(
+                        'vista' => 'web/nuevo_post.php',
+                        'params' => $datos,
+                        'layout' => 'ly_session.php',
+                        'titulo' => 'Crear un nuevo post',
+                    );
+                    $this->layouts->view($vista);
+                } else {
+                    //debug($datos_nuevos);
+                    //Hay campos que se devuelven vacíos o que simplemente se rellenan automáticamente:
+                    $datos_nuevos['id_usuario'] = $_SESSION['id'];
+                    unset($datos_nuevos['username']);
+                    //$datos_nuevos['imagen_post'] == null ? '' : $datos_nuevos['imagen_post'];
+                    $datos_nuevos['visitas'] = 1; 
+
+                    debug($datos_nuevos);
+
+                    $this->FrontEndModel->insert('post', $datos_nuevos);
+
+                    //header('Location: /post/'.$datos_nuevos['id_post']);
+                }
+            } else {
+                //debug($datos);
+                if (!empty($verif)) {
+                    $datos['rol'] = $verif['rol'];
+
+                    //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
+                    $vista = array(
+                        'vista' => 'web/nuevo_post.php',
+                        'params' => $datos,
+                        'layout' => 'ly_session.php',
+                        'titulo' => 'Crear un nuevo post',
+                    );
+
+                    $this->layouts->view($vista);
+                }
+            }
+        } else {
+            header('Location: /login');
+        }
+    }
+
 
     public function contactar()
     {
@@ -383,12 +517,12 @@ class FormController extends CI_Controller
             array(
                 'field' => 'username',
                 'label' => 'nombre de usuario',
-                'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                'rules' => 'trim|required|min_length[2]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_\s]+$/]',
                 'errors' => array(
                     'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                    'min_length' => 'El %s debe tener al menos 2 caracteres de longitud',
                     'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y únicamente con espacios.'
                 ),
             ),
             array(
@@ -415,7 +549,6 @@ class FormController extends CI_Controller
                 'rules' => 'trim|required|max_length[40]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;"\'\-\/!¡¿?\s]+$/]',
                 'errors' => array(
                     'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
                     'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
                     'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
                 ),
@@ -426,7 +559,7 @@ class FormController extends CI_Controller
                 'rules' => 'trim|required|min_length[4]|max_length[2500]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ(),.;"\'\-\/!¡¿?\s]+$/]',
                 'errors' => array(
                     'required' => 'Los %s son obligatorios, al menos el primero.',
-                    'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
+                    'min_length' => 'Los %s deben tener al menos 4 caracteres de longitud',
                     'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
                     'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
                 ),
@@ -438,18 +571,18 @@ class FormController extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
 
             foreach ($_POST as $key => $value) {
-                $value =str_replace(' ', '-', $value);//Se sustituye cualquier espacio en blanco por una '-'.
-                $value =str_replace(PHP_EOL, 'br', $value);//PHP_EOL son los saltos de línea en php. Los traduzco para poder meterlo en la url
+                $value = str_replace(' ', '-', $value); //Se sustituye cualquier espacio en blanco por una '-'.
+                $value = str_replace(PHP_EOL, 'br', $value); //PHP_EOL son los saltos de línea en php. Los traduzco para poder meterlo en la url
                 $datos[$key] = $value;
             }
             debug($datos);
             //Se guarda una cadena en forma de url con los datos pasados desde formulario. Dependiendo de si se ha dado el teléfono o no, habrá dos posibles urls
-            isset($datos['phone']) 
-            ? $url = urlencode($datos['username'].'&'.$datos['email'].'&'.$datos['phone'].'&'.$datos['asunto'].'&'.$datos['mensaje']) 
-            : $url = urlencode($datos['username'].'&'.$datos['email'].'&'.$datos['asunto'].'&'.$datos['mensaje']) ;
-            
+            isset($datos['phone'])
+                ? $url = urlencode($datos['username'] . '&' . $datos['email'] . '&' . $datos['phone'] . '&' . $datos['asunto'] . '&' . $datos['mensaje'])
+                : $url = urlencode($datos['username'] . '&' . $datos['email'] . '&' . $datos['asunto'] . '&' . $datos['mensaje']);
+
             //Y la ruta coge de la url los datos y los pasa al controlador pertinente
-            header('Location: contacto/enviar-email/'.$url);
+            header('Location: contacto/enviar-email/' . $url);
             //redirect_back();
         } else {
 
@@ -563,102 +696,106 @@ class FormController extends CI_Controller
 
     public function registro_admin()
     {
-        $this->load->helper(array('form', 'url'));
+        $verif = comprobar_login();
 
-        $this->load->library('form_validation'); //llamamos a las reglas de validación
+        if (!empty($verif) && $verif['rol'] == 'administrador') {
 
-        $config = array(
-            array(
-                'field' => 'username',
-                'label' => 'nombre de usuario',
-                'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
-                'errors' => array(
-                    'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
-                ),
-            ),
-            array(
-                'field' => 'nombre',
-                'label' => 'nombre',
-                'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
-                ),
-            ),
-            array(
-                'field' => 'apellidos',
-                'label' => 'apellidos',
-                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'Los %s son obligatorios, al menos el primero.',
-                    'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
-                    'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
-                ),
-            ),
-            array(
-                'field' => 'email',
-                'label' => 'correo',
-                'rules' => 'trim|required|valid_email',
-                'errors' => array(
-                    'required' => 'El correo es obligatorio',
-                    'valid_email' => 'El correo debe tener un formato válido'
-                ),
-            ),
-            array(
-                'field' => 'password',
-                'label' => 'contraseña',
-                'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
-                'errors' => array(
-                    'required' => 'Es obligatorio añadir una %s válida',
-                    'min_length' => 'La %s debe tener al menos 8 caracteres',
-                    'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
-                ),
-            ),
-            array(
-                'field' => 'password_confirm',
-                'label' => 'confirmación de contraseña',
-                'rules' => 'trim|required|matches[password]',
-                'errors' => array(
-                    'required' => 'Debe añadir una contraseña para poder realizar la %s',
-                    'matches' => 'La %s no coindide con el password'
-                ),
-            ),
-            array(
-                'field' => 'rol',
-                'label' => 'rol de usuario',
-                'rules' => 'required|in_list[0,1]',
-                'errors' => array(
-                    'required' => 'El rol es obligatorio',
-                    'in_list' => 'El rol debe ser únicamente 0: "usuario estándar" o 1: "administrador"'
-                ),
-            )
-        );
+            $this->load->helper(array('form', 'url'));
 
-        $this->form_validation->set_rules($config);
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
 
-        if ($this->form_validation->run() == TRUE) {
+            $config = array(
+                array(
+                    'field' => 'username',
+                    'label' => 'nombre de usuario',
+                    'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'nombre',
+                    'label' => 'nombre',
+                    'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'apellidos',
+                    'label' => 'apellidos',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'Los %s son obligatorios, al menos el primero.',
+                        'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
+                        'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
+                    ),
+                ),
+                array(
+                    'field' => 'email',
+                    'label' => 'correo',
+                    'rules' => 'trim|required|valid_email',
+                    'errors' => array(
+                        'required' => 'El correo es obligatorio',
+                        'valid_email' => 'El correo debe tener un formato válido'
+                    ),
+                ),
+                array(
+                    'field' => 'password',
+                    'label' => 'contraseña',
+                    'rules' => 'trim|required|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
+                    'errors' => array(
+                        'required' => 'Es obligatorio añadir una %s válida',
+                        'min_length' => 'La %s debe tener al menos 8 caracteres',
+                        'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
+                    ),
+                ),
+                array(
+                    'field' => 'password_confirm',
+                    'label' => 'confirmación de contraseña',
+                    'rules' => 'trim|required|matches[password]',
+                    'errors' => array(
+                        'required' => 'Debe añadir una contraseña para poder realizar la %s',
+                        'matches' => 'La %s no coindide con el password'
+                    ),
+                ),
+                array(
+                    'field' => 'rol',
+                    'label' => 'rol de usuario',
+                    'rules' => 'required|in_list[0,1]',
+                    'errors' => array(
+                        'required' => 'El rol es obligatorio',
+                        'in_list' => 'El rol debe ser únicamente 0: "usuario estándar" o 1: "administrador"'
+                    ),
+                )
+            );
 
-            foreach ($_POST as $key => $value) {
-                $datos[$key] = $value;
-            }
+            $this->form_validation->set_rules($config);
 
-            $registro_username = $this->FrontEndModel->Buscar('usuarios', 'username', $datos['username']);
-            $registro_correo = $this->FrontEndModel->Buscar('usuarios', 'email', $datos['email']);
+            if ($this->form_validation->run() == TRUE) {
 
-            if (!empty($registro_username) || !empty($registro_correo)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
-                if (!empty($registro_username)) {
-                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                foreach ($_POST as $key => $value) {
+                    $datos[$key] = $value;
                 }
-                if (!empty($registro_correo)) {
-                    $datos['error_correo'] = 'Este correo ya existe';
-                } 
+
+                $registro_username = $this->FrontEndModel->Buscar('usuarios', 'username', $datos['username']);
+                $registro_correo = $this->FrontEndModel->Buscar('usuarios', 'email', $datos['email']);
+
+                if (!empty($registro_username) || !empty($registro_correo)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
+                    if (!empty($registro_username)) {
+                        $datos['error_username'] = 'Este nombre de usuario ya existe';
+                    }
+                    if (!empty($registro_correo)) {
+                        $datos['error_correo'] = 'Este correo ya existe';
+                    }
                     debug($datos);
                     //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
                     $vista = array(
@@ -669,279 +806,291 @@ class FormController extends CI_Controller
                     );
 
                     $this->layouts->view($vista);
+                } else {
 
+                    if ($datos['password'] == $datos['password_confirm']) {
+                        $datos['password'] = md5($datos['password']);
+                        unset($datos['password_confirm']);
+                    }
+
+                    $this->BackEndModel->insert('usuarios', $datos);
+
+                    header('Location: /admin/panel-control/usuarios');
+                }
             } else {
 
-                if ($datos['password'] == $datos['password_confirm']) {
-                    $datos['password'] = md5($datos['password']);
-                    unset($datos['password_confirm']);
-                }
+                $datos = array();
 
-                $this->BackEndModel->insert('usuarios', $datos);
+                $vista = array(
+                    'vista' => 'admin/nuevo_usuario.php',
+                    'params' => $datos,
+                    'layout' => 'ly_admin_basico.php',
+                    'titulo' => 'Añadir nuevo usuario',
+                );
 
-                header('Location: /admin/panel-control/usuarios');
+                $this->layouts->view($vista);
             }
         } else {
-
-            $datos = array();
-
-            $vista = array(
-                'vista' => 'admin/nuevo_usuario.php',
-                'params' => $datos,
-                'layout' => 'ly_admin_basico.php',
-                'titulo' => 'Añadir nuevo usuario',
-            );
-
-            $this->layouts->view($vista);
+            header('Location: /error');
         }
     }
 
     public function editar_admin()
     {
-        $this->load->helper(array('form', 'url'));
 
-        $this->load->library('form_validation'); //llamamos a las reglas de validación
+        $verif = comprobar_login();
 
-        $config = array(
-            array(
-                'field' => 'imagen_post',
-                'label' => 'imagen',
-                'rules' => 'trim',
-                'errors' => array(                 
-                ),
-            ),
-            array(
-                'field' => 'username',
-                'label' => 'nombre de usuario',
-                'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
-                'errors' => array(
-                    'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
-                ),
-            ),
-            array(
-                'field' => 'nombre',
-                'label' => 'nombre',
-                'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
-                ),
-            ),
-            array(
-                'field' => 'apellidos',
-                'label' => 'apellidos',
-                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
-                'errors' => array(
-                    'required' => 'Los %s son obligatorios, al menos el primero.',
-                    'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
-                    'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
-                ),
-            ),
-            array(
-                'field' => 'email',
-                'label' => 'correo',
-                'rules' => 'trim|required|valid_email',
-                'errors' => array(
-                    'required' => 'El correo es obligatorio',
-                    'valid_email' => 'El correo debe tener un formato válido'
-                ),
-            ),
-            array(
-                'field' => 'password',
-                'label' => 'contraseña',
-                'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
-                'errors' => array(
-                    'min_length' => 'La %s debe tener al menos 8 caracteres',
-                    'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
-                ),
-            ),
-            array(
-                'field' => 'rol',
-                'label' => 'rol de usuario',
-                'rules' => 'required|in_list[0,1]',
-                'errors' => array(
-                    'required' => 'El rol es obligatorio',
-                    'in_list' => 'El rol debe ser únicamente 0: "usuario estándar" o 1: "administrador"'
-                ),
-            )
-        );
+        if (!empty($verif) && $verif['rol'] == 'administrador') {
 
-        $this->form_validation->set_rules($config);
+            $this->load->helper(array('form', 'url'));
 
-        if ($this->form_validation->run() == TRUE) {
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
 
-            foreach ($_POST as $key => $value) {
-                $datos_nuevos[$key] = $value;
-                if ($datos_nuevos[$key] == null) {
-                    unset($datos_nuevos[$key]);
+            $config = array(
+                array(
+                    'field' => 'imagen_post',
+                    'label' => 'imagen',
+                    'rules' => 'trim',
+                    'errors' => array(),
+                ),
+                array(
+                    'field' => 'username',
+                    'label' => 'nombre de usuario',
+                    'rules' => 'trim|required|min_length[5]|max_length[30]|regex_match[/^[0-9A-Za-zÁÉÍÓÚñáéíóúÑ_]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s no debe contener espacios, solo puede llevar \'_\'.',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfanumérico y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'nombre',
+                    'label' => 'nombre',
+                    'rules' => 'trim|required|min_length[3]|max_length[30]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 5 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
+                ),
+                array(
+                    'field' => 'apellidos',
+                    'label' => 'apellidos',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ\s]+$/]',
+                    'errors' => array(
+                        'required' => 'Los %s son obligatorios, al menos el primero.',
+                        'min_length' => 'Los %s deben tener al menos 2 caracteres de longitud',
+                        'max_length' => 'Los %s deben tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'Los %s solo deben contener espacios entre media de caracteres alfabéticos.'
+                    ),
+                ),
+                array(
+                    'field' => 'email',
+                    'label' => 'correo',
+                    'rules' => 'trim|required|valid_email',
+                    'errors' => array(
+                        'required' => 'El correo es obligatorio',
+                        'valid_email' => 'El correo debe tener un formato válido'
+                    ),
+                ),
+                array(
+                    'field' => 'password',
+                    'label' => 'contraseña',
+                    'rules' => 'trim|min_length[8]|regex_match[/^[0-9A-Za-z!@#$&*_-]\S{7,16}$/]',
+                    'errors' => array(
+                        'min_length' => 'La %s debe tener al menos 8 caracteres',
+                        'regex_match' => 'La %s no cumple con las reglas de formato. Debe tener entre 8 y 16 caracteres'
+                    ),
+                ),
+                array(
+                    'field' => 'rol',
+                    'label' => 'rol de usuario',
+                    'rules' => 'required|in_list[0,1]',
+                    'errors' => array(
+                        'required' => 'El rol es obligatorio',
+                        'in_list' => 'El rol debe ser únicamente 0: "usuario estándar" o 1: "administrador"'
+                    ),
+                )
+            );
+
+            $this->form_validation->set_rules($config);
+
+            if ($this->form_validation->run() == TRUE) {
+
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
+                    if ($datos_nuevos[$key] == null) {
+                        unset($datos_nuevos[$key]);
+                    }
                 }
-            }
-            //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
-            $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'username',$datos_nuevos['username']);
-            $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios','id_usuario',$datos_nuevos['id'],'email',$datos_nuevos['email']);
+                //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
+                $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'username', $datos_nuevos['username']);
+                $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'email', $datos_nuevos['email']);
 
-            if (!empty($registro_correo) || !empty($registro_username)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
-                if (!empty($registro_username)) {
-                    $datos['error_username'] = 'Este nombre de usuario ya existe';
+                if (!empty($registro_correo) || !empty($registro_username)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
+                    if (!empty($registro_username)) {
+                        $datos['error_username'] = 'Este nombre de usuario ya existe';
+                    }
+
+                    if (!empty($registro_correo)) {
+                        $datos['error_correo'] = 'Este correo ya existe';
+                    }
+                    //El id se obtiene a través del array de segment, dentro de la uri
+                    $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
+
+                    $datos['usuarios'] = $info['data'];
+
+                    //debug($datos);
+
+                    $vista = array(
+                        'vista' => 'admin/editar_usuario.php',
+                        'params' => $datos,
+                        'layout' => 'ly_admin_basico.php',
+                        'titulo' => 'Editar información del usuario',
+                    );
+                    $this->layouts->view($vista);
+                } else {
+
+                    if (!empty($datos_nuevos['password'])) {
+                        $datos_nuevos['password'] = md5($datos_nuevos['password']);
+                    }
+
+                    //debug($datos_nuevos);
+                    $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
+                    $where['id_usuario'] = $datos_nuevos['id'];
+                    //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                    unset($datos_nuevos['id']);
+
+                    $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
+
+                    header('Location: /admin/panel-control/usuarios');
                 }
-                
-                if (!empty($registro_correo)) {
-                    $datos['error_correo'] = 'Este correo ya existe';
-                }
-                //El id se obtiene a través del array de segment, dentro de la uri
+            } else {
+                //debug($this->uri);
+
                 $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
 
-                $datos['usuarios'] = $info['data'];
-
+                $datos = array(
+                    //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
+                    'usuarios' => $info['data']
+                );
                 //debug($datos);
-
                 $vista = array(
                     'vista' => 'admin/editar_usuario.php',
                     'params' => $datos,
                     'layout' => 'ly_admin_basico.php',
                     'titulo' => 'Editar información del usuario',
                 );
+
                 $this->layouts->view($vista);
-
-            } else {
-
-                if (!empty($datos_nuevos['password'])) {
-                    $datos_nuevos['password'] = md5($datos_nuevos['password']);
-                }
-
-                //debug($datos_nuevos);
-                $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
-                $where['id_usuario'] = $datos_nuevos['id'];
-                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-                unset($datos_nuevos['id']);
-
-                $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
-
-                header('Location: /admin/panel-control/usuarios');
             }
         } else {
-            //debug($this->uri);
-            
-            $info = $this->BackEndModel->ListarUsuario($this->uri->segment(3));
-
-            $datos = array(
-                //se carga como el "apartado" data para evitar problemas en el archivo desde donde se visualizan los datos
-                'usuarios' => $info['data']
-            );
-            debug($datos);
-            $vista = array(
-                'vista' => 'admin/editar_usuario.php',
-                'params' => $datos,
-                'layout' => 'ly_admin_basico.php',
-                'titulo' => 'Editar información del usuario',
-            );
-
-            $this->layouts->view($vista);
+            header('Location: /error');
         }
     }
 
     public function nuevo_post_admin()
     {
-        $this->load->helper(array('form', 'url'));
+        $verif = comprobar_login();
 
-        $this->load->library('form_validation'); //llamamos a las reglas de validación
+        if (!empty($verif) && $verif['rol'] == 'administrador') {
+            $datos['rol'] = $verif['rol'];
 
-        $config = array(
-            array(
-                'field' => 'id_usuario',
-                'label' => 'usuario',
-                'rules' => 'trim|required|regex_match[/^[1-9][0-9]*$/]',
-                'errors' => array(
-                    'required' => 'Indicar el %s es indispesable para poder crear el post',
-                    'regex_match' => 'La selección del %s no es válida'
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+            $config = array(
+                array(
+                    'field' => 'id_usuario',
+                    'label' => 'usuario',
+                    'rules' => 'trim|required|regex_match[/^[1-9][0-9]*$/]',
+                    'errors' => array(
+                        'required' => 'Indicar el %s es indispesable para poder crear el post',
+                        'regex_match' => 'La selección del %s no es válida'
                     ),
-            ),
-            array(
-                'field' => 'titulo',
-                'label' => 'título del post',
-                'rules' => 'trim|required|min_length[3]|max_length[100]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;"\-\/!¡¿?\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
                 ),
-            ),
-            array(
-                'field' => 'slug',
-                'label' => 'slug',
-                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z0-9\-]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatoria.',
-                    'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 50 caracteres de longitud',
-                    'regex_match' => 'El %s no puede contener espacios ni caracteres especiales solo guiones (-).'
+                array(
+                    'field' => 'titulo',
+                    'label' => 'título del post',
+                    'rules' => 'trim|required|min_length[3]|max_length[100]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;:"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'contenido',
-                'label' => 'contenido',
-                'rules' => 'trim|required|min_length[20]|max_length[5000]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;"\-\/!¡¿?\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio, de lo contrario, ¿qué sentido tendría crear este post?.',
-                    'min_length' => 'El %s debe tener al menos 20 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 5000 caracteres de longitud o causaría problemas en base de datos',
-                    'regex_match' => 'El %s puede contener todo tipo de caracteres y símbolos excepto alguno que has añadido, revísalo por favor.'
+                array(
+                    'field' => 'slug',
+                    'label' => 'slug',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z0-9\-]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatoria.',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 50 caracteres de longitud',
+                        'regex_match' => 'El %s no puede contener espacios ni caracteres especiales solo guiones (-).'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'imagen_post',
-                'label' => 'imagen',
-                'rules' => 'trim',
-                'errors' => array(                 
+                array(
+                    'field' => 'contenido',
+                    'label' => 'contenido',
+                    'rules' => 'trim|required|min_length[20]|max_length[5000]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;:"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio, de lo contrario, ¿qué sentido tendría crear este post?.',
+                        'min_length' => 'El %s debe tener al menos 20 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 5000 caracteres de longitud o causaría problemas en base de datos',
+                        'regex_match' => 'El %s puede contener todo tipo de caracteres y símbolos excepto alguno que has añadido, revísalo por favor.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'visitas',
-                'label' => 'visitas',
-                'rules' => 'regex_match[/^[0-9]+$/]',
-                'errors' => array(
-                    'regex_match' => 'Las visitas solo pueden ser de tipo numérico'
+                array(
+                    'field' => 'imagen_post',
+                    'label' => 'imagen',
+                    'rules' => 'trim',
+                    'errors' => array(),
                 ),
-            )
-        );
+                array(
+                    'field' => 'visitas',
+                    'label' => 'visitas',
+                    'rules' => 'regex_match[/^[0-9]+$/]',
+                    'errors' => array(
+                        'regex_match' => 'Las visitas solo pueden ser de tipo numérico'
+                    ),
+                )
+            );
 
-        $this->form_validation->set_rules($config);
+            $this->form_validation->set_rules($config);
 
-        /* Se obtiene el listado de usuarios para seleccionarlos en la lista al crear el post*/
-        $usuarios = $this->BackEndModel->Lista('usuarios','id_usuario');
-        
-        $datos['usuarios'] = $usuarios;
+            /* Se obtiene el listado de usuarios para seleccionarlos en la lista al crear el post*/
+            $usuarios = $this->BackEndModel->Lista('usuarios', 'id_usuario');
 
-        if ($this->form_validation->run() == TRUE) {
+            $datos['usuarios'] = $usuarios;
 
-            foreach ($_POST as $key => $value) {
-                $datos_nuevos[$key] = $value;
-            }
-           
-            $registro_titulo = $this->FrontEndModel->Buscar('post', 'titulo', $datos_nuevos['titulo']);
-            $registro_slug = $this->FrontEndModel->Buscar('post', 'slug', $datos_nuevos['slug']);
+            if ($this->form_validation->run() == TRUE) {
 
-            if (!empty($registro_titulo) || !empty($registro_slug)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
-                if (!empty($registro_titulo)) {
-                    $datos['error_titulo'] = 'Este título coincide con otro';
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
                 }
-                if (!empty($registro_slug)) {
-                    $datos['error_slug'] = 'Este slug está en uso';
-                } 
 
-                $info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
+                $registro_titulo = $this->FrontEndModel->Buscar('post', 'titulo', $datos_nuevos['titulo']);
+                $registro_slug = $this->FrontEndModel->Buscar('post', 'slug', $datos_nuevos['slug']);
 
-                $datos['usuarios'] = $info['data'];
-                
+                if (!empty($registro_titulo) || !empty($registro_slug)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
+
+                    if (!empty($registro_titulo)) {
+                        $datos['error_titulo'] = 'Este título coincide con otro';
+                    }
+                    if (!empty($registro_slug)) {
+                        $datos['error_slug'] = 'Este slug está en uso';
+                    }
+
+                    $info = $this->BackEndModel->ListarUsuario($this->uri->segment(2));
+
+                    $datos['usuarios'] = $info['data'];
+
                     //debug($datos);
                     //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
                     $vista = array(
@@ -952,139 +1101,168 @@ class FormController extends CI_Controller
                     );
 
                     $this->layouts->view($vista);
+                } else {
+                    //debug($datos_nuevos);
+                    //Hay campos que se devuelven vacíos o que simplemente se rellenan automáticamente:
+                    $datos_nuevos['imagen_post'] == null ? '' : $datos_nuevos['imagen_post'];
+                    $datos_nuevos['visitas'] == 0 ? '1' : $datos_nuevos['visitas'];
 
+                    debug($datos_nuevos);
+
+                    $this->BackEndModel->insert('post', $datos_nuevos);
+
+                    //header('Location: /admin/panel-control/post');
+                }
             } else {
-                //debug($datos_nuevos);
-                //Hay campos que se devuelven vacíos o que simplemente se rellenan automáticamente:
-                $datos_nuevos['imagen_post'] == null ? '' : $datos_nuevos['imagen_post'];
-                $datos_nuevos['visitas'] == 0 ? '1' : $datos_nuevos['visitas'];
-                
-                //debug($datos_nuevos);
+                //debug($datos);
+                $vista = array(
+                    'vista' => 'admin/nuevo_post.php',
+                    'params' => $datos,
+                    'layout' => 'ly_admin_basico.php',
+                    'titulo' => 'Crear un nuevo post',
+                );
 
-                $this->BackEndModel->insert('post', $datos_nuevos);
-
-                header('Location: /admin/panel-control/post');
+                $this->layouts->view($vista);
             }
         } else {
-            //debug($datos);
-            $vista = array(
-                'vista' => 'admin/nuevo_post.php',
-                'params' => $datos,
-                'layout' => 'ly_admin_basico.php',
-                'titulo' => 'Crear un nuevo post',
-            );
-
-            $this->layouts->view($vista);
+            header('Location: /error');
         }
     }
 
     public function editar_post_admin()
     {
-        $this->load->helper(array('form', 'url'));
+        $verif = comprobar_login();
 
-        $this->load->library('form_validation'); //llamamos a las reglas de validación
+        //debug($verif);
 
-        $config = array(
-            array(
-                'field' => 'id_usuario',
-                'label' => 'usuario',
-                'rules' => 'trim|required|regex_match[/^[1-9][0-9]*$/]',
-                'errors' => array(
-                    'required' => 'Indicar el %s es indispesable para poder crear el post',
-                    'regex_match' => 'La selección del %s no es válida'
+        if (!empty($verif) && $verif['rol'] == 'administrador') {
+            $datos['rol'] = $verif['rol'];
+
+            $this->load->helper(array('form', 'url'));
+
+            $this->load->library('form_validation'); //llamamos a las reglas de validación
+
+            $config = array(
+                array(
+                    'field' => 'id_usuario',
+                    'label' => 'usuario',
+                    'rules' => 'trim|required|regex_match[/^[1-9][0-9]*$/]',
+                    'errors' => array(
+                        'required' => 'Indicar el %s es indispesable para poder crear el post',
+                        'regex_match' => 'La selección del %s no es válida'
                     ),
-            ),
-            array(
-                'field' => 'titulo',
-                'label' => 'título del post',
-                'rules' => 'trim|required|min_length[3]|max_length[100]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;"\-\/!¡¿?\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio',
-                    'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
-                    'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
                 ),
-            ),
-            array(
-                'field' => 'slug',
-                'label' => 'slug',
-                'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z0-9\-]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatoria.',
-                    'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 50 caracteres de longitud',
-                    'regex_match' => 'El %s no puede contener espacios ni caracteres especiales solo guiones (-).'
+                array(
+                    'field' => 'titulo',
+                    'label' => 'título del post',
+                    'rules' => 'trim|required|min_length[3]|max_length[100]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.:;"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 30 caracteres de longitud',
+                        'regex_match' => 'El %s no cumple con las reglas de formato. Debe ser alfabético y sin espacios.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'contenido',
-                'label' => 'contenido',
-                'rules' => 'trim|required|min_length[20]|max_length[5000]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;"\-\/!¡¿?\s]+$/]',
-                'errors' => array(
-                    'required' => 'El %s es obligatorio, de lo contrario, ¿qué sentido tendría crear este post?.',
-                    'min_length' => 'El %s debe tener al menos 20 caracteres de longitud',
-                    'max_length' => 'El %s debe tener, como mucho, 5000 caracteres de longitud o causaría problemas en base de datos',
-                    'regex_match' => 'El %s puede contener todo tipo de caracteres y símbolos excepto alguno que has añadido, revísalo por favor.'
+                array(
+                    'field' => 'slug',
+                    'label' => 'slug',
+                    'rules' => 'trim|required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z0-9\-]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatoria.',
+                        'min_length' => 'El %s debe tener al menos 4 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 50 caracteres de longitud',
+                        'regex_match' => 'El %s no puede contener espacios ni caracteres especiales solo guiones (-).'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'imagen_post',
-                'label' => 'imagen',
-                'rules' => 'trim|regex_match[%\.(gif|jpe?g|png)$%i]',
-                'errors' => array(    
-                    'regex_match' => 'La imagen no es válida, inténtelo con otra (que sea .jpg, .jpeg, .gif o .png) por favor'             
+                array(
+                    'field' => 'contenido',
+                    'label' => 'contenido',
+                    'rules' => 'trim|required|min_length[20]|max_length[5000]|regex_match[/^[A-Za-zÁÉÍÓÚñáéíóúÑ0-9(),.;:"\-\/\'!¡¿?\s]+$/]',
+                    'errors' => array(
+                        'required' => 'El %s es obligatorio, de lo contrario, ¿qué sentido tendría crear este post?.',
+                        'min_length' => 'El %s debe tener al menos 20 caracteres de longitud',
+                        'max_length' => 'El %s debe tener, como mucho, 5000 caracteres de longitud o causaría problemas en base de datos',
+                        'regex_match' => 'El %s puede contener todo tipo de caracteres y símbolos excepto alguno que has añadido, revísalo por favor.'
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'visitas',
-                'label' => 'visitas',
-                'rules' => 'regex_match[/^[0-9]+$/]',
-                'errors' => array(
-                    'regex_match' => 'Las visitas solo pueden ser de tipo numérico'
+                array(
+                    'field' => 'imagen_post',
+                    'label' => 'imagen',
+                    'rules' => 'trim|regex_match[%\.(gif|jpe?g|png)$%i]',
+                    'errors' => array(
+                        'regex_match' => 'La imagen no es válida, inténtelo con otra (que sea .jpg, .jpeg, .gif o .png) por favor'
+                    ),
                 ),
-            )
-        );
+                array(
+                    'field' => 'visitas',
+                    'label' => 'visitas',
+                    'rules' => 'regex_match[/^[0-9]+$/]',
+                    'errors' => array(
+                        'regex_match' => 'Las visitas solo pueden ser de tipo numérico'
+                    ),
+                )
+            );
 
 
-        $this->form_validation->set_rules($config);
-        
-        /* Se obtiene el listado de usuarios para seleccionarlos en la lista al crear el post*/
-        $usuarios = $this->BackEndModel->Lista('usuarios','id_usuario');
-                
-        $datos['usuarios'] = $usuarios;
+            $this->form_validation->set_rules($config);
 
-        $info = $this->BackEndModel->ListarPost($this->uri->segment(3));
-                
-        $datos['posts'] = $info['data'];
+            /* Se obtiene el listado de usuarios para seleccionarlos en la lista al crear el post*/
+            $usuarios = $this->BackEndModel->Lista('usuarios', 'id_usuario');
 
-        //debug($datos);
+            $datos['usuarios'] = $usuarios;
 
-        if ($this->form_validation->run() == TRUE) {
+            $info = $this->BackEndModel->ListarPost($this->uri->segment(3));
 
-            foreach ($_POST as $key => $value) {
-                $datos_nuevos[$key] = $value;
-                if ($datos_nuevos[$key] == null) {
-                    unset($datos_nuevos[$key]);
+            $datos['posts'] = $info['data'];
+
+            //debug($datos);
+
+            if ($this->form_validation->run() == TRUE) {
+
+                foreach ($_POST as $key => $value) {
+                    $datos_nuevos[$key] = $value;
+                    if ($datos_nuevos[$key] == null) {
+                        unset($datos_nuevos[$key]);
+                    }
                 }
-            }
-            //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
-            $registro_titulo = $this->FrontEndModel->Buscar_campo_existente('post','id_post',$datos_nuevos['id_post'],'titulo',$datos_nuevos['titulo']);
-            $registro_slug = $this->FrontEndModel->Buscar_campo_existente('post','id_post',$datos_nuevos['id_post'],'slug',$datos_nuevos['slug']);
+                //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
+                $registro_titulo = $this->FrontEndModel->Buscar_campo_existente('post', 'id_post', $datos_nuevos['id_post'], 'titulo', $datos_nuevos['titulo']);
+                $registro_slug = $this->FrontEndModel->Buscar_campo_existente('post', 'id_post', $datos_nuevos['id_post'], 'slug', $datos_nuevos['slug']);
 
-            if (!empty($registro_titulo) || !empty($registro_slug)) {//si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
-                
-                if (!empty($registro_titulo)) {
-                    $datos['error_titulo'] = 'Este título coincide con otro';
-                }
-                if (!empty($registro_slug)) {
-                    $datos['error_slug'] = 'Este slug está en uso';
-                }
-                
-                $info = $this->BackEndModel->ListarPost($this->uri->segment(3));
-                
-                $datos['posts'] = $info['data'];
+                if (!empty($registro_titulo) || !empty($registro_slug)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
 
-                //debug($datos_nuevos);
+                    if (!empty($registro_titulo)) {
+                        $datos['error_titulo'] = 'Este título coincide con otro';
+                    }
+                    if (!empty($registro_slug)) {
+                        $datos['error_slug'] = 'Este slug está en uso';
+                    }
+
+                    $info = $this->BackEndModel->ListarPost($this->uri->segment(3));
+
+                    $datos['posts'] = $info['data'];
+
+                    //debug($datos_nuevos);
+
+                    $vista = array(
+                        'vista' => 'admin/editar_post.php',
+                        'params' => $datos,
+                        'layout' => 'ly_admin_basico.php',
+                        'titulo' => 'Editar post',
+                    );
+                    $this->layouts->view($vista);
+                } else {
+                    $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
+                    debug($datos_nuevos);
+                    $where['id_post'] = $datos_nuevos['id_post'];
+                    //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+                    unset($datos_nuevos['id_post']);
+
+                    $this->BackEndModel->update('post', $datos_nuevos, $where);
+
+                    header('Location: /admin/panel-control/post');
+                }
+            } else {
 
                 $vista = array(
                     'vista' => 'admin/editar_post.php',
@@ -1092,31 +1270,11 @@ class FormController extends CI_Controller
                     'layout' => 'ly_admin_basico.php',
                     'titulo' => 'Editar post',
                 );
+
                 $this->layouts->view($vista);
-
-            } else {
-                $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
-                debug($datos_nuevos);
-                $where['id_post'] = $datos_nuevos['id_post'];
-                //se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-                unset($datos_nuevos['id_post']);
-
-                $this->BackEndModel->update('post', $datos_nuevos, $where);
-
-                header('Location: /admin/panel-control/post');
             }
         } else {
-
-            $vista = array(
-                'vista' => 'admin/editar_post.php',
-                'params' => $datos,
-                'layout' => 'ly_admin_basico.php',
-                'titulo' => 'Editar post',
-            );
-
-            $this->layouts->view($vista);
+            header('Location: /error');
         }
     }
-
-
 }

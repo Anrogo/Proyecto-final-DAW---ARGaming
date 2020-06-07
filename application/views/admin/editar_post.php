@@ -25,7 +25,7 @@ foreach($posts as $post){
                         <div class="form-group">
                             <label for="imagen">Imagen del post</label>
                             <div class="mb-2">
-                                    <img class="img-fluid" src="/images/<?php echo $post['imagen_post'] ?>" alt="Foto perfil">
+                                    <img class="img-fluid" src="/images/<?php echo $post['imagen_post'] ?>" alt="Foto post">
                             </div>
                             <input class="form-control" type="text" placeholder="<?php echo $post['imagen_post'] ?>" readonly>
                             <input type="file" class="form-control-file" name="imagen_post" id="imagen_post" accept="image/png, .jpeg, .jpg, image/gif">

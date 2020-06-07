@@ -1,7 +1,19 @@
 <!--TABLA/LISTADO DE POST-->
 <div class="container">
-
-    <div class="row">
+<div class="row mt-4">
+    <div class="col-5 text-center">
+      <h1 class="">Listado de posts</h1>
+    </div>
+    <div class="col-3 text-center">
+      <a href="/nuevo-post" class="btn btn-primary">Nuevo Post</a>
+    </div>
+    <div class="col-4 text-center">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Busqueda...">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
         <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
@@ -9,9 +21,6 @@
                     if (isset($posts)) {
 
                     ?>
-                        <caption class="text-center">
-                            Listado de post
-                        </caption>
                         <thead class="thead-dark">
                             <tr>
                                 <th class="th-sm">Imagen</th>
@@ -48,7 +57,7 @@
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/" . $imagen . "\"  width=\"200px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
-                            <td>" . $contenido . " </td>
+                            <td class=\"col-3\">" . $contenido . " </td>
                             <td><a href=\"post/" . $id . "\">$link</a></td>
                             <td>" . $modificado . " </td>
                             <td class=\"text-center\">" . $abierto . "</td>

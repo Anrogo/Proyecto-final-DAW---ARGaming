@@ -33,13 +33,8 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Videojuegos</a>
-                        <div class="dropdown-menu">
-                            <a href="/lista-juegos" class="dropdown-item">Listado de juegos</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="/" class="dropdown-item">Post</a>
-                        </div>
+                    <li class="nav-item">
+                        <a href="/lista-juegos" class="nav-link">Videojuegos</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Foro</a>

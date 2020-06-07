@@ -5,12 +5,9 @@
 ?>
     <div class="row justify-content-center">
         <div class="col-10">
-        <p class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <?php
                         echo $mensaje;
                     ?>
-        </p>
         </div>
     </div>
 <?php

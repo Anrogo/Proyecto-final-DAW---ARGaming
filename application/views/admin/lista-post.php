@@ -20,18 +20,18 @@
     <div class="col-4 text-center">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Busqueda...">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
       </form>
     </div>
   </div>
     <div class="row">
         <div class="col-md-12">
+        <?php
+            if (isset($posts)) {
+
+        ?>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
-                    <?php
-                    if (isset($posts)) {
-
-                    ?>
                         <thead>
                             <tr class="table-primary">
                                 <th scope="col">Imagen</th>

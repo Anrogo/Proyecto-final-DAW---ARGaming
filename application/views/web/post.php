@@ -137,7 +137,7 @@ $hora_post = $creado[1];//guarda la hora solamente
     <!-- Sidebar Widgets Column -->
     <div class="col-md-4">
 
-      <!-- Search Widget -->
+      <!-- Search Widget 
       <div class="card my-4">
         <h5 class="card-header">Búsqueda</h5>
         <div class="card-body">
@@ -148,16 +148,16 @@ $hora_post = $creado[1];//guarda la hora solamente
             </span>
           </div>
         </div>
-      </div>
+      </div>-->
 
       <!-- Links relacionados -->
       <div class="card my-4">
         <h5 class="card-header">Otros enlaces que te pueden interesar</h5>
         <div class="card-body">
           <ul class="list-group">
-            <li class="list-group-item"><a href="#">Primer juego de la historia</a></li>
-            <li class="list-group-item"><a href="#">Los 10 videojuegos más exitosos del momento</a></li>
-            <li class="list-group-item"><a href="#">El juego con más descargas del 2019</a></li>
+            <li class="list-group-item"><a href="https://latam.historyplay.tv/hoy-en-la-historia/se-lanza-tennis-two-considerado-el-primer-videojuego-de-la-historia" target="_blank">Primer juego de la historia</a></li>
+            <li class="list-group-item"><a href="https://qpasa.com/actualidad/los-10-video-juegos-mas-populares-de-este-2020/" target="_blank">Los 10 videojuegos más exitosos del momento</a></li>
+            <li class="list-group-item"><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjkzvfhjvDpAhV0AWMBHWBNCf8QFjACegQIBBAB&url=https%3A%2F%2Fwww.20minutos.es%2Fvideojuegos%2Fnoticia%2F4059964%2F0%2Fgoogle-play-store-juego-mas-descargado-historia-subway-surfers%2F&usg=AOvVaw1yKoPGKJaOWVaIK09oBU8j" target="_blank">El juego con más descargas del 2019</a></li>
           </ul>
         </div>
       </div>

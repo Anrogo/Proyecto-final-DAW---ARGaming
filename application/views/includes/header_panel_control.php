@@ -39,9 +39,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto nav-justified w-50">
-                <li class="nav-item active">
-                    <span class="text-white">Listar datos de <span class="sr-only">(current)</span></span>
+            <ul class="navbar-nav mr-auto nav-justified w-100">
+                <li class="nav-item dropdown">
+                    <a href="/admin/panel-control/juegos" class="nav-link">Videojuegos</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="/admin/panel-control/usuarios" class="nav-link">Usuarios</a>

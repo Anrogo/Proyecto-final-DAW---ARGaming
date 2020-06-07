@@ -8,6 +8,7 @@ $route['lista-juegos'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 $route['post/(:num)'] = "UserController/ver_post";
 $route['post/(:num)/agregar-comentario'] = 'UserController/ver_post';
+$route['nuevo-post'] = 'FormController/nuevo_post';
 $route['responder-comentario/(:num)'] = 'FormController/responder_comentario';
 $route['contacto'] = "FormController/contactar";
 $route['contacto/enviar-email/(:any)'] = "EmailController/enviar/$1";
@@ -37,6 +38,9 @@ $route['admin'] = 'AdminController/index';
 $route['admin/inicio'] = 'AdminController/index';
 $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 $route['admin/panel-control'] = 'AdminController/panel_control';
+# Admin - juegos
+$route['admin/panel-control/juegos'] = 'AdminController/listado_juegos';
+
 # Admin - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
 $route['admin/nuevo-usuario'] = "FormController/registro_admin";

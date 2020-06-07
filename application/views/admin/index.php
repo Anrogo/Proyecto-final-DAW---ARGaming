@@ -26,43 +26,62 @@
     <a href="/new_post" class="btn btn-primary">Nuevo post</a>
     <br><br>
     <div class="row">
-
+            
         <div class="col-lg-12 text-center">
+            <?php
+                if (isset($posts)) {
+
+            ?>
             <table class="table">
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" class="text-center">Titulo</th>
-                        <th scope="col" class="text-center">Fecha y hora</th>
-                        <th scope="col" class="text-center">Activo</th>
-                        <th scope="col" class="text-center">Editar</th>
-                        <th scope="col" class="text-center">Eliminar</th>
+                    <tr class="table-primary">
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Slug</th>
+                                <th scope="col">Última modificación</th>
+                                <th scope="col">Abierto</th>
+                                <th scope="col">Visitas</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <?php
+                <?php
 
-                    if (!empty($posts)) {
-                        foreach ($posts as $post) {
-                            if ($post['enabled'] == "1") {
-                                $enabled = "<img src='/images/activo.png'  width=20px>";
-                            } else {
-                                $enabled = "<img src='/images/no_activo.png' width=20px>";
-                            }
+                foreach ($posts as $post) {
 
-
-                            echo '<tr>
-                                <th scope="row">' . $post['id'] . '</th>
-                                <td>' . $post['title'] . '</td>
-                                <td>' . date("d/m/Y H:i:s", strtotime($post['created'])) . '</td>
-                                <td>' . $enabled . '</td>
-                                <td><a href="/edit/' . $post['id'] . '"><img src="/images/edit.png" width=20px></a></td>
-                                <td><a href="#" OnClick="delete_post(' . $post['id'] . ')"><img src="/images/delete_2.png"  width=20px></a></td>
-                            </tr>';
-                        }
+                    //Se filtran algunos valores clave
+                    if ($post['estado'] == "1") {
+                        $abierto = "<img src='/images/activo.png'  width=20px>";
+                    } else {
+                        $abierto = "<img src='/images/no_activo.png' width=20px>";
                     }
-                    ?>
+
+                    //Se procesan los datos recibidos
+                    $id = $post['id_post'];
+                    $imagen = $post['imagen_post'];
+                    $titulo = $post['titulo'];
+                    $contenido = strlen($post['contenido']) > 60 ? substr($post['contenido'],0,60)."..." : $post['contenido'];
+                    $modificado = $post['modificado'];
+                    $link = $post['slug'];
+                    $visitas = $post['visitas'];
+
+                    //Y se muestran en forma de tabla
+                    echo "<tr id=\"" . $id . "\">
+                    <td><img src=\"/images/". $imagen ."\"  width=\"200px\"></td>
+                    <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
+                    <td>" . $contenido . " </td>
+                    <td><a href=\"post/" . $id . "\">$link</a></td>
+                    <td>" . $modificado . " </td>
+                    <td>" . $abierto . "</td>
+                    <td>" . $visitas . "</td>
+                    </tr>";
+                    }
+                } else {
+
+                    echo "Algo ha fallado al obtener el listado... Disculpe las molestias";
+                }
+                ?>
 
 
                 </tbody>

@@ -14,7 +14,7 @@
 			public function index()
 			{
 				/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
-				$datos = comprobar_login();
+				/*$datos = comprobar_login();
 				if (!empty($datos)) {
 					$datos['title'] = 'No hay post disponibles en este momento, disculpe las molestias';
 					$vista = array(
@@ -44,6 +44,41 @@
 
 					$this->layouts->view($vista);
 				}
+				*/
+				$posts = $this->FrontEndModel->Lista('post', 'id_post');
+
+				//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+				$datos = array(
+					'posts' => $posts,
+				);
+				//debug($datos);
+				//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+				$verif = comprobar_login();
+
+				if (!empty($verif)) {
+
+					$datos['rol'] = $verif['rol'];
+
+					$vista = array(
+						'vista' => 'web/index.php',
+						'params' => $datos,
+						'layout' => 'ly_session.php',
+						'titulo' => 'Post'
+					);
+
+					$this->layouts->view($vista);
+				} else {
+
+					$vista = array(
+						'vista' => 'web/index.php',
+						'params' => $datos,
+						'layout' => 'ly_home.php',
+						'titulo' => 'Post'
+					);
+
+					$this->layouts->view($vista);
+				}
+
 			}
 
 			public function cambiar_contraseña_sin_acceso()
@@ -280,6 +315,7 @@
 				if (!empty($verif)) {
 
 					$datos['rol'] = $verif['rol'];
+					$datos['crear_post'] = '';
 
 					$vista = array(
 						'vista' => 'web/lista-post.php',

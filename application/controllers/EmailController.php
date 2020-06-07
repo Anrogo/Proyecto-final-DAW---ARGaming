@@ -6,8 +6,6 @@ class EmailController extends CI_Controller
     function __construct()
 	{
 				parent::__construct();
-
-				$this->load->model('FrontEndModel', 'FrontEndModel');
     }
             
     public function enviar()
@@ -44,7 +42,7 @@ class EmailController extends CI_Controller
 
         $array_url = explode('&',$url);//se separan los datos a partir del separador insertado previamente y se dejan en forma de array
 
-        //debug($array_url);
+        debug($array_url);
         
         $long_array = count($array_url);//se guarda la longitud del array generado a partir de la url
 
@@ -52,14 +50,17 @@ class EmailController extends CI_Controller
         $long_array == 5 ? $campos_email = ['username','email','phone','asunto','mensaje'] : $campos_email = ['username','email','asunto','mensaje'];
 
         //Se asignan los diferentes segmentos de URL a cada valor del array, el primero, el número 3 será el nombre de usuario y le corresponde a 'username', por ejemplo.
-        $c = 0;//los campos que se van a ir asignando
-        for($i = 0; $i < $long_array; $i++,$c++ ){
-            strpos($array_url[$i], '-') !== null ? ($cad1 = str_replace('-',' ',$array_url[$i])) : ($cad1 = $array_url[$i]) ;
-            strpos($array_url[$i], 'br') !== null ? ($cad2 = str_replace('br',PHP_EOL,$cad1)) : ($cad2 = $cad1) ;
-            $datos_email [$campos_email[$c]] = $cad2;
+        for($i = 0; $i < $long_array; $i++ ){
+            if($campos_email[$i] != 'email'){
+                strpos($array_url[$i], '-') !== null ? ($cad1 = str_replace('-',' ',$array_url[$i])) : ($cad1 = $array_url[$i]) ;
+                strpos($array_url[$i], 'br') !== null ? ($cad2 = str_replace('br',PHP_EOL,$cad1)) : ($cad2 = $cad1) ;
+                $datos_email [$campos_email[$i]] = $cad2;
+            } else {//si se trata del email, se salta el filtro, porque no puede contener saltos de línea y sí guiones que no habría que sustituirlos por nada..
+                $datos_email [$campos_email[$i]] = $array_url[$i];
+            }
         }
         isset($datos_email['phone']) ? $datos_email['mensaje'] = $datos_email['mensaje'].PHP_EOL.PHP_EOL.'Teléfono de contacto: '.$datos_email['phone'] : ''; 
-        //debug($datos_email);
+        debug($datos_email);
         /*    
         $datos_email['username'] = $this->uri->segment(3);
         $datos_email['email'] = $this->uri->segment(4);
@@ -70,7 +71,7 @@ class EmailController extends CI_Controller
         $this->email->subject('Email Test 3');
         $this->email->message('Este es un correo de prueba (3). Enviado por Antonio Rodríguez, administrador del blog ARGaming.com');
         */
-//Se estructuran las partes de la clase email
+        //Se estructuran las partes de la clase email
         $this->email->from($datos_email['email'], $datos_email['username']);
         $this->email->to('info@argaming.com');
         $this->email->cc('antonirg96@gamil.com');
@@ -78,13 +79,16 @@ class EmailController extends CI_Controller
 
         $this->email->subject($datos_email['asunto']);
         $this->email->message($datos_email['mensaje']);
-//Y se ejecuta, es decir se manda, con una respuesta positiva si se envía con éxito, o negativa si da error al enviarlo
+        //Y se ejecuta, es decir se manda, con una respuesta positiva si se envía con éxito, o negativa si da error al enviarlo
         if($this->email->send()){
-            $mensaje = 'El correo ha sido enviado con éxito';
-        } else $mensaje = 'El correo no ha podido ser enviado';
+            $mensaje = '<p class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>El correo ha sido enviado con éxito</p>';
+        } else $mensaje = '<p class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>El correo no ha podido ser enviado</p>';
+        
         //debug($this->email);
         //redirect_back();
-    /*
+        /*
         $this->email->from('your@example.com', 'Your Name');
         $this->email->to('someone@example.com');
         $this->email->cc('another@another-example.com');
@@ -95,10 +99,10 @@ class EmailController extends CI_Controller
 
         $this->email->send();
     */
-
+    //Se carga la página de contacto, con un "mínimo" de opciones, se pasa el mensaje de que el correo ha sido enviado o no y después se refresca para devolver a la ventana original
     $this->load->helper(array('form', 'url'));
 
-    $this->load->library('form_validation'); //llamamos a las reglas de validación
+    $this->load->library('form_validation');
     
     $datos = array(
         'mensaje' => $mensaje

@@ -22,7 +22,6 @@
                     <li data-target="#demo1" data-slide-to="7"></li>
                     <li data-target="#demo1" data-slide-to="8"></li>
                     <li data-target="#demo1" data-slide-to="9"></li>
-                    <li data-target="#demo1" data-slide-to="10"></li>
                 </ul>
 
                 <!--IMÁGENES-->
@@ -186,29 +185,70 @@
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
-<!--TABLA/LISTADO DE VIDEOJUEGOS-->
+<!--TABLA/LISTADO DE POST-->
 
-    <div class="row">
-        <div class="col-md-12">
-
-
+<div class="row">
+            
+        <div class="col-lg-12 text-center">
             <?php
-            if (isset($juegos)) {
+                if (isset($posts)) {
+
             ?>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
-                        <caption class="text-center">
-                            Listado de videojuegos
-                        </caption>
-                    <?php
-                } else {
-                    echo isset($title) ? $title : '';
-                    echo "<br>";
-                    echo isset($mensaje) ? $mensaje : '';
-                }
+            <table class="table">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Última modificación</th>
+                        <th scope="col">Abierto</th>
+                        <th scope="col">Visitas</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <?php
+
+                        foreach ($posts as $post) {
+
+                            //Se filtran algunos valores clave
+                            if ($post['estado'] == "1") {
+                                $abierto = "<img src='/images/activo.png'  width=20px>";
+                            } else {
+                                $abierto = "<img src='/images/no_activo.png' width=20px>";
+                            }
+
+                            //Se procesan los datos recibidos
+                            $id = $post['id_post'];
+                            $titulo = $post['titulo'];
+                            $contenido = strlen($post['contenido']) > 60 ? substr($post['contenido'], 0, 60) . "..." : $post['contenido'];
+                            $imagen = $post['imagen_post'];
+                            $modificado = $post['modificado'];
+                            $activo = $post['estado'] == 1 ? 'Activo' : 'Cerrado';
+                            $link = $post['slug'];
+                            $visitas = $post['visitas'];
+                            
+                            //Y se muestran en forma de tabla
+                            echo "<tr id=\"" . $id . "\">
+                            <td><img src=\"/images/" . $imagen . "\"  width=\"200px\"></td>
+                            <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
+                            <td>" . $contenido . " </td>
+                            <td><a href=\"post/" . $id . "\">$link</a></td>
+                            <td>" . $modificado . " </td>
+                            <td class=\"text-center\">" . $abierto . "</td>
+                            <td class=\"text-center\">" . $visitas . "</td>
+                            </tr>";
+                        }
+                    } else {
+                        echo "Algo ha fallado al obtener el listado... Disculpe las molestias";
+                    }
+
                     ?>
-                    </tbody>
-                    </table>
+
+
+                </tbody>
+            </table>
 
                 </div>
         </div>

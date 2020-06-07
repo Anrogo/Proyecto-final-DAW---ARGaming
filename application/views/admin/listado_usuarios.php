@@ -25,7 +25,7 @@
     <div class="col-4 text-center">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Buscar...">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Busqueda</button>
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Busqueda</button>
       </form>
     </div>
   </div>

@@ -72,6 +72,44 @@ class AdminController extends CI_Controller
 		}
 	}
 
+	public function listado_juegos()
+	{
+		//Leemos los datos recibidos en formato json
+		$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=dead&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+
+		//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+		$juegos = json_decode($json, true);
+
+		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+		$datos = array(
+			'juegos' => $juegos['items'],
+		);
+		//debug($datos);
+		$verif = comprobar_login();
+
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
+			$datos['rol'] = $verif['rol'];
+			$vista = array(
+				'vista' => 'admin/listado-videojuegos.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Videojuegos - Admin'
+			);
+
+			$this->layouts->view($vista);
+		} else {
+
+			$vista = array(
+				'vista' => 'web/listado-videojuegos.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Videojuegos'
+			);
+
+			$this->layouts->view($vista);
+		}
+	}
+
 	public function listado_usuarios()
 	{
 		$datos = comprobar_login();

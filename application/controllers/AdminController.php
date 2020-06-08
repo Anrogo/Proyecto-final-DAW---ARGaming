@@ -199,12 +199,13 @@ class AdminController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-*/
+*/	//No se utiliza, la actualización se realiza desde el FormController en editar_admin()
 	public function actualizar_usuario()
 	{
-		$datos = comprobar_login();
+		$verif = comprobar_login();
 
-		if (!empty($datos) && $datos['rol'] == 'administrador') {
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
+			
 			foreach ($_POST as $key => $value) {
 				$datos[$key] = $value;
 				//el campo que esté vacío no se incluye en la actualización:
@@ -267,7 +268,7 @@ class AdminController extends CI_Controller
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
-		if(!empty($verif)){
+		if(!empty($verif) && $verif['rol'] == 'administrador'){
 
 			$datos['rol'] = $verif['rol'];			
 

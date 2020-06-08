@@ -87,8 +87,12 @@ foreach($posts as $post){
                             ?>
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Fecha de creación</label>
+                            <label for="creacion">Fecha de creación</label>
                             <input class="form-control" type="text" value="<?php echo $post['creado'] ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="modificación">Última modificación</label>
+                            <input class="form-control" type="text" value="<?php echo $post['modificado'] ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="visitas">Visitas</label>

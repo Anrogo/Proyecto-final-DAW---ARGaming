@@ -26,8 +26,9 @@
                                 <th class="th-sm">Imagen</th>
                                 <th class="th-sm">Título</th>
                                 <th class="th-sm">Descripción</th>
-                                <th class="th-sm">Slug</th>
+                                <th class="th-sm">Meta descripción</th>
                                 <th class="th-sm">Última modificación</th>
+                                <th class="th-sm">Visitas</th>
                                 <th class="th-sm">Abierto</th>
                             </tr>
                         </thead>
@@ -52,14 +53,16 @@
                             $modificado = $post['modificado'];
                             $activo = $post['estado'] == 1 ? 'Activo' : 'Cerrado';
                             $link = $post['slug'];
+                            $visitas = $post['visitas'];
                             
                             //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id . "\">
                             <td><img src=\"/images/" . $imagen . "\"  width=\"200px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
-                            <td class=\"col-3\">" . $contenido . " </td>
+                            <td>" . $contenido . " </td>
                             <td><a href=\"post/" . $id . "\">$link</a></td>
                             <td>" . $modificado . " </td>
+                            <td class=\"text-center\">" . $visitas . "</td>
                             <td class=\"text-center\">" . $abierto . "</td>
                             </tr>";
                         }

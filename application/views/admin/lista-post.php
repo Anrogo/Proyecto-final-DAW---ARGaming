@@ -38,6 +38,7 @@
                                 <th scope="col">Título</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Slug</th>
+                                <th scope="col">Fecha de creación</th>
                                 <th scope="col">Última modificación</th>
                                 <th scope="col">Abierto</th>
                                 <th scope="col">Visitas</th>
@@ -63,16 +64,18 @@
                             $imagen = $post['imagen_post'];
                             $titulo = $post['titulo'];
                             $contenido = strlen($post['contenido']) > 60 ? substr($post['contenido'],0,60)."..." : $post['contenido'];
+                            $creado = $post['creado'];
                             $modificado = $post['modificado'];
                             $link = $post['slug'];
                             $visitas = $post['visitas'];
 
                             //Y se muestran en forma de tabla
                             echo "<tr id=\"" . $id . "\">
-                            <td><img src=\"/images/". $imagen ."\"  width=\"200px\"></td>
+                            <td><img src=\"/images/". $imagen ."\" class=\"img-fluid\" width=\"440px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
                             <td>" . $contenido . " </td>
                             <td><a href=\"post/" . $id . "\">$link</a></td>
+                            <td>" . $creado . " </td>
                             <td>" . $modificado . " </td>
                             <td>" . $abierto . "</td>
                             <td>" . $visitas . "</td>

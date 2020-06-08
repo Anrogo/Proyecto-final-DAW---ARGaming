@@ -12,7 +12,7 @@ class FrontEndModel extends CI_Model
 
     # Cargamos la conexión a la base de datos
     $this->db = $this->load->database('default', true);
-
+    
   }
 
    # Ejecuta consultas y devuelte los resultados en un array
@@ -41,10 +41,22 @@ class FrontEndModel extends CI_Model
     $this->db->insert( $tabla, $datos);
   }
 
+  /* Actualizar número de visitas */
+  public function actualizar_visitas_post( $id_post)
+  {
+    /*
+    $this->db->set('field', 'field+1', FALSE);
+    $this->db->where('id', 2);
+    $this->db->update('mytable'); // gives UPDATE mytable SET field = field+1 WHERE id = 2
+    */
+    $this->db->set('visitas', 'visitas+1', FALSE);
+    $this->db->where('id_post', $id_post);
+    $this->db->update('post');
+  }
+
   public function Lista($tabla,$clasif)
   {
-
-    $sql = "select * from ".$tabla." order by ".$clasif." asc";
+    $sql = "select * from ".$tabla." order by ".$clasif." desc";
     return ( $this->ExecuteArrayResults( $sql ));
 
   }

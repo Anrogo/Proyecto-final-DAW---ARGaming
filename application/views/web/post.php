@@ -158,6 +158,7 @@ $hora_post = $creado[1];//guarda la hora solamente
             <li class="list-group-item"><a href="https://latam.historyplay.tv/hoy-en-la-historia/se-lanza-tennis-two-considerado-el-primer-videojuego-de-la-historia" target="_blank">Primer juego de la historia</a></li>
             <li class="list-group-item"><a href="https://qpasa.com/actualidad/los-10-video-juegos-mas-populares-de-este-2020/" target="_blank">Los 10 videojuegos más exitosos del momento</a></li>
             <li class="list-group-item"><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjkzvfhjvDpAhV0AWMBHWBNCf8QFjACegQIBBAB&url=https%3A%2F%2Fwww.20minutos.es%2Fvideojuegos%2Fnoticia%2F4059964%2F0%2Fgoogle-play-store-juego-mas-descargado-historia-subway-surfers%2F&usg=AOvVaw1yKoPGKJaOWVaIK09oBU8j" target="_blank">El juego con más descargas del 2019</a></li>
+            <li class="list-group-item"><a href="https://vandal.elespanol.com/noticia/1350734838/square-enix-esta-satisfecha-con-las-ventas-de-final-fantasy-vii-remake/" target="_blank">Square Enix está satisfecha con las ventas de Final Fantasy VII: Remake</a></li>
           </ul>
         </div>
       </div>

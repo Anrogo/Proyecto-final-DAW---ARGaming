@@ -53,11 +53,11 @@
                                 <label for="nombre">Crea una contraseña</label>
                             </div>
                             <div class="col-12 col-md-6">
-                                <input type="password" name="password" id="password" class="form-control input" value="<?php echo set_value('password'); ?>" required>
+                                <input type="password" name="password" id="password" class="form-control" value="<?php echo set_value('password'); ?>">
                             </div>
                             <!--<i class="fas fa-eye"></i>-->
                             <div class="col-3 mt-1 mt-md-0" id="botones-pass">
-                                <span id="ver-pass" class="btn btn-outline-secondary" title="Mostrar contraseña">Mostrar</span>
+                                <span id="ver-pass" class="btn btn-outline-secondary" title="Mostrar contraseña"><i class="fas fa-eye"></i></span>
                             </div>
                             <?php
                             echo form_error('password', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,10 @@
                                 <label for="nombre">Confirmar contraseña</label>
                             </div>
                             <div class="col-12 col-md-6">
-                                <input type="password" name="password_confirm" id="password_confirm" class="form-control input" value="<?php echo set_value('password_confirm'); ?>">
+                                <input type="password" name="password_confirm" id="password_confirm" class="form-control" value="<?php echo set_value('password_confirm'); ?>">
+                            </div>
+                            <div class="col-3 mt-1 mt-md-0" id="botones-pass-conf">
+                                <span id="ver-pass-conf" class="btn btn-outline-secondary" title="Mostrar contraseña"><i class="fas fa-eye"></i></span>
                             </div>
                             <?php
                             echo form_error('password_confirm', '<div class="error"><svg class="bi bi-exclamation-diamond-fill mr-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -103,7 +106,7 @@
                 }
                 */
                // CON JQUERY quedaría tal que así:
-                $(document).ready(function() {
+               $(document).ready(function() {
                     /*$('#form_registro').on('submit', function(){
                         alert("Espera, estamos verificando los datos..");
                     });*/
@@ -113,13 +116,24 @@
                         $('#password').attr('type', 'text');
                         //Si no existe el botón de ocultar, se crea. Así evito que se uedan crear botones infinitos
                         if ($('#ocultar-pass').length == 0) {
-                            $('#botones-pass').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass').text('Ocultar'));
+                            $('#botones-pass').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass').attr('title','Ocultar contraseña').append('<i class="fas fa-eye-slash"></i>'));
                         }
                         //Y entonces queda activo el otro botón 'ocultar' para devolverlo a su estado original
                         $('#ocultar-pass').on('click', function() {
                             //alert($('#password').val());
                             $('#password').attr('type', 'password');
                             $('#ocultar-pass').remove();
+                        });
+                    });
+                    //Y después, exactametne igual pero con el campo de confirmar la contraseña
+                    $('#ver-pass-conf').on('click', function() {
+                        $('#password_confirm').attr('type', 'text');
+                        if ($('#ocultar-pass-conf').length == 0) {
+                            $('#botones-pass-conf').append($('<span>').attr("class", "btn btn-outline-secondary").attr('id', 'ocultar-pass-conf').attr('title','Ocultar contraseña').append('<i class="fas fa-eye-slash"></i>'));
+                        }
+                        $('#ocultar-pass-conf').on('click', function() {
+                            $('#password_confirm').attr('type', 'password');
+                            $('#ocultar-pass-conf').remove();
                         });
                     });
                 });

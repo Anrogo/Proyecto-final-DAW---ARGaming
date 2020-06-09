@@ -43,6 +43,13 @@ $route['admin/panel-control/juegos'] = 'AdminController/listado_juegos';
 
 # Admin - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-username/desc'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-username/asc'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-nombre/desc'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-nombre/asc'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-modificado/desc'] = 'AdminController/listado_usuarios';
+$route['admin/panel-control/usuarios/ordenar-modificado/asc'] = 'AdminController/listado_usuarios';
+$route['admin/buscar-usuario'] = 'AdminController/listado_usuarios';
 $route['admin/nuevo-usuario'] = "FormController/registro_admin";
 $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
 $route['admin/editar-usuario/(:num)'] = 'FormController/editar_admin';
@@ -51,6 +58,13 @@ $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
 
 # Admin - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-creado/desc'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-creado/asc'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-modificado/desc'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-modificado/asc'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-visitas/desc'] = 'AdminController/listado_post';
+$route['admin/panel-control/post/ordenar-visitas/asc'] = 'AdminController/listado_post';
+$route['admin/buscar-post'] = 'AdminController/listado_post';
 $route['admin/nuevo-post'] = "FormController/nuevo_post_admin";
 $route['admin/crear-post'] = 'AdminController/registrar_nuevo_post';
 $route['admin/editar-post/(:num)'] = 'FormController/editar_post_admin';
@@ -59,6 +73,9 @@ $route['admin/eliminar-post/(:num)'] = 'AdminController/eliminar_post';
 
 # Admin - comentarios
 $route['admin/panel-control/comentarios'] = 'AdminController/listado_comentarios';
+$route['admin/panel-control/comentarios/ordenar-creado/asc'] = 'AdminController/listado_comentarios';
+$route['admin/panel-control/comentarios/ordenar-creado/desc'] = 'AdminController/listado_comentarios';
+$route['admin/buscar-comentario'] = 'AdminController/listado_comentarios';
 $route['admin/nuevo-comentario'] = "FormController/nuevo_comentario_admin";
 $route['admin/registrar-comentario'] = 'AdminController/registrar_comentario';
 $route['admin/responder-comentario/(:num)'] = 'FormController/responder_comentario_admin';

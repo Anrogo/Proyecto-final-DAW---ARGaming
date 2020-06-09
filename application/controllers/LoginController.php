@@ -62,7 +62,7 @@ class LoginController extends CI_Controller
 
         if(!empty($datos)){//si ya estuviese la sesión iniciada nos manda a inicio
 
-            header('Location: /inicio ');
+            header('Location: / ');
 
         } else {//de lo contrario, se comprueban los datos:
 
@@ -101,7 +101,7 @@ class LoginController extends CI_Controller
                         'password_hash' => $info['password'],
                         'activo' => $info['estado'],
                         'rol' => $info['rol'],
-                        'imagen_perfil' => $info['imagen_perfil'],
+                        'imagen_perfil' => ($info['imagen_perfil'] == null ? 'perfil-predeter.jpg' : $info['imagen_perfil']),
                         'logueado' => TRUE
                     );
                 }
@@ -109,7 +109,7 @@ class LoginController extends CI_Controller
                 //debug($usuario_data);
 
                 $this->session->set_userdata($usuario_data);
-                header("Location: /inicio");
+                header("Location: /");
             }
         }
     }
@@ -122,7 +122,7 @@ class LoginController extends CI_Controller
         if(!empty($datos)){
             $datos['title'] = 'No hay post disponibles en este momento, disculpe las molestias.';
             $vista = array(
-                'vista' =>  $datos['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
+                'vista' =>  $datos['rol'] == 'administrador' ? 'web/index.php' : 'web/index.php',
                 'params' => $datos,
                 'layout' => 'ly_session.php',
                 'titulo' => 'Inicio - logueado',
@@ -182,7 +182,7 @@ class LoginController extends CI_Controller
 
 		$this->BackEndModel->update('usuarios', $datos, $where);
 
-		header('Location: /inicio');
+		header('Location: /');
 	}
 
     public function cerrar_sesion()

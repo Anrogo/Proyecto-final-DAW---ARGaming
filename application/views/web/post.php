@@ -13,7 +13,7 @@ $hora_post = $creado[1];//guarda la hora solamente
   <div class="row">
 
     <!-- Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-12 col-lg-8">
 
       <!-- Titulo -->
       <h1 class="mt-4"><?php echo $post['titulo']; ?></h1>
@@ -135,7 +135,7 @@ $hora_post = $creado[1];//guarda la hora solamente
     </div>
 
     <!-- Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <div class="col-12 col-lg-4">
 
       <!-- Search Widget 
       <div class="card my-4">

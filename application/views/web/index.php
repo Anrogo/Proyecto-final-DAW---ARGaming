@@ -152,10 +152,10 @@
     </div>
 </div>
 </div>
-<div class="container-fluid bg-dark">
+<div class="container-fluid bg-dark mt-3 pt-2 w-100">
 <div class="container bg-light">
     <!-- Three columns of text below the carousel -->
-    <div class="row">
+    <div class="row p-4">
         <div class="col-lg-4">
             <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
                 <title>Placeholder</title>

@@ -19,14 +19,13 @@ class AdminController extends CI_Controller
 
 		if (!empty($datos) && $datos['rol'] == 'administrador') {
 			$vista = array(
-				'vista' => 'admin/index.php',
+				'vista' => 'web/index.php',
 				'params' => $datos,
-				'layout' => 'ly_admin.php',
+				'layout' => 'ly_session.php',
 				'titulo' => 'Inicio',
 			);
 
 			$this->layouts->view($vista);
-
 		} else { //si no se consigue verificar correctamente, te manda al inicio
 			header("Location: /");
 		}
@@ -44,7 +43,6 @@ class AdminController extends CI_Controller
 				'titulo' => 'Administración',
 			);
 			$this->layouts->view($vista);
-
 		} else {
 			header("Location: /error ");
 		}
@@ -65,7 +63,6 @@ class AdminController extends CI_Controller
 			);
 
 			$this->layouts->view($vista);
-
 		} else {
 
 			header("Location: /error ");
@@ -112,24 +109,49 @@ class AdminController extends CI_Controller
 
 	public function listado_usuarios()
 	{
-		$datos = comprobar_login();
-		if (!empty($datos) && $datos['rol'] == 'administrador') {
+		$verif = comprobar_login();
+		//debug($this->uri);
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
 
-			$info = $this->BackEndModel->Lista('usuarios','id_usuario');
-			//debug($info);
-			$datos = array(
-				'usuarios' => $info
-			);
+			$datos['rol'] = $verif['rol'];
 
+			if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+				$cadena = $this->input->post('buscar');
+				$info = $this->BackEndModel->busqueda_usuarios($cadena);
+				//debug($info);
+
+				if (!empty($info)) { //si se encuentran registros coincidentes, se devuelven
+					$datos['busqueda'] = $cadena;
+					$datos['usuarios'] = $info;
+				} else { //si se busca pero no se encuentra, lo comunica
+					$datos['busqueda'] = $cadena;
+					$datos['resultado'] = 'No se han encontrado resultados';
+				}
+			} else { //si no se ha realizado ninguna búsqueda simplemente muestra todos los registros diponibles
+
+				if ($this->uri->segment(5) == 'asc' || $this->uri->segment(5) == 'desc') {
+					if ($this->uri->segment(5) == 'asc') { //si se ha solicitado que sea asc se le pasa una consulta a la tabla ordenando de forma ascendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$info = $this->BackEndModel->Lista('usuarios', $filtro, 'asc');
+					}
+					if ($this->uri->segment(5) == 'desc') { //si se ha solicitado que sea desc se le pasa una consulta a la tabla ordenando de forma descendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$info = $this->BackEndModel->Lista('usuarios', $filtro, 'desc');
+					}
+				} else { //por defecto muestre a partir de los id como 'asc'
+					$info = $this->BackEndModel->Lista('usuarios', 'id_usuario');
+				}
+				$datos['usuarios'] = $info;
+				//debug($info);
+			}
+			//debug($datos);
 			$vista = array(
 				'vista' => 'admin/listado_usuarios.php',
 				'params' => $datos,
 				'layout' => 'ly_admin.php',
 				'titulo' => 'Usuarios',
 			);
-
 			$this->layouts->view($vista);
-
 		} else {
 
 			header("Location: /error ");
@@ -205,7 +227,7 @@ class AdminController extends CI_Controller
 		$verif = comprobar_login();
 
 		if (!empty($verif) && $verif['rol'] == 'administrador') {
-			
+
 			foreach ($_POST as $key => $value) {
 				$datos[$key] = $value;
 				//el campo que esté vacío no se incluye en la actualización:
@@ -228,11 +250,9 @@ class AdminController extends CI_Controller
 			$this->BackEndModel->update('usuarios', $datos, $where);
 
 			header('Location: /admin/panel-control/usuarios');
-
 		} else {
 
 			header('Location: /error');
-
 		}
 	}
 
@@ -248,54 +268,68 @@ class AdminController extends CI_Controller
 			$this->BackEndModel->delete('usuarios', $where);
 
 			header('Location: /admin/panel-control/usuarios');
-		
 		} else {
 
 			header('Location: /error');
-
 		}
+	}
+
+	public function buscar_usuario()
+	{
+		$nombre = $this->input->post('buscar');
+		$datos = $this->BackEndModel->buscar_usuario($nombre);
+		debug($datos);
 	}
 
 	public function listado_post()
 	{
-		$posts = $this->BackEndModel->Lista('post','id_post');
-
-		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'posts' => $posts,
-		);
-		//debug($datos);
-		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
-		if(!empty($verif) && $verif['rol'] == 'administrador'){
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
 
-			$datos['rol'] = $verif['rol'];			
+			$datos['rol'] = $verif['rol'];
 
+			if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+				$cadena = $this->input->post('buscar');
+				$posts = $this->BackEndModel->busqueda_post($cadena);
+				//debug($info);
+
+				if (!empty($posts)) { //si se encuentran registros coincidentes, se devuelven
+					$datos['busqueda'] = $cadena;
+					$datos['posts'] = $posts;
+				} else { //si se busca pero no se encuentra, lo comunica
+					$datos['busqueda'] = $cadena;
+					$datos['resultado'] = 'No se han encontrado resultados';
+				}
+			} else { //si no se ha realizado ninguna búsqueda simplemente muestra todos los registros diponibles
+
+				if ($this->uri->segment(5) == 'asc' || $this->uri->segment(5) == 'desc') {
+					if ($this->uri->segment(5) == 'asc') { //si se ha solicitado que sea asc se le pasa una consulta a la tabla ordenando de forma ascendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$posts = $this->BackEndModel->Filtrar_post($filtro, 'asc');
+					}
+					if ($this->uri->segment(5) == 'desc') { //si se ha solicitado que sea desc se le pasa una consulta a la tabla ordenando de forma descendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$posts = $this->BackEndModel->Filtrar_post($filtro, 'desc');
+					}
+				} else { //por defecto muestre a partir de los id como 'asc'
+					$posts = $this->BackEndModel->Listado_post_y_usuarios();
+				}
+
+				$datos['posts'] = $posts;
+			}
+			//debug($datos);
 			$vista = array(
 				'vista' => 'admin/lista-post.php',
 				'params' => $datos,
 				'layout' => 'ly_admin.php',
 				'titulo' => 'Lista de post'
 			);
-
 			$this->layouts->view($vista);
-
 		} else {
 
-			header('Location: /error');
-
+			header("Location: /error ");
 		}
-	}
-
-	public function registrar_nuevo_post()
-	{
-
-	}
-
-	public function actualizar_post()
-	{
-		
 	}
 
 	public function eliminar_post()
@@ -309,30 +343,39 @@ class AdminController extends CI_Controller
 			$this->BackEndModel->delete('post', $where);
 
 			header('Location: /admin/panel-control/post');
-		
 		} else {
 
 			header('Location: /error');
-
 		}
 	}
-
+/*
 	public function listado_comentarios()
 	{
-		$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios();
-
-		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'comentarios' => $comentarios,
-		);
-
-		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
-		if(!empty($verif)){
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
 
-			$datos['rol'] = $verif['rol'];			
+			$datos['rol'] = $verif['rol'];
 
+			if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+				$cadena = $this->input->post('buscar');
+				$comentarios = $this->BackEndModel->busqueda_comentario($cadena);
+				//debug($info);
+
+				if (!empty($comentarios)) { //si se encuentran registros coincidentes, se devuelven
+					$datos['busqueda'] = $cadena;
+					$datos['comentarios'] = $comentarios;
+				} else { //si se busca pero no se encuentra, lo comunica
+					$datos['busqueda'] = $cadena;
+					$datos['resultado'] = 'No se han encontrado resultados';
+				}
+			} else { //si no se ha realizado ninguna búsqueda simplemente muestra todos los registros diponibles
+
+				$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios();
+				$datos['comentarios'] = $comentarios;
+				//debug($info);
+			}
+			//debug($datos);
 			$vista = array(
 				'vista' => 'admin/lista-comentarios.php',
 				'params' => $datos,
@@ -340,11 +383,62 @@ class AdminController extends CI_Controller
 				'titulo' => 'Lista de comentarios'
 			);
 			$this->layouts->view($vista);
-		//debug($datos);
 		} else {
 
-			header('Location: /error');
+			header("Location: /error ");
+		}
+	}
+*/
 
+	public function listado_comentarios()
+	{
+		$verif = comprobar_login();
+
+		if (!empty($verif) && $verif['rol'] == 'administrador') {
+
+			$datos['rol'] = $verif['rol'];
+
+			if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+				$cadena = $this->input->post('buscar');
+				$comentarios = $this->BackEndModel->busqueda_comentario($cadena);
+				//debug($info);
+
+				if (!empty($comentarios)) { //si se encuentran registros coincidentes, se devuelven
+					$datos['busqueda'] = $cadena;
+					$datos['comentarios'] = $comentarios;
+				} else { //si se busca pero no se encuentra, lo comunica
+					$datos['busqueda'] = $cadena;
+					$datos['resultado'] = 'No se han encontrado resultados';
+				}
+			} else { //si no se ha realizado ninguna búsqueda simplemente muestra todos los registros diponibles
+
+				if ($this->uri->segment(5) == 'asc' || $this->uri->segment(5) == 'desc') {
+					if ($this->uri->segment(5) == 'asc') { //si se ha solicitado que sea asc se le pasa una consulta a la tabla ordenando de forma ascendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios($filtro, 'asc');
+					}
+					if ($this->uri->segment(5) == 'desc') { //si se ha solicitado que sea desc se le pasa una consulta a la tabla ordenando de forma descendente
+						$filtro = explode('-', $this->uri->segment(4))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+						$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios($filtro, 'desc');
+					}
+				} else { //por defecto muestre a partir de los id como 'asc'
+					$comentarios = $this->BackEndModel->Listado_comentarios_post_y_usuarios('id_comentario','asc');
+				}
+				
+				$datos['comentarios'] = $comentarios;
+				//debug($info);
+			}
+			//debug($datos);
+			$vista = array(
+				'vista' => 'admin/lista-comentarios.php',
+				'params' => $datos,
+				'layout' => 'ly_admin.php',
+				'titulo' => 'Lista de comentarios'
+			);
+			$this->layouts->view($vista);
+		} else {
+
+			header("Location: /error ");
 		}
 	}
 
@@ -359,11 +453,9 @@ class AdminController extends CI_Controller
 			$this->BackEndModel->delete('comentarios', $where);
 
 			header('Location: /admin/panel-control/comentarios');
-		
 		} else {
 
 			header('Location: /error');
-
 		}
 	}
 

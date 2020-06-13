@@ -38,7 +38,11 @@
 <body>
 
     <!-- Navigation -->
-    <?php $rol == 'administrador' ? require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_session_admin.php" : require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_session_user.php"; ?>
+    <?php 
+    $rol == 'administrador' 
+        ? require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_session_admin.php" 
+        : require_once dirname( dirname( dirname(__FILE__))) . "/views/includes/header_session_user.php"; 
+    ?>
     
     <!-- Page Content -->
     <?php

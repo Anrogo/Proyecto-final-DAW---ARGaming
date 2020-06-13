@@ -17,6 +17,8 @@ $route['aviso-legal'] = "UserController/aviso_legal";
 $route['politica-cookies'] = "UserController/politica_cookies";
 $route['politica-privacidad'] = "UserController/politica_privacidad";
 $route['cambiar-password'] = 'UserController/cambiar_contraseña_sin_acceso';
+$route['usuario/(:num)'] = 'UserController/datos_usuario';
+$route['autores'] = 'UserController/autores_post';
 
 
 # LOGIN
@@ -38,6 +40,7 @@ $route['admin'] = 'AdminController/index';
 $route['admin/inicio'] = 'AdminController/index';
 $route['admin/perfil-admin'] = 'AdminController/perfil_admin';
 $route['admin/panel-control'] = 'AdminController/panel_control';
+
 # Admin - juegos
 $route['admin/panel-control/juegos'] = 'AdminController/listado_juegos';
 
@@ -82,7 +85,7 @@ $route['admin/responder-comentario/(:num)'] = 'FormController/responder_comentar
 $route['actualizar-comentario'] = 'AdminController/actualizar_comentario';
 $route['admin/eliminar-comentario/(:num)'] = 'AdminController/eliminar_comentario';
 
-
+# Otras rutas
 $route['default_controller'] = 'UserController/index';
 $route['404_override'] = 'UserController/error_404';
 $route['translate_uri_dashes'] = FALSE;

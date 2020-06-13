@@ -1,26 +1,52 @@
-<!--TABLA/LISTADO DE POST-->
-<div class="container">
-<div class="row mt-4">
-    <div class="col-12 col-md-5 text-center">
-      <h1 class="">Listado de posts</h1>
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><?php echo $username ?></h3>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-4">
+                        <div class="foto-perfil mt-2 ml-3">
+                            <img src="/images/fotos_perfil/<?php echo $imagen_perfil ?>" class="img-fluid" alt="Foto-perfil">
+                        </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-responsive-md">
+                        <tr>
+                            <th class="col-3 list-group-item-success">Nombre</th>
+                            <td><?php echo $nombre ?></td>
+                        </tr>
+                        <tr>
+                            <th class="col-3 col-md-3 list-group-item-success">Apellidos</th>
+                            <td><?php echo $apellidos ?></td>
+                        </tr>
+                        <tr>
+                            <th class="col-3 col-md-3 list-group-item-success">Correo</th>
+                            <td><?php echo $email ?></td>
+                        </tr>
+                        <tr>
+                            <th class="col-3 col-md-3 list-group-item-success">Rol</th>
+                            <td><?php echo $rol ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-12 col-md-3 text-center">
-      <a href="/nuevo-post" class="btn btn-primary">Crear un nuevo post</a>
-    </div>
-    <div class="col-12 col-md-4">
-      <form class="form-inline my-2 my-lg-0 justify-content-center">
-        <input class="form-control mr-sm-2 mb-sm-2" type="text" placeholder="Buscar...">
-        <button class="btn btn-primary my-2 my-sm-0 mb-md-2" type="submit">Búsqueda</button>
-      </form>
-    </div>
-  </div>
-        <div class="col-md-12">
+    <?php
+        if (isset($posts)) {
+
+    ?>
+    <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Posts creados por <?php echo $username ?></h3>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
-                    <?php
-                    if (isset($posts)) {
-
-                    ?>
+                    
                         <thead class="thead-dark">
                             <tr>
                                 <th class="th-sm">Imagen</th>
@@ -37,13 +63,6 @@
                         <?php
 
                         foreach ($posts as $post) {
-
-                            //Se filtran algunos valores clave
-                            if ($post['estado'] == "1") {
-                                $abierto = "<img src='/images/activo.png'  width=20px>";
-                            } else {
-                                $abierto = "<img src='/images/no_activo.png' width=20px>";
-                            }
 
                             //Se procesan los datos recibidos
                             $id = $post['id_post'];
@@ -76,8 +95,6 @@
                 </table>
 
             </div>
-        </div>
+        </>
     </div>
-    <!-- /.row -->
-
 </div>

@@ -10,41 +10,14 @@ class UserController extends CI_Controller
 	}
 	public function index()
 	{
-		/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
-		/*$datos = comprobar_login();
-			if (!empty($datos)) {
-				$datos['title'] = 'No hay post disponibles en este momento, disculpe las molestias';
-				$vista = array(
-					'vista' =>  $datos['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
-					'params' => $datos,
-					'layout' => 'ly_session.php',
-					'titulo' => 'Inicio - logueado'
-				);
-				$this->layouts->view($vista);
-			} else { // si no estuviera logueado muestra la página de inicio con normalidad, quitando ciertas opciones de la cabecera
-				// $posts = $this->FrontEndModel->list_all_posts();
-				$datos = array(
-					//'posts' => $posts,
-					'title' => 'No hay post disponibles en este momento, disculpe las molestias.'
-				);
-				//debug($datos);
-				//echo "**".$datos['posts'][0]['display_name']."**";
-				$vista = array(
-					'vista' => 'web/index.php',
-					'params' => $datos,
-					'layout' => 'ly_home.php',
-					'titulo' => 'Inicio - ARGaming'
-				);
-				$this->layouts->view($vista);
-			}
-			*/
-		$posts = $this->FrontEndModel->Lista('post','visitas');
+		$posts = $this->FrontEndModel->Lista('post', 'visitas');
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(
 			'posts' => $posts,
 		);
 		//debug($datos);
-		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
+		/*Tras obtener los datos que se van a mostrar, 
+		se comprueba si hay una sesión abierta por parte del usuario*/
 		$verif = comprobar_login();
 		if (!empty($verif)) {
 			$datos['rol'] = $verif['rol'];
@@ -52,7 +25,7 @@ class UserController extends CI_Controller
 				'vista' => 'web/index.php',
 				'params' => $datos,
 				'layout' => 'ly_session.php',
-				'titulo' => 'Post'
+				'titulo' => 'Inicio'
 			);
 			$this->layouts->view($vista);
 		} else {
@@ -60,7 +33,7 @@ class UserController extends CI_Controller
 				'vista' => 'web/index.php',
 				'params' => $datos,
 				'layout' => 'ly_home.php',
-				'titulo' => 'Post'
+				'titulo' => 'Inicio'
 			);
 			$this->layouts->view($vista);
 		}
@@ -112,6 +85,47 @@ class UserController extends CI_Controller
 			$this->layouts->view($vista);
 		}
 	}
+	public function datos_usuario()
+	{
+		$where['id_usuario'] = $this->uri->segment(2);
+
+		$usuario = $this->FrontEndModel->Buscar('usuarios', 'id_usuario', $where['id_usuario']); //info del usuario si existe
+		$posts = $this->FrontEndModel->Datos_autor_post($where['id_usuario']); //info de los post que ha creado el usuario
+
+		if (!empty($usuario)) {//si existe el usuario se cargan los datos y se muestran en la vista
+			$datos = array(
+				'id_usuario' => $usuario[0]['id_usuario'],
+				'username' => $usuario[0]['username'],
+				'nombre' => $usuario[0]['nombre'],
+				'apellidos' => $usuario[0]['apellidos'],
+				'email' => $usuario[0]['email'],
+				'rol' => $usuario[0]['rol'] == '1' ? 'administrador' : 'usuario estándar',
+				'imagen_perfil' => $usuario[0]['imagen_perfil'],
+				'posts' => $posts
+			);
+			//debug($datos);
+			$verif = comprobar_login();
+			if (!empty($verif)) {
+				$vista = array(
+					'vista' => 'web/usuario.php',
+					'params' => $datos,
+					'layout' => 'ly_session.php',
+					'titulo' => 'Perfil de usuario'
+				);
+				$this->layouts->view($vista);
+			} else {
+				$vista = array(
+					'vista' => 'web/usuario.php',
+					'params' => $datos,
+					'layout' => 'ly_home.php',
+					'titulo' => 'Perfil de usuario'
+				);
+				$this->layouts->view($vista);
+			}
+		} else { //si no se localizan datos de ese usuario sería porque no existe y se devuelve error 
+			header('Location: /error ');
+		}
+	}
 	public function error_404()
 	{
 		$datos = array();
@@ -124,106 +138,6 @@ class UserController extends CI_Controller
 		);
 		$this->layouts->view($vista);
 	}
-	/*
-	public function cargar_pagina($pag,$datos,$titulo){
-		$verif = comprobar_login();
-		$paginas = array(
-			'inicio' => $verif['rol'] == 'administrador' ? 'admin/index.php' : 'web/index.php',
-			'login' => 'user/login.php',
-			'perfil-usuario' => 'web/logueado.php',
-			'creador' => 'web/creador-blog.php',
-			'juegos' => 'web/listado-videojuegos.php',
-			'post' => 'web/index.php',
-			'aviso-legal' => 'web/aviso-legal.php',
-			'politica-cookies' => 'web/politica-cookies.php',
-			'politica-privacidad' => 'web/politica-privacidad.php'
-		);
-
-		$layout = array(
-			'inicio' => '',
-			'login' => 'ly_login.php',
-			'perfil-usuario' => '',
-			'creador' => '',
-			'juegos' => '',
-			'post' => '',
-			'aviso-legal' => '',
-			'politica-cookies' => '',
-			'politica-privacidad' => ''
-		);
-
-		$pag = 'inicio';
-		/* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper 
-		$verif = comprobar_login();
-		if(!empty($verif)){
-			$datos['vacio'] = 'No hay post disponibles en este momento, disculpe las molestias';
-			$vista = array(
-				'vista' =>  $paginas[$pag],
-				'params' => $datos,
-				'layout' => $layout[$pag] == '' ? 'ly_session.php' : $layout[$pag],
-				'titulo' => $titulo
-			);
-			$this->layouts->view($vista);
-		} else {// si no estuviera logueado muestra la página de inicio con normalidad, quitando ciertas opciones de la cabecera
-			// $posts = $this->FrontEndModel->list_all_posts();
-
-			$datos = array(
-				//'posts' => $posts,
-				'title' => 'No hay post disponibles en este momento, disculpe las molestias.'
-			);
-			
-			//debug($datos);
-			//echo "**".$datos['posts'][0]['display_name']."**";
-			
-			$vista = array(
-				'vista' => $paginas[$pag],
-				'params' => $datos,
-				'layout' => $layout[$pag] == '' ? 'ly_home.php' : $layout[$pag],
-				'titulo' => $titulo
-			);
-
-			$this->layouts->view($vista);
-		}	
-	} */
-
-	/*
-	public function registro_usuario()
-	{
-
-		$datos = array();
-
-		$vista = array(
-			'vista' => 'web/nuevo_usuario.php',
-			'params' => $datos,
-			'layout' => 'ly_home.php',
-			'titulo' => 'Añadir nuevo usuario'
-		);
-
-		$this->layouts->view($vista);
-	}
-
-	public function registrar_nuevo_usuario()
-	{
-		foreach ($_POST as $key => $value) {
-			$datos[$key] = $value;
-		}
-		//debug($datos);
-
-		if ($datos['password'] == $datos['password_confirm']){
-			//Es necesario pasar la contraseña cifrada previamente, así que utilizamos la función md5 para cifrarla
-			$datos['password'] = md5($datos['password']);
-			unset($datos['password_confirm']);
-		}
-		
-		//$datos['password'] = md5($datos['password']);
-		
-		//debug($datos);
-		
-		$this->BackEndModel->insert('usuarios', $datos);
-
-		header('Location: /inicio');
-	}
-	*/
-
 	public function juegos()
 	{
 		//Leemos los datos recibidos en formato json
@@ -266,16 +180,15 @@ class UserController extends CI_Controller
 			$this->layouts->view($vista);
 		}
 	}
-
 	public function post()
 	{
-		$posts = $this->FrontEndModel->Lista('post', 'visitas');
-
+		$posts = $this->BackEndModel->Listado_post_y_usuarios();
+		
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos = array(
 			'posts' => $posts,
 		);
-		//debug($datos);
+		debug($datos);
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
@@ -304,7 +217,6 @@ class UserController extends CI_Controller
 			$this->layouts->view($vista);
 		}
 	}
-
 	public function ver_post()
 	{
 		//debug($this->uri);
@@ -312,13 +224,13 @@ class UserController extends CI_Controller
 		$post = $this->FrontEndModel->Listar_post($where['id_post']); //info del post si existe
 		if (!empty($post)) { //si todo está bien, la variable post vuelve con información y actualizo las visitas a este en bbdd
 			$this->FrontEndModel->actualizar_visitas_post($where['id_post']); //esta función actualiza las visitas de la tabla post con el id del post
-			$autor = $this->FrontEndModel->Buscar('usuarios', 'id_usuario', $post[0]['id_usuario']); //info autor post
+			$autor = $this->FrontEndModel->Buscar('usuarios', 'id_usuario', $post['data'][0]['id_usuario']); //info autor post
 			$comentarios = $this->FrontEndModel->Listar_comentarios($where['id_post']); //listado de comentarios de este post
 
 			$datos = array(
-				'post' => $post,
+				'post' => $post['data'],
 				'autor' => $autor,
-				'comentarios' => $comentarios
+				'comentarios' => $comentarios['data']
 			);
 
 			//debug($datos);
@@ -445,42 +357,35 @@ class UserController extends CI_Controller
 			header('Location: /error');
 		}
 	}
-
-	public function agregar_comentarios($datos_nuevos)
+	public function autores_post()
 	{
-		//$comentario['id_post'] = $datos_nuevos['id_post'];
-		$comentario['id_usuario'] = $datos_nuevos['id_usuario'];
-		$comentario['texto'] = $datos_nuevos['texto'];
 
-		debug($comentario);
-
-		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
-		//unset($comentarios['id']);
-
-		$this->BackEndModel->insertar('comentarios', $comentario);
-
-		header('Location: /post/' . $datos_nuevos['id_post']);
-	}
-	/*
-	public function contactar(){
-
-		$titulo = 'FORMULARIO DE CONTACTO';
+		$autores = $this->FrontEndModel->Autores_post();
 
 		$datos = array(
-			'title' => $titulo
+			'autores' => $autores
 		);
-
-		$vista = array(
-			'vista' => 'web/contacto.php',
-			'params' => $datos,
-			'layout' => 'ly_contacto.php',
-			'titulo' => 'Contacto'
-		);
-
-		$this->layouts->view($vista);
+		//debug($datos);
+		$verif = comprobar_login();
+		if (!empty($verif)) {
+			$datos['rol'] = $verif['rol'];
+			$vista = array(
+				'vista' => 'web/autores.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => 'Autores'
+			);
+			$this->layouts->view($vista);
+		} else {
+			$vista = array(
+				'vista' => 'web/autores.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => 'Autores'
+			);
+			$this->layouts->view($vista);
+		}
 	}
-	*/
-
 	public function aviso_legal()
 	{
 
@@ -499,7 +404,6 @@ class UserController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-
 	public function politica_cookies()
 	{
 
@@ -518,7 +422,6 @@ class UserController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-
 	public function politica_privacidad()
 	{
 
@@ -537,7 +440,6 @@ class UserController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
-
 	public function creador_blog()
 	{
 
@@ -556,55 +458,19 @@ class UserController extends CI_Controller
 
 		$this->layouts->view($vista);
 	}
+	public function agregar_comentarios($datos_nuevos)
+	{
+		//$comentario['id_post'] = $datos_nuevos['id_post'];
+		$comentario['id_usuario'] = $datos_nuevos['id_usuario'];
+		$comentario['texto'] = $datos_nuevos['texto'];
 
+		//debug($comentario);
 
+		//se quita el id antes de actualizar porque es la clave primaria y no se puede modificar
+		//unset($comentarios['id']);
 
+		$this->BackEndModel->insertar('comentarios', $comentario);
 
-	/*
-    public function post()
-    {
-        $post_id = $this->uri->segment(2);
-        $post = $this->FrontEndModel->list_one_post($post_id);
-
-        $datos = array(
-            'post' => $post
-        );
-
-		//Si no tiene autor lo muestra como anónimo
-		if($datos['post'][0]['display_name'] == ''){
-			$datos['post'][0]['display_name'] = 'Anónimo';
-		}
-		//debug($datos);
-		//echo "**".$datos['post'][0]['display_name']."**";
-		
-		$vista = array(
-			'vista' => 'web/post.php',
-			'params' => $datos,
-			'layout' => 'ly_blog.php',
-			'titulo' => 'Página de post',
-		);
-
-		$this->layouts->view($vista);
-    }
-
-    public function autor()
-    {
-        $author_id = $this->uri->segment(2);
-        $post = $this->FrontEndModel->list_all_posts_by_author($author_id);
-
-        $datos = array(
-            'posts' => $post
-        );
-
-		$vista = array(
-			'vista' => 'web/author.php',
-			'params' => $datos,
-			'layout' => 'ly_blog.php',
-			'titulo' => 'Página de autor',
-		);
-
-		$this->layouts->view($vista);
-
+		header('Location: /post/' . $datos_nuevos['id_post']);
 	}
-	*/
 }

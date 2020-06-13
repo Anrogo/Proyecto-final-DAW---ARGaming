@@ -149,7 +149,7 @@
                             echo "<tr id=\"" . $id . "\">
                             <td class=\" col-1\"><img src=\"/images/" . $imagen . "\" class=\"img-fluid\" width=\"440px\"></td>
                             <td><a href=\"/post/" . $id . "\">" . $titulo . "</a></td>
-                            <td><a href=\"/autor/" . $id_usuario . "\">" . $username . "</a></td>
+                            <td><a href=\"/usuario/" . $id_usuario . "\">" . $username . "</a></td>
                             <td class=\"col-2 small\">" . $contenido . " </td>
                             <td class=\" col-1 small\"><a href=\"post/" . $id . "\">$link</a></td>
                             <td class=\"col-1 small\">" . $creado . " </td>

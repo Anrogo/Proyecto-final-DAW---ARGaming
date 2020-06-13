@@ -23,7 +23,8 @@ class LoginModel extends CI_Model
  
      return ( $rows);
    }
- 
+  # Ejecuta consultas, con los valores pasados por separado,
+  # y devuelte los resultados en un array
    public function ExecuteResultsParamsArray( $sql, $params)
    {
  
@@ -38,13 +39,13 @@ class LoginModel extends CI_Model
      $this->db->query( $sql);
    }
  
-    # Método para validar el email y contraseña que nos han pasado desde el formulario
+  # Método para validar el email y contraseña que nos han pasado desde el formulario
   public function comprobar_usuario( $datos)
   {
-    //email = '".$datos['email']
-    $sql = "Select * From usuarios Where username = '".$datos['username']."' And password = '".$datos['password']."'";
+    $sql = "SELECT * FROM usuarios WHERE username =  ?  AND password =  ? ";
+    $params = array( $datos['username'],$datos['password']);
 
-    return ( $this->ExecuteArrayResults( $sql ));
+    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
 
   }
 }

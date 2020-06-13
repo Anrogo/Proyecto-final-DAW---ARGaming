@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class LoginController extends CI_Controller
 {
-
     function __construct()
     {
         parent::__construct();
@@ -12,7 +11,6 @@ class LoginController extends CI_Controller
         $this->load->model('BackEndModel', 'BackEndModel');
         $this->load->model('LoginModel', 'LoginModel');
     }
-
     public function login()
     {
         /* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
@@ -54,7 +52,6 @@ class LoginController extends CI_Controller
 
         
     }
-
     public function login2()
     {
         /* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
@@ -81,9 +78,9 @@ class LoginController extends CI_Controller
             */
 
             $usuario = $this->LoginModel->comprobar_usuario($datos);
-
+            //debug($usuario);
             //Filtramos los posibles errores según lo que devuelva el modelo
-            if (empty($usuario)) {
+            if (empty($usuario['data'])) {
 
                 header("Location: /login/error");
 
@@ -91,7 +88,8 @@ class LoginController extends CI_Controller
 
                 //debug($usuario);
                 //Se guarda en variables de sesión los parámetros más importantes para poder utilizarlos mientras no se cierre sesión
-                foreach ($usuario as $info) {
+                foreach ($usuario['data'] as $info) {
+                //foreach ($usuario as $info) {
                     $usuario_data = array(
                         'id' => $info['id_usuario'],
                         'nombre_usuario' => $info['username'],
@@ -113,7 +111,6 @@ class LoginController extends CI_Controller
             }
         }
     }
-
     public function inicio_logueado()
     {
         /* El inicio de sesión se comprueba en la funcion comprobar_login(), ubicada en utiles_helper */
@@ -132,15 +129,16 @@ class LoginController extends CI_Controller
             header("Location: /login");
         }
     }
-
     public function perfil_usuario()
     {
         if ($this->session->userdata('logueado')) {
             $datos = array();
             $datos['nombre'] = $this->session->userdata('nombre');
+            $datos['apellidos'] = $this->session->userdata('apellidos');
             $datos['nombre_usuario'] = $this->session->userdata('nombre_usuario');
+            $datos['email'] = $this->session->userdata('email');
             $datos['password_hash'] = $this->session->userdata('password_hash');
-            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'administrador' : 'usuario estándar';
+            $datos['rol'] = $this->session->userdata('rol') == 1 ? 'Administrador' : 'Usuario estándar';
             $datos['id'] = $this->session->userdata('id');
             $datos['imagen_perfil'] = $this->session->userdata('imagen_perfil');
             //debug($_SESSION);
@@ -158,7 +156,6 @@ class LoginController extends CI_Controller
             header("Location: /login");
         }
     }
-
     public function actualizar_usuario()
 	{
 		foreach ($_POST as $key => $value) {
@@ -184,7 +181,6 @@ class LoginController extends CI_Controller
 
 		header('Location: /');
 	}
-
     public function cerrar_sesion()
     {
         $usuario_data = array(
@@ -193,24 +189,5 @@ class LoginController extends CI_Controller
         $this->session->set_userdata($usuario_data);
         $_SESSION = array();
         header('Location:/');
-    }
-
-    public function registro()
-    {
-
-        $titulo = 'FORMULARIO DE REGISTRO';
-
-        $datos = array(
-            'title' => $titulo
-        );
-
-        $vista = array(
-            'vista' => 'web/index.php',
-            'params' => $datos,
-            'layout' => 'ly_home.php',
-            'titulo' => 'Registro para nuevos usuarios',
-        );
-
-        $this->layouts->view($vista);
     }
 }

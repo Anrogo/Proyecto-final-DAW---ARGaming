@@ -51,17 +51,13 @@
                 <div class="dropdown-menu">
                     <a href="/lista-post" class="dropdown-item">Post</a>
                     <div class="dropdown-divider"></div>
-                    <a href="/" class="dropdown-item">Autores</a>
+                    <a href="/autores" class="dropdown-item">Autores</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a href="/contacto" class="nav-link">Contacto</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Buscar...">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Busqueda</button>
-        </form>
     </div>
 </nav>
 

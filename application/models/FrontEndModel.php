@@ -44,79 +44,91 @@ class FrontEndModel extends CI_Model
   /* Actualizar número de visitas */
   public function actualizar_visitas_post( $id_post)
   {
-    /*
-    $this->db->set('field', 'field+1', FALSE);
-    $this->db->where('id', 2);
-    $this->db->update('mytable'); // gives UPDATE mytable SET field = field+1 WHERE id = 2
-    */
     $this->db->set('visitas', 'visitas+1', FALSE);
-    $this->db->where('id_post', $id_post);
+    $this->db->WHERE('id_post', $id_post);
     $this->db->update('post');
   }
 
+  /*Lista la tabla que se le solicite y clasifica la información a partir del parámetro indicado*/
   public function Lista($tabla,$clasif)
   {
-    $sql = "select * from ".$tabla." order by ".$clasif." desc";
+    $sql = "SELECT * FROM ".$tabla." order by ".$clasif." desc";
     return ( $this->ExecuteArrayResults( $sql ));
-
   }
 
+  /*Devuelve el registro que coincida, de la tabla, y con el valor indicados*/
   public function Buscar($tabla,$campo_clave,$cadena)
   {
 
-    $sql = "select * from ".$tabla." where ".$campo_clave." ='".$cadena."'";
+    $sql = "SELECT * FROM ".$tabla." WHERE ".$campo_clave." ='".$cadena."'";
     return ( $this->ExecuteArrayResults( $sql ));
-
   }
-//Buscar coincidencia de dos campos, el primero que no exista en ningún otro registro y el segundo que sí coincida para que se cumpla
+
+/*Buscar coincidencia de dos campos, el primero que no exista 
+en ningún otro registro y el segundo que sí coincida para que se cumpla*/
   public function Buscar_campo_existente($tabla,$campo1,$valor1,$campo2,$valor2)
   {
-
-    $sql = "select * from ".$tabla." where ".$campo1." != '".$valor1."' and ".$campo2." = '".$valor2."'";
+    $sql = "SELECT * FROM ".$tabla." WHERE ".$campo1." != '".$valor1."' and ".$campo2." = '".$valor2."'";
     return ( $this->ExecuteArrayResults( $sql ));
-
   }
 
     # Método para mostrar un post cuando se seleccione, a través de su id
     public function Listar_post($post_id)
     {
-  
-      $sql = "Select * From post Where id_post = " . $post_id;
-  
-      return ( $this->ExecuteArrayResults( $sql ));
-  
+      $sql = "SELECT * FROM post WHERE id_post = ?";
+      $params = array($post_id);
+      return ( $this->ExecuteResultsParamsArray( $sql, $params ));
     }
 
   # Método para mostrar un comentario cuando se seleccione, a través de su id
   public function Listar_comentario($comentario_id)
   {
-
-    $sql = "Select * From comentarios Where id_comentario = " . $comentario_id;
-    
-    return ( $this->ExecuteArrayResults( $sql ));
-
+    $sql = "SELECT * FROM comentarios WHERE id_comentario = ?";
+    $params = array($comentario_id);
+    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
   }
 
   # Método para mostrar todos los comentarios que existen en un post, según su id
   public function Listar_comentarios($post_id)
   {
-
-    $sql = "Select comentarios.id_comentario,comentarios.id_post,comentarios.id_usuario,comentarios.texto,comentarios.creado,usuarios.username,usuarios.email,usuarios.imagen_perfil 
-    From comentarios,usuarios 
-    WHERE comentarios.id_usuario = usuarios.id_usuario  and id_post = ". $post_id;
-    
-    return ( $this->ExecuteArrayResults( $sql ));
-
+    $sql = "SELECT comentarios.id_comentario,comentarios.id_post,comentarios.id_usuario,
+    comentarios.texto,comentarios.creado,usuarios.username,usuarios.email,usuarios.imagen_perfil 
+    FROM comentarios,usuarios 
+    WHERE comentarios.id_usuario = usuarios.id_usuario  and id_post = ?";
+    $params = array($post_id);
+    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
   }
+
+  # Método para listar el número de post creados por cada usuario
+  public function Autores_post()
+  {
+    $sql = "SELECT usuarios.username,usuarios.id_usuario,count(post.id_post) as numero_post
+    FROM usuarios,post 
+    WHERE post.id_usuario = usuarios.id_usuario 
+    GROUP BY usuarios.username ";
+    return ( $this->ExecuteArrayResults( $sql ));
+  }
+
+    # Método para listar los datos de los post creados por un usuario concreto
+    public function Datos_autor_post($id)
+    {
+      $sql = "SELECT post.id_post,post.id_usuario,post.titulo,post.imagen_post,post.contenido,post.slug,post.creado,post.modificado,post.visitas,post.estado,
+      usuarios.username,usuarios.id_usuario
+      FROM post,usuarios 
+      WHERE post.id_usuario = usuarios.id_usuario AND usuarios.id_usuario = $id";
+      return ( $this->ExecuteArrayResults( $sql ));
+    }
+
+  /* ----- Funciones antiguas ----- */
 
   # Método para mostrar los post en la página principal solo con parte de la información
   public function list_all_posts()
   {
 
-    $sql = "Select p.*, a.display_name 
-    From posts as p
+    $sql = "SELECT p.*, a.display_name 
+    FROM posts as p
     left join authors as a On p.author_id = a.id
-    Where p.enabled = 1 order by p.created desc limit 10";
+    WHERE p.enabled = 1 order by p.created desc limit 10";
 
     return ( $this->ExecuteArrayResults( $sql ));
 
@@ -126,10 +138,10 @@ class FrontEndModel extends CI_Model
   public function list_one_post($post_id)
   {
 
-    $sql = "Select p.*, a.display_name 
-    From posts as p
+    $sql = "SELECT p.*, a.display_name 
+    FROM posts as p
     left join authors as a On p.author_id = a.id
-    Where p.id = " . $post_id;
+    WHERE p.id = " . $post_id;
 
     return ( $this->ExecuteArrayResults( $sql ));
 
@@ -139,10 +151,10 @@ class FrontEndModel extends CI_Model
    public function list_all_posts_by_author($author_id)
    {
  
-     $sql = "Select p.*, a.display_name 
-     From posts as p
+     $sql = "SELECT p.*, a.display_name 
+     FROM posts as p
      left join authors as a On p.author_id = a.id
-     Where p.enabled = 1 And p.author_id = ".$author_id." 
+     WHERE p.enabled = 1 And p.author_id = ".$author_id." 
      order by p.created desc";
  
      return ( $this->ExecuteArrayResults( $sql ));

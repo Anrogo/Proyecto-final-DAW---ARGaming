@@ -56,18 +56,6 @@ class BackEndModel extends CI_Model
     $this->db->delete( $tabla, $WHERE);
   }
 
-  # Método para validar el email y contraseña que nos han pasado desde el formulario
-  public function login( $datos)
-  {
-/*
-    $sql = "SELECT * FROM usuarios WHERE username = '".$datos['username']."' And password = '".$datos['password']."'";
-    return ( $this->ExecuteArrayResults( $sql ));
-*/
-    $sql = "SELECT * FROM usuarios WHERE username =  ?  And password =  ? ";
-    $params = array( $datos['username'],$datos['password']);
-    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
-  }
-
   public function Lista($tabla,$filtro,$orden = null)
   {
 
@@ -88,7 +76,8 @@ class BackEndModel extends CI_Model
     $sql = "SELECT post.id_post,post.id_usuario,post.titulo,post.imagen_post,post.contenido,post.slug,post.creado,post.modificado,post.visitas,post.estado,
     usuarios.username
     FROM post,usuarios
-    WHERE post.id_usuario = usuarios.id_usuario";
+    WHERE post.id_usuario = usuarios.id_usuario
+    ORDER BY visitas";
 
     return ( $this->ExecuteArrayResults( $sql ));
   }
@@ -141,7 +130,8 @@ class BackEndModel extends CI_Model
   //Función que permite buscar coincidencias en la tabla de post (vinculada a la de usuarios) mediante las expresiones regulares
   public function busqueda_post($campo)
   {
-    $sql = "SELECT post.id_post,post.id_usuario,post.titulo,post.imagen_post,post.contenido,post.slug,post.creado,post.modificado,post.visitas,post.estado,
+    $sql = "SELECT post.id_post,post.id_usuario,post.titulo,post.imagen_post,
+    post.contenido,post.slug,post.creado,post.modificado,post.visitas,post.estado,
     usuarios.username,usuarios.id_usuario
     FROM post,usuarios
     WHERE post.id_usuario = usuarios.id_usuario and 
@@ -154,7 +144,7 @@ class BackEndModel extends CI_Model
   }
 
   //Función que permite buscar coincidencias en la tabla de comentarios (vinculada a la de usuarios y post) mediante las expresiones regulares
-  public function busqueda_comentario($campo)
+  public function busqueda_comentarios($campo)
   {
     $sql = "SELECT comentarios.id_comentario,comentarios.id_post,comentarios.id_usuario,comentarios.texto,comentarios.creado,
     usuarios.id_usuario,usuarios.username,

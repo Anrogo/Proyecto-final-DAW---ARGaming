@@ -12,9 +12,19 @@ class UserController extends CI_Controller
 	{
 		$posts = $this->FrontEndModel->Lista('post', 'visitas');
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'posts' => $posts,
-		);
+		$datos['posts'] = $posts;
+		
+		/* Mensaje de cookies: se comprueba si existe la cookie de nuestra web, en caso de que no exista se muestra el mensaje */
+
+		if(!isset($_COOKIE['cookies_aceptadas'])){
+
+			$datos['cookies'] = '<p>Éste sitio web usa cookies, si permanece aquí acepta su uso.
+			Puede leer más sobre el uso de cookies en nuestra <a href="/politica-privacidad">política de privacidad</a>
+			<br>
+			<a href="/aceptar-cookies"><button class="btn btn-primary mt-3">Aceptar y cerrar  <i class="fa fa-times"></i></button></a>
+			</p>';
+		}
+
 		//debug($datos);
 		/*Tras obtener los datos que se van a mostrar, 
 		se comprueba si hay una sesión abierta por parte del usuario*/

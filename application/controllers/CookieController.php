@@ -18,32 +18,31 @@ class CookieController extends CI_Controller {
 
 
    function set()
-
    {
     //Valores que se le asignan a la cookie
-       $cookie= array(
+    $nombre = 'cookies_aceptadas';
+    $valor = '1';
+    $expira = time() + 604800;      //ese tiempo es una semana                                                                             
+    $seguro = TRUE;
 
-           'name'   => 'remember_me',
-           'value'  => 'test',                            
-           'expire' => '300',                                                                                   
-           'secure' => TRUE
+    setcookie($nombre,$valor,$expira,$seguro);
 
-       );
-
-       $this->input->set_cookie($cookie);
-
-       echo "Congratulation Cookie Set";
-
+    //echo "Congratulation Cookie Set";
+    header('Location: /');
    }
 
 
 
    function get()
-
    {
     //muestra el contenido de la cookie
-       echo $this->input->cookie('remember_me',true);
+    //echo $this->input->cookie('cookies_aceptadas',true);
+    debug($_COOKIE);
+   }
 
+   function delete()
+   {
+       delete_cookie('cookies_aceptadas');
    }
 
 }

@@ -20,6 +20,11 @@ $route['cambiar-password'] = 'UserController/cambiar_contraseña_sin_acceso';
 $route['usuario/(:num)'] = 'UserController/datos_usuario';
 $route['autores'] = 'UserController/autores_post';
 
+# COOKIES
+$route['aceptar-cookies'] = 'CookieController/set';
+$route['comprobar-cookies'] = 'CookieController/get';
+$route['borrar-cookies'] = 'CookieController/delete';
+
 
 # LOGIN
 $route['login'] = 'LoginController/login';

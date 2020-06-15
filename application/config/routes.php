@@ -5,9 +5,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 # RUTAS PARA TODOS LOS USUARIOS
 $route['/'] = "UserController/index";//de todas formas, coge la ruta por defecto
 $route['lista-juegos'] = "UserController/juegos";
+$route['lista-juegos/buscar'] = "UserController/juegos";
 $route['lista-post'] = "UserController/post";
 $route['post/(:num)'] = "UserController/ver_post";
 $route['post/(:num)/agregar-comentario'] = 'UserController/ver_post';
+$route['buscar-post'] = "UserController/post";
+$route['post/ordenar-creado/desc'] = 'UserController/post';
+$route['post/ordenar-creado/asc'] = 'UserController/post';
+$route['post/ordenar-modificado/desc'] = 'UserController/post';
+$route['post/ordenar-modificado/asc'] = 'UserController/post';
+$route['post/ordenar-visitas/desc'] = 'UserController/post';
+$route['post/ordenar-visitas/asc'] = 'UserController/post';
 $route['nuevo-post'] = 'FormController/nuevo_post';
 $route['responder-comentario/(:num)'] = 'FormController/responder_comentario';
 $route['contacto'] = "FormController/contactar";
@@ -33,6 +41,8 @@ $route['login/error'] = 'LoginController/login';
 $route['login/no-registrado'] = 'LoginController/login';
 $route['registro'] = "FormController/registro";
 $route['inicio'] = 'LoginController/inicio_logueado';
+$route['usuario/eliminar-perfil/(:num)'] = 'LoginController/eliminar_perfil';
+$route['correo/eliminar-perfil/(:num)'] = 'EmailController/solicitar_borrado';
 
 # USUARIO
 $route['perfil-usuario'] = 'LoginController/perfil_usuario';

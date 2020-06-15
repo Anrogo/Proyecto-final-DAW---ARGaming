@@ -150,21 +150,44 @@ class UserController extends CI_Controller
 	}
 	public function juegos()
 	{
-		//Leemos los datos recibidos en formato json
-		$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=dead&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+		if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+			
+			$cadena = $this->input->post('buscar');
 
-		//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
-		$juegos = json_decode($json, true);
+			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
+			$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=' . $cadena . '&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
 
-		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'juegos' => $juegos['items'],
-		);
+			//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+			$juegos = json_decode($json, true);
+
+			if (!empty($juegos)) { //si se encuentran registros coincidentes, se devuelven
+				$datos['etiqueta'] = $cadena;
+				$datos['total'] = $juegos['total'];
+				$datos['juegos'] = $juegos['items'];
+
+			} else { //si se busca pero no se encuentra, lo comunica
+				$datos['etiqueta'] = $cadena;
+				$datos['total'] = 0;
+				$datos['resultado'] = 'No se han encontrado resultados';
+			}
+
+		} else {
+
+			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
+			$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=game&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+
+			//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+			$juegos = json_decode($json, true);
+
+			//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+			$datos['juegos'] = $juegos['items'];
+			$datos['total'] = $juegos['total'];
+		}
 
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
-		//debug($verif);
+		//debug($datos);
 
 		if (!empty($verif)) {
 
@@ -192,13 +215,37 @@ class UserController extends CI_Controller
 	}
 	public function post()
 	{
-		$posts = $this->BackEndModel->Listado_post_y_usuarios();
+
+		if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+			$cadena = $this->input->post('buscar');
+			$posts = $this->BackEndModel->busqueda_post($cadena);
+			//debug($info);
+
+			if (!empty($posts)) { //si se encuentran registros coincidentes, se devuelven
+				$datos['busqueda'] = $cadena;
+				$datos['posts'] = $posts;
+			} else { //si se busca pero no se encuentra, lo comunica
+				$datos['busqueda'] = $cadena;
+				$datos['resultado'] = 'No se han encontrado resultados';
+			}
+		} else { //si no se ha realizado ninguna búsqueda simplemente muestra todos los registros diponibles
+
+			if ($this->uri->segment(3) == 'asc' || $this->uri->segment(3) == 'desc') {
+				if ($this->uri->segment(3) == 'asc') { //si se ha solicitado que sea asc se le pasa una consulta a la tabla ordenando de forma ascendente
+					$filtro = explode('-', $this->uri->segment(2))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+					$posts = $this->BackEndModel->Filtrar_post($filtro, 'asc');
+				}
+				if ($this->uri->segment(3) == 'desc') { //si se ha solicitado que sea desc se le pasa una consulta a la tabla ordenando de forma descendente
+					$filtro = explode('-', $this->uri->segment(2))[1]; //el filtro será el campo a partir del cuál se ordenará y lo obtiene de la url
+					$posts = $this->BackEndModel->Filtrar_post($filtro, 'desc');
+				}
+			} else { //por defecto muestre a partir de los id como 'asc'
+				$posts = $this->BackEndModel->Listado_post_y_usuarios();
+			}
+
+			$datos['posts'] = $posts;
+		}
 		
-		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'posts' => $posts,
-		);
-		debug($datos);
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 

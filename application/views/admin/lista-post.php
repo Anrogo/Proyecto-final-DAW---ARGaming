@@ -11,16 +11,16 @@
 <!--TABLA/LISTADO DE POST-->
 <div class="container">
     <div class="row mt-4">
-        <div class="col-5 text-center">
+        <div class="col-12 col-md-5 text-center">
             <h1 class="">Listado de posts</h1>
         </div>
-        <div class="col-3 text-center">
+        <div class="col-12 col-md-3 text-center mt-2">
             <a href="/admin/nuevo-post" class="btn btn-primary">Nuevo Post</a>
         </div>
-        <div class="col-4 text-center">
+        <div class="col-12 col-md-4 text-center">
             <form class="form-inline my-2 my-lg-0" action="/admin/buscar-post" method="post">
                 <input class="form-control mr-sm-2" type="text" name="buscar" id="busqueda" value="<?php echo isset($busqueda) ? $busqueda : '' ?>" placeholder="Buscar...">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Búsqueda</button>
+                <button class="btn btn-primary my-2 my-sm-2" type="submit">Búsqueda</button>
             </form>
         </div>
     </div>
@@ -31,8 +31,7 @@
             if (isset($posts)) {
 
             ?>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
+                    <table class="table table-responsive table-striped table-hover table-bordered">
                         <thead>
                             <tr class="table-primary">
                                 <th scope="col">Imagen</th>

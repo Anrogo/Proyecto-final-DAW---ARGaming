@@ -4,14 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class EmailController extends CI_Controller
 {
     function __construct()
-	{
-				parent::__construct();
+    {
+        parent::__construct();
+        $this->load->model('FrontEndModel', 'FrontEndModel');
     }
-            
+
     public function enviar()
     {
         /* Configuración para mailtrap.io */
-        $config = Array(
+        $config = array(
             'protocol' => 'smtp',
             'smtp_host' => 'smtp.mailtrap.io',
             'smtp_port' => 2525,
@@ -20,35 +21,35 @@ class EmailController extends CI_Controller
             'charset' => 'utf-8',
             'crlf' => "\r\n",
             'newline' => "\r\n"
-          );
-        
+        );
+
         $this->email->initialize($config);
 
         $datos_email = array();
 
-        $url = urldecode($this->uri->segment(3));//se extrae la parte de la url con los datos
+        $url = urldecode($this->uri->segment(3)); //se extrae la parte de la url con los datos
 
-        $array_url = explode('&',$url);//se separan los datos a partir del separador insertado previamente y se dejan en forma de array
+        $array_url = explode('&', $url); //se separan los datos a partir del separador insertado previamente y se dejan en forma de array
 
         debug($array_url);
-        
-        $long_array = count($array_url);//se guarda la longitud del array generado a partir de la url
+
+        $long_array = count($array_url); //se guarda la longitud del array generado a partir de la url
 
         //si esta longitud vale 5 es porque contiene el teléfono y sino no lo tiene
-        $long_array == 5 ? $campos_email = ['username','email','phone','asunto','mensaje'] : $campos_email = ['username','email','asunto','mensaje'];
+        $long_array == 5 ? $campos_email = ['username', 'email', 'phone', 'asunto', 'mensaje'] : $campos_email = ['username', 'email', 'asunto', 'mensaje'];
 
         //Se asignan los diferentes segmentos de URL a cada valor del array, el primero, el número 3 será el nombre de usuario y le corresponde a 'username', por ejemplo.
-        for($i = 0; $i < $long_array; $i++ ){
-            if($campos_email[$i] != 'email'){
-                strpos($array_url[$i], '-') !== null ? ($cad1 = str_replace('-',' ',$array_url[$i])) : ($cad1 = $array_url[$i]) ;
-                strpos($array_url[$i], 'br') !== null ? ($cad2 = str_replace('br',PHP_EOL,$cad1)) : ($cad2 = $cad1) ;
-                $datos_email [$campos_email[$i]] = $cad2;
-            } else {//si se trata del email, se salta el filtro, porque no puede contener saltos de línea y sí guiones que no habría que sustituirlos por nada..
-                $datos_email [$campos_email[$i]] = $array_url[$i];
+        for ($i = 0; $i < $long_array; $i++) {
+            if ($campos_email[$i] != 'email') {
+                strpos($array_url[$i], '-') !== null ? ($cad1 = str_replace('-', ' ', $array_url[$i])) : ($cad1 = $array_url[$i]);
+                strpos($array_url[$i], 'br') !== null ? ($cad2 = str_replace('br', PHP_EOL, $cad1)) : ($cad2 = $cad1);
+                $datos_email[$campos_email[$i]] = $cad2;
+            } else { //si se trata del email, se salta el filtro, porque no puede contener saltos de línea y sí guiones que no habría que sustituirlos por nada..
+                $datos_email[$campos_email[$i]] = $array_url[$i];
             }
         }
 
-        isset($datos_email['phone']) ? $datos_email['mensaje'] = $datos_email['mensaje'].PHP_EOL.PHP_EOL.'Teléfono de contacto: '.$datos_email['phone'] : ''; 
+        isset($datos_email['phone']) ? $datos_email['mensaje'] = $datos_email['mensaje'] . PHP_EOL . PHP_EOL . 'Teléfono de contacto: ' . $datos_email['phone'] : '';
         debug($datos_email);
         //Se estructuran las partes de la clase email
         $this->email->from($datos_email['email'], $datos_email['username']);
@@ -59,30 +60,103 @@ class EmailController extends CI_Controller
         $this->email->subject($datos_email['asunto']);
         $this->email->message($datos_email['mensaje']);
         //Y se ejecuta, es decir se manda, con una respuesta positiva si se envía con éxito, o negativa si da error al enviarlo
-        if($this->email->send()){
+        if ($this->email->send()) {
             $mensaje = '<p class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>El correo ha sido enviado con éxito</p>';
         } else $mensaje = '<p class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert">&times;</button>El correo no ha podido ser enviado</p>';
 
-    //Se carga la página de contacto, con un "mínimo" de opciones, se pasa el mensaje de que el correo ha sido enviado o no y después se refresca para devolver a la ventana original
-    $this->load->helper(array('form', 'url'));
+        //Se carga la página de contacto, con un "mínimo" de opciones, se pasa el mensaje de que el correo ha sido enviado o no y después se refresca para devolver a la ventana original
+        $this->load->helper(array('form', 'url'));
 
-    $this->load->library('form_validation');
-    
-    $datos = array(
-        'mensaje' => $mensaje
-    );
+        $this->load->library('form_validation');
 
-    $vista = array(
-        'vista' => 'web/contacto.php',
-        'params' => $datos,
-        'layout' => 'ly_contacto.php',
-        'titulo' => 'Contactar',
-    );
+        $datos = array(
+            'mensaje' => $mensaje
+        );
 
-    $this->layouts->view($vista);
-    header("refresh:10;url=/contacto");
+        $vista = array(
+            'vista' => 'web/contacto.php',
+            'params' => $datos,
+            'layout' => 'ly_contacto.php',
+            'titulo' => 'Contactar',
+        );
+
+        $this->layouts->view($vista);
+        header("refresh:10;url=/contacto");
+    }
+
+    public function solicitar_borrado()
+    {
+        /* Configuración para mailtrap.io */
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.mailtrap.io',
+            'smtp_port' => 2525,
+            'smtp_user' => '46ff8744270f6b',
+            'smtp_pass' => 'b39367f2273361',
+            'charset' => 'utf-8',
+            'crlf' => "\r\n",
+            'newline' => "\r\n"
+        );
+
+        $this->email->initialize($config);
+
+        $datos_email = array();
+
+        $id = $this->uri->segment(3); //se extrae la parte de la url con los datos
+
+        $datos_usuario = $this->FrontEndModel->Buscar('usuarios', 'id_usuario', $id);
+
+        //debug($datos_usuario);
+
+        $mensaje = 'Aviso automático. Solicito la eliminación de mi cuenta de usuario. ' . PHP_EOL . ' Datos de la cuenta:' . PHP_EOL .
+            ' ID: ' . $datos_usuario[0]['id_usuario'] . PHP_EOL . ' Nombre: ' . $datos_usuario[0]['nombre'] . PHP_EOL . ' Correo: ' . $datos_usuario[0]['email'];
+
+        $datos_email = array(
+            'email' => $datos_usuario[0]['email'],
+            'username' => $datos_usuario[0]['username'],
+            'asunto' => 'Eliminación de perfil',
+            'mensaje' => $mensaje
+        );
+
+        //debug($datos_email);
+        //Se estructuran las partes de la clase email
+        $this->email->from($datos_email['email'], $datos_email['username']);
+        $this->email->to('info@argaming.com');
+        $this->email->cc('antonirg96@gamil.com');
+        $this->email->bcc('them@their-example.com');
+
+        $this->email->subject($datos_email['asunto']);
+        $this->email->message($datos_email['mensaje']);
+
+        //Y se ejecuta, es decir se manda, con una respuesta positiva si se envía con éxito, o negativa si da error al enviarlo
+        if ($this->email->send()) {
+            $mensaje = '<p class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>La solicitud ha sido enviada con éxito</p>';
+        } else $mensaje = '<p class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>La solicitud no ha podido ser procesada</p>';
+
+        $datos = array();
+        $datos['nombre'] = $this->session->userdata('nombre');
+        $datos['apellidos'] = $this->session->userdata('apellidos');
+        $datos['username'] = $this->session->userdata('username');
+        $datos['email'] = $this->session->userdata('email');
+        $datos['password_hash'] = $this->session->userdata('password_hash');
+        $datos['rol'] = $this->session->userdata('rol') == 1 ? 'Administrador' : 'Usuario estándar';
+        $datos['id_usuario'] = $this->session->userdata('id');
+        $datos['imagen_perfil'] = $this->session->userdata('imagen_perfil');
+        $datos['mensaje_confirmacion'] = $mensaje;
+
+        $vista = array(
+            'vista' => 'user/perfil-usuario.php',
+            'params' => $datos,
+            'layout' => 'ly_session.php',
+            'titulo' => 'Usuario logueado',
+        );
+
+        $this->layouts->view($vista);
+        header("refresh:5;url=/perfil-usuario");
     }
 
     /* Función original */
@@ -112,7 +186,7 @@ class EmailController extends CI_Controller
             'validate' => TRUE
         );
         */
-        /*
+    /*
         $this->email->initialize($config);
 
         $datos_email = array();
@@ -150,8 +224,8 @@ class EmailController extends CI_Controller
         $this->email->subject('Email Test 3');
         $this->email->message('Este es un correo de prueba (3). Enviado por Antonio Rodríguez, administrador del blog ARGaming.com');
         */
-        //Se estructuran las partes de la clase email
-        /*
+    //Se estructuran las partes de la clase email
+    /*
         $this->email->from($datos_email['email'], $datos_email['username']);
         $this->email->to('info@argaming.com');
         $this->email->cc('antonirg96@gamil.com');

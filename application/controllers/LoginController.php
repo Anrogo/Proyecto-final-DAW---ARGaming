@@ -92,7 +92,7 @@ class LoginController extends CI_Controller
                 //foreach ($usuario as $info) {
                     $usuario_data = array(
                         'id' => $info['id_usuario'],
-                        'nombre_usuario' => $info['username'],
+                        'username' => $info['username'],
                         'nombre' => $info['nombre'],
                         'apellidos' => $info['apellidos'],
                         'email' => $info['email'],
@@ -107,7 +107,7 @@ class LoginController extends CI_Controller
                 //debug($usuario_data);
 
                 $this->session->set_userdata($usuario_data);
-                header("Location: /");
+                redirect_back();
             }
         }
     }
@@ -135,11 +135,11 @@ class LoginController extends CI_Controller
             $datos = array();
             $datos['nombre'] = $this->session->userdata('nombre');
             $datos['apellidos'] = $this->session->userdata('apellidos');
-            $datos['nombre_usuario'] = $this->session->userdata('nombre_usuario');
+            $datos['username'] = $this->session->userdata('username');
             $datos['email'] = $this->session->userdata('email');
             $datos['password_hash'] = $this->session->userdata('password_hash');
             $datos['rol'] = $this->session->userdata('rol') == 1 ? 'Administrador' : 'Usuario estándar';
-            $datos['id'] = $this->session->userdata('id');
+            $datos['id_usuario'] = $this->session->userdata('id');
             $datos['imagen_perfil'] = $this->session->userdata('imagen_perfil');
             //debug($_SESSION);
             //debug($datos);
@@ -180,7 +180,18 @@ class LoginController extends CI_Controller
 		$this->BackEndModel->update('usuarios', $datos, $where);
 
 		header('Location: /');
-	}
+    }
+    
+    public function eliminar_perfil()
+    {
+        $id = $this->uri->segment(3);//id del usuario que hay que eliminar
+        if($id == $_SESSION['id']){
+            header('Location: /correo/eliminar-perfil/' . $id);
+        } else {
+            
+        }
+    }
+
     public function cerrar_sesion()
     {
         $usuario_data = array(
@@ -188,6 +199,6 @@ class LoginController extends CI_Controller
         );
         $this->session->set_userdata($usuario_data);
         $_SESSION = array();
-        header('Location:/');
+        redirect_back();
     }
 }

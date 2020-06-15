@@ -160,6 +160,7 @@
     <?php
     }
     ?>
+
     <div class="container bg-light">
         <!-- Three columns of text below the carousel -->
         <div class="row p-4">
@@ -265,19 +266,19 @@
 </div>
 <!-- /.container -->
 <?php
-    if(isset($cookies)){
+if (isset($cookies)) {
 ?>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="mensaje-cookies">
-                <div class="text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="mensaje-cookies">
+                    <div class="text-center">
                     <?php
-                        echo $cookies;
-                    }
+                    echo $cookies;
+                }
                     ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

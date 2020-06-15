@@ -10,16 +10,16 @@
 </script>
 <div class="container">
   <div class="row mt-4">
-    <div class="col-5 text-center">
+    <div class="col-12 col-md-5 text-center">
       <h1 class="">Listado de usuarios</h1>
     </div>
-    <div class="col-3 text-center">
+    <div class="col-12 col-md-3 text-center mt-2">
       <a href="/admin/nuevo-usuario" class="btn btn-primary">Nuevo Usuario</a>
     </div>
-    <div class="col-4 text-center">
+    <div class="col-12 col-md-4 text-center">
       <form class="form-inline my-2 my-lg-0" action="/admin/buscar-usuario" method="post">
         <input class="form-control mr-sm-2" type="text" name="buscar" id="busqueda" value="<?php echo isset($busqueda) ? $busqueda : '' ?>" placeholder="Buscar...">
-        <button class="btn btn-primary my-2 my-sm-0" type="submit">Búsqueda</button>
+        <button class="btn btn-primary my-2 my-sm-2" type="submit">Búsqueda</button>
       </form>
     </div>
   </div>
@@ -29,7 +29,7 @@
       <?php
       if (isset($usuarios)) {
       ?>
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-responsive table-bordered table-striped table-hover">
           <thead>
             <tr class="table-primary">
               <th scope="col">ID</th>

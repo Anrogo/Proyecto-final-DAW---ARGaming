@@ -5,17 +5,12 @@ if ( ! defined('BASEPATH')) exit('Stop Its demostrate how to set cookie');
 class CookieController extends CI_Controller {
 
    function __construct()
-
    {
-
        parent::__construct();
 
       //$this->load->helper('cookie');
       $this->load->helper(array('cookie', 'url'));
-
    }
-
-
 
    function set()
    {
@@ -30,8 +25,6 @@ class CookieController extends CI_Controller {
     //echo "Congratulation Cookie Set";
     header('Location: /');
    }
-
-
 
    function get()
    {

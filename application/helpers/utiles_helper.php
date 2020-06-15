@@ -15,6 +15,7 @@
     $datos = array();
     if (isset($_SESSION['logueado']) && $_SESSION['logueado'] === TRUE) {
       $datos['nombre'] = $_SESSION['nombre'];
+      $datos['username'] = $_SESSION['username'];
       $datos['rol'] = $_SESSION['rol'] == 1 ? 'administrador' : 'usuario normal';
       $datos['id'] = $_SESSION['id'];
       $datos['password_hash'] = $_SESSION['password_hash'];

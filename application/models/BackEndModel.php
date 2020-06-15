@@ -139,7 +139,8 @@ class BackEndModel extends CI_Model
     post.titulo REGEXP '^.*" . $campo . ".*?$' or
     post.contenido REGEXP '^.*" . $campo . ".*?$' or
     post.slug REGEXP '^.*" . $campo . ".*?$' or
-    post.visitas REGEXP '^.*" . $campo . ".*?$')";
+    post.visitas REGEXP '^.*" . $campo . ".*?$')
+    ORDER BY post.visitas desc";
     return ( $this->ExecuteArrayResults( $sql ));
   }
 

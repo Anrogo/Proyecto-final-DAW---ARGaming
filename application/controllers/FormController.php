@@ -135,6 +135,12 @@ class FormController extends CI_Controller
 
                     $this->BackEndModel->insert('usuarios', $datos);
 
+                    //A partir de aquí se carga la página de inicio con normalidad pero añadiendo un mensaje de confirmación del usuario creado
+                    $posts = $this->FrontEndModel->Lista('post', 'visitas');
+                    
+                    //Se almacenan los datos en el array para pasarselo a la vista que corresponda
+		            $datos['posts'] = $posts;
+
                     $datos['mensaje_confirmacion'] = '<p class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>El usuario ha sido registrado con éxito</p>';
 
@@ -260,7 +266,8 @@ class FormController extends CI_Controller
                 //Se busca que no haya coincidencia, de nombre de usuario o correo, en otros registros de usuarios con id diferente.
                 $registro_username = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'username', $datos_nuevos['username']);
                 $registro_correo = $this->FrontEndModel->Buscar_campo_existente('usuarios', 'id_usuario', $datos_nuevos['id'], 'email', $datos_nuevos['email']);
-
+                //debug($datos_nuevos);
+                
                 if (!empty($registro_correo) || !empty($registro_username)) { //si el correo o el nombre de usuario ya estuviesen registrados se, guarda y, muestra el error
 
                     if (!empty($registro_username)) {
@@ -281,7 +288,7 @@ class FormController extends CI_Controller
                         'vista' => 'user/editar-perfil.php',
                         'params' => $datos,
                         'layout' => 'ly_session.php',
-                        'titulo' => 'Editar información del usuario' . $_SESSION['nombre_usuario'],
+                        'titulo' => 'Editar información del usuario' . $_SESSION['username'],
                     );
 
                     $this->layouts->view($vista);
@@ -293,6 +300,7 @@ class FormController extends CI_Controller
                         $datos_nuevos['rol'] = 0;
                     }
 
+                    
                     //debug($datos_nuevos);
                     $datos_nuevos['modificado'] = date('Y-m-d H:i:s');
                     $where['id_usuario'] = $datos_nuevos['id'];
@@ -301,7 +309,27 @@ class FormController extends CI_Controller
 
                     $this->BackEndModel->update('usuarios', $datos_nuevos, $where);
 
-                    header('Location: /perfil-usuario');
+                    $datos = array();
+                    $datos['nombre'] = $this->session->userdata('nombre');
+                    $datos['apellidos'] = $this->session->userdata('apellidos');
+                    $datos['username'] = $this->session->userdata('username');
+                    $datos['email'] = $this->session->userdata('email');
+                    $datos['password_hash'] = $this->session->userdata('password_hash');
+                    $datos['rol'] = $this->session->userdata('rol') == 1 ? 'Administrador' : 'Usuario estándar';
+                    $datos['id_usuario'] = $this->session->userdata('id');
+                    $datos['imagen_perfil'] = $this->session->userdata('imagen_perfil');
+
+                    $datos['mensaje_confirmacion'] = '<p class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>Sus datos de usuario han sido guardados con éxito</p>';
+
+                    $vista = array(
+                        'vista' => 'user/perfil-usuario.php',
+                        'params' => $datos,
+                        'layout' => 'ly_session.php',
+                        'titulo' => 'Usuario logueado',
+                    );
+
+                    $this->layouts->view($vista);
                 }
             } else {
 
@@ -317,7 +345,7 @@ class FormController extends CI_Controller
                     'vista' => 'user/editar-perfil.php',
                     'params' => $datos,
                     'layout' => 'ly_session.php',
-                    'titulo' => 'Editar información de ' . $_SESSION['nombre_usuario'],
+                    'titulo' => 'Editar información de ' . $_SESSION['username'],
                 );
 
                 $this->layouts->view($vista);

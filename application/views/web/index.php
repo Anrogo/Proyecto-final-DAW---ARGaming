@@ -1,8 +1,3 @@
-<?php
-
-//debug($posts);
-
-?>
 <!-- /.container <div class="container">-->
 <!--CARRUSEL DE IMAGENES-->
 <div class="container-fluid portada">
@@ -151,8 +146,21 @@
         </div>
     </div>
 </div>
-</div>
 <div class="container-fluid bg-dark mt-3 pt-2 w-100">
+<?php
+    if(isset($mensaje_confirmacion))
+    {
+?>
+    <div class="row justify-content-center">
+        <div class="col-10">
+                    <?php
+                        echo $mensaje_confirmacion;
+                    ?>
+        </div>
+    </div>
+<?php
+    }
+?>
 <div class="container bg-light">
     <!-- Three columns of text below the carousel -->
     <div class="row p-4">

@@ -79,6 +79,15 @@ class FormController extends CI_Controller
                     'required' => 'El correo es obligatorio',
                     'valid_email' => 'El correo debe tener un formato válido'
                 ),
+            ),
+            array(
+                'field' => 'check',
+                'label' => 'políticas',
+                'rules' => 'trim|required|in_list[1]',
+                'errors' => array(
+                    'required' => 'Es obligatorio aceptar nuestras %s',
+                    'in_list' => 'Valor inválido para las %s'
+                ),
             )
         );
 
@@ -101,7 +110,7 @@ class FormController extends CI_Controller
                 if (!empty($registro_correo)) {
                     $datos['error_correo'] = 'Este correo ya existe';
                 }
-                debug($datos);
+                //debug($datos);
                 //Se devuelve el error de que el correo ya existe, estaba registrado con anterioridad
                 $vista = array(
                     'vista' => 'web/nuevo_usuario.php',
@@ -112,28 +121,48 @@ class FormController extends CI_Controller
 
                 $this->layouts->view($vista);
             } else {
-
+                //si los datos están bien, y las contraseñas coinciden al 100%, carga la nueva información del usuario en la tabala usuarios y devuelve un mensaje de confirmación
                 if ($datos['password'] == $datos['password_confirm']) {
+                    
                     $datos['password'] = md5($datos['password']);
+                    
                     unset($datos['password_confirm']);
+                    unset($datos['check']);
+
+                    
+                    $datos['rol'] = 0;//usuario estándar, por defecto
+                    $datos['estado'] = 1;//activo, por defecto
+
+                    $this->BackEndModel->insert('usuarios', $datos);
+
+                    $datos['mensaje_confirmacion'] = '<p class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>El usuario ha sido registrado con éxito</p>';
+
+                    //debug($datos);
+                    //Se genera la vista una vez el registro se completa con éxito
+                    $vista = array(
+                        'vista' => 'web/index.php',
+                        'params' => $datos,
+                        'layout' => 'ly_home.php',
+                        'titulo' => 'Usuario añadido - ARGaming',
+                    );
+
+                    $this->layouts->view($vista);
+                    
+                } else {
+                    $datos['error_contraseñas'] = 'Las contraseñas no coinciden';
+
+                    $vista = array(
+                        'vista' => 'web/nuevo_usuario.php',
+                        'params' => $datos,
+                        'layout' => 'ly_registro.php',
+                        'titulo' => 'Añadir nuevo usuario - ARGaming',
+                    );
+
+                    $this->layouts->view($vista);
                 }
 
-                $this->BackEndModel->insert('usuarios', $datos);
-
-                $datos = array(
-                    'title' => 'Bienvenido',
-                    'mensaje_confirmacion' => 'El usuario ha sido registrado con éxito'
-                );
-
-                //Se genera la vista una vez el registro se completa con éxito
-                $vista = array(
-                    'vista' => 'web/index.php',
-                    'params' => $datos,
-                    'layout' => 'ly_home.php',
-                    'titulo' => 'Usuario añadido - ARGaming',
-                );
-
-                $this->layouts->view($vista);
+                
             }
         } else {
             //si la validación falla por cualquier otra circunstancia se queda en el formulario y se muestran los errores

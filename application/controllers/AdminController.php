@@ -300,4 +300,85 @@ class AdminController extends CI_Controller
 			header('Location: /error');
 		}
 	}
+	public function listado_paginado()
+	{
+		
+		$numero_filas = $this->BackEndModel->count('usuarios');//obtenemos el número de filas de la tabla usuarios
+		$numero_pag = $numero_filas / 5;//he decidio tener 5 por página así que calculo el numero de páginas
+		
+		$this->load->library('pagination');
+
+		//Configuración básica de la paginación
+		$config['base_url'] = '/admin/listado';
+		$config['total_rows'] = $numero_filas;
+		$config['per_page'] = 5;
+		$config['uri_segment'] = 3;
+		$config['num_links'] = 3;
+
+		//Otros parámetros de páginación, con bootstrap: 
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = false;
+		$config['last_link'] = false;
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['prev_link'] = '&laquo';
+		$config['prev_tag_open'] = '<li class="prev page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['next_link'] = '&raquo';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active page-item"><a href="#" class="page-link">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+
+
+		$this->pagination->initialize($config);
+		$result = $this->BackEndModel->pagination('usuarios',$config['per_page'],$this->uri->segment(3));
+		
+		$data['usuarios'] = $result;
+		$data['pagination'] = $this->pagination->create_links();
+		//debug($data);
+		$vista = array(
+			'vista' => 'admin/listado_paginacion.php',
+			'params' => $data,
+			'layout' => 'ly_admin.php',
+			'titulo' => 'Lista de usuarios'
+		);
+		$this->layouts->view($vista);
+		
+
+		/*
+		//Pag1
+		$usuarios = $this->BackEndModel->pagination('usuarios',4,0);
+		$datos['usuarios'] = $usuarios;
+		debug($datos);
+
+		//Pag2
+		$usuarios = $this->BackEndModel->pagination('usuarios',4,4);
+		$datos['usuarios'] = $usuarios;
+		debug($datos);
+
+		//Pag3
+		$usuarios = $this->BackEndModel->pagination('usuarios',4,8);
+		$datos['usuarios'] = $usuarios;
+		debug($datos);
+
+		//Pag4
+		$usuarios = $this->BackEndModel->pagination('usuarios',4,12);
+		$datos['usuarios'] = $usuarios;
+		debug($datos);
+		
+		$vista = array(
+			'vista' => 'admin/listado_paginado.php',
+			'params' => $datos,
+			'layout' => 'ly_admin.php',
+			'titulo' => 'Lista de usuarios'
+		);
+		$this->layouts->view($vista);
+		*/
+	}
 }

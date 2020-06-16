@@ -30,7 +30,6 @@
         </div>
     </div>
 </div>
-</div>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
         <a class="navbar-brand" href="#"></a>

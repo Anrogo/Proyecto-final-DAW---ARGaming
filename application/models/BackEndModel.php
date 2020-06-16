@@ -160,38 +160,23 @@ class BackEndModel extends CI_Model
     return ( $this->ExecuteArrayResults( $sql ));
   }
 
-  /*---------- FUNCIONES ANTIGUAS --------------------*/
 
-  public function ListPosts()
+  /* Paginación de usuarios */
+
+  function pagination($tabla,$pag_size,$offset)
   {
-
-    $sql = "SELECT * FROM posts order by id desc";
-    return ( $this->ExecuteArrayResults( $sql ));
-
+    $this->db->select();
+    $this->db->from($tabla);
+    $this->db->limit($pag_size,$offset);
+    $query = $this->db->get();
+    $rows = $query->result_array();
+    return $rows;
   }
 
-  public function ListAuthors()
+  function count($tabla)
   {
-    $sql = "SELECT * FROM authors order by display_name asc";
-    return ( $this->ExecuteArrayResults( $sql ));
+
+    $number = $this->db->query("SELECT count(*) as number FROM $tabla")->row()->number;
+    return intval($number);//devuelve en un valor entero el número de filas de la tabla que le pidamos
   }
-
-  public function ListOnePost( $post_id)
-  {
-    //$sql = "SELECT * FROM posts WHERE id = " . $post_id;
-    $sql = "SELECT * FROM posts WHERE id = ?";
-    $params = array( $post_id);
-    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
-  }
-
-  public function ListOneAuthor( $author_id)
-  {
-    //$sql = "SELECT * FROM posts WHERE id = " . $post_id;
-    $sql = "SELECT * FROM authors WHERE id = ?";
-    $params = array( $author_id);
-    return ( $this->ExecuteResultsParamsArray( $sql, $params ));
-  }
-
-  
-
 }

@@ -119,45 +119,4 @@ en ningún otro registro y el segundo que sí coincida para que se cumpla*/
       return ( $this->ExecuteArrayResults( $sql ));
     }
 
-  /* ----- Funciones antiguas ----- */
-
-  # Método para mostrar los post en la página principal solo con parte de la información
-  public function list_all_posts()
-  {
-
-    $sql = "SELECT p.*, a.display_name 
-    FROM posts as p
-    left join authors as a On p.author_id = a.id
-    WHERE p.enabled = 1 order by p.created desc limit 10";
-
-    return ( $this->ExecuteArrayResults( $sql ));
-
-  }
-  
-  # Método para mostrar un post cuando se seleccione, a través de su id
-  public function list_one_post($post_id)
-  {
-
-    $sql = "SELECT p.*, a.display_name 
-    FROM posts as p
-    left join authors as a On p.author_id = a.id
-    WHERE p.id = " . $post_id;
-
-    return ( $this->ExecuteArrayResults( $sql ));
-
-  }
-
-   # Método para mostrar los post del autor seleccionado
-   public function list_all_posts_by_author($author_id)
-   {
- 
-     $sql = "SELECT p.*, a.display_name 
-     FROM posts as p
-     left join authors as a On p.author_id = a.id
-     WHERE p.enabled = 1 And p.author_id = ".$author_id." 
-     order by p.created desc";
- 
-     return ( $this->ExecuteArrayResults( $sql ));
- 
-   }
 }

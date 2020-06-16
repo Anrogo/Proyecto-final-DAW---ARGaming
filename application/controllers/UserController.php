@@ -161,7 +161,7 @@ class UserController extends CI_Controller
 			$juegos = json_decode($json, true);
 
 			if (!empty($juegos)) { //si se encuentran registros coincidentes, se devuelven
-				$datos['etiqueta'] = $cadena;
+				$datos['etiqueta'] = $cadena; 
 				$datos['total'] = $juegos['total'];
 				$datos['juegos'] = $juegos['items'];
 

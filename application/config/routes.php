@@ -73,6 +73,8 @@ $route['admin/registrar-usuario'] = 'AdminController/registrar_nuevo_usuario';
 $route['admin/editar-usuario/(:num)'] = 'FormController/editar_admin';
 $route['actualizar-usuario'] = 'AdminController/actualizar_usuario';
 $route['admin/eliminar-usuario/(:num)'] = 'AdminController/eliminar_usuario';
+$route['admin/listado'] = 'AdminController/listado_paginado';
+$route['admin/listado/(:num)'] = 'AdminController/listado_paginado/$1';
 
 # Admin - post
 $route['admin/panel-control/post'] = 'AdminController/listado_post';

@@ -40,7 +40,7 @@ class AdminController extends CI_Controller
 			);
 			$this->layouts->view($vista);
 		} else {
-			header("Location: /error ");
+			header("Location: / ");
 		}
 	}
 	public function perfil_admin()
@@ -60,7 +60,7 @@ class AdminController extends CI_Controller
 			$this->layouts->view($vista);
 		} else {
 
-			header("Location: /error ");
+			header("Location: / ");
 		}
 	}
 	public function listado_juegos()
@@ -147,7 +147,7 @@ class AdminController extends CI_Controller
 			$this->layouts->view($vista);
 		} else {
 
-			header("Location: /error ");
+			header("Location: / ");
 		}
 	}
 	public function eliminar_usuario()
@@ -214,7 +214,7 @@ class AdminController extends CI_Controller
 			$this->layouts->view($vista);
 		} else {
 
-			header("Location: /error ");
+			header("Location: / ");
 		}
 	}
 	public function eliminar_post()
@@ -281,7 +281,7 @@ class AdminController extends CI_Controller
 			$this->layouts->view($vista);
 		} else {
 
-			header("Location: /error ");
+			header("Location: / ");
 		}
 	}
 	public function eliminar_comentario()
@@ -352,7 +352,7 @@ class AdminController extends CI_Controller
 			);
 			$this->layouts->view($vista);
 		} else {
-			header("Location: /error ");
+			header("Location: / ");
 		}
 
 		/*

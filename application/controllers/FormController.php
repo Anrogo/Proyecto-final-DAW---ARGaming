@@ -154,6 +154,7 @@ class FormController extends CI_Controller
                     );
 
                     $this->layouts->view($vista);
+                    header('Refresh:5;url=/');
                     
                 } else {
                     $datos['error_contraseñas'] = 'Las contraseñas no coinciden';

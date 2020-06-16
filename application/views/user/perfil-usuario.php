@@ -37,13 +37,13 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-3 pull-right mt-3 text-center">
-                        <a href="usuario/editar-perfil/<?php echo $id_usuario ?>" class="btn btn-outline-info">Editar perfil</a>
+                        <a href="/usuario/editar-perfil/<?php echo $id_usuario ?>" class="btn btn-outline-info">Editar perfil</a>
                     </div>
                     <div class="col-12 col-md-3 pull-right mt-3 text-center">
                         <a href="#" onclick="eliminar(<?php echo $id_usuario ?>)" class="btn btn-outline-danger">Borrar perfil</a>
                     </div>
                     <div class="col-12 col-md-3 pull-right mt-3 text-center">
-                        <a href="usuario/cerrar-sesion" class="btn btn-outline-secondary">Cerrar sesión</a>
+                        <a href="/usuario/cerrar-sesion" class="btn btn-outline-secondary">Cerrar sesión</a>
                     </div>
                 </div>
                 <div class="card-body">

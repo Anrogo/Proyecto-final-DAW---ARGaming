@@ -17,6 +17,7 @@ $route['post/ordenar-modificado/asc'] = 'UserController/post';
 $route['post/ordenar-visitas/desc'] = 'UserController/post';
 $route['post/ordenar-visitas/asc'] = 'UserController/post';
 $route['nuevo-post'] = 'FormController/nuevo_post';
+$route['post/novedades/(:num)'] = 'UserController/novedades/$1';
 $route['responder-comentario/(:num)'] = 'FormController/responder_comentario';
 $route['contacto'] = "FormController/contactar";
 $route['contacto/enviar-email/(:any)'] = "EmailController/enviar/$1";

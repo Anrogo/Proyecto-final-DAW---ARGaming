@@ -13,10 +13,10 @@ class UserController extends CI_Controller
 		$posts = $this->FrontEndModel->Lista('post', 'visitas');
 		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
 		$datos['posts'] = $posts;
-		
+
 		/* Mensaje de cookies: se comprueba si existe la cookie de nuestra web, en caso de que no exista se muestra el mensaje */
 
-		if(!isset($_COOKIE['cookies_aceptadas'])){
+		if (!isset($_COOKIE['cookies_aceptadas'])) {
 
 			$datos['cookies'] = '<p>Éste sitio web usa cookies, si permanece aquí acepta su uso.
 			Puede leer más sobre el uso de cookies en nuestra <a href="/politica-privacidad">política de privacidad</a>
@@ -102,7 +102,7 @@ class UserController extends CI_Controller
 		$usuario = $this->FrontEndModel->Buscar('usuarios', 'id_usuario', $where['id_usuario']); //info del usuario si existe
 		$posts = $this->FrontEndModel->Datos_autor_post($where['id_usuario']); //info de los post que ha creado el usuario
 
-		if (!empty($usuario)) {//si existe el usuario se cargan los datos y se muestran en la vista
+		if (!empty($usuario)) { //si existe el usuario se cargan los datos y se muestran en la vista
 			$datos = array(
 				'id_usuario' => $usuario[0]['id_usuario'],
 				'username' => $usuario[0]['username'],
@@ -151,7 +151,7 @@ class UserController extends CI_Controller
 	public function juegos()
 	{
 		if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
-			
+
 			$cadena = $this->input->post('buscar');
 
 			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
@@ -161,16 +161,14 @@ class UserController extends CI_Controller
 			$juegos = json_decode($json, true);
 
 			if (!empty($juegos)) { //si se encuentran registros coincidentes, se devuelven
-				$datos['etiqueta'] = $cadena; 
+				$datos['etiqueta'] = $cadena;
 				$datos['total'] = $juegos['total'];
 				$datos['juegos'] = $juegos['items'];
-
 			} else { //si se busca pero no se encuentra, lo comunica
 				$datos['etiqueta'] = $cadena;
 				$datos['total'] = 0;
 				$datos['resultado'] = 'No se han encontrado resultados';
 			}
-
 		} else {
 
 			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
@@ -245,7 +243,7 @@ class UserController extends CI_Controller
 
 			$datos['posts'] = $posts;
 		}
-		
+
 		//Tras obtener los datos que se van a mostrar, se comprueba si hay una sesión abierta por parte del usuario
 		$verif = comprobar_login();
 
@@ -529,5 +527,37 @@ class UserController extends CI_Controller
 		$this->BackEndModel->insertar('comentarios', $comentario);
 
 		header('Location: /post/' . $datos_nuevos['id_post']);
+	}
+	public function novedades()
+	{
+		//Post al que debemos redirigir:
+		$num_post = intval($this->uri->segment(3));
+
+		//Titulos de los post:
+		$titulos = ['PS5 vs XBOX series X','Silent Hill aparecerá en DbD','Novedades de Call of Duty'];
+
+
+		$datos = array();
+
+		$verif = comprobar_login();
+
+		if (!empty($verif)) {
+			$datos['rol'] = $verif['rol'];
+			$vista = array(
+				'vista' => 'web/novedades-'.$num_post.'.php',
+				'params' => $datos,
+				'layout' => 'ly_session.php',
+				'titulo' => $titulos[$num_post-1]
+			);
+			$this->layouts->view($vista);
+		} else {
+			$vista = array(
+				'vista' => 'web/novedades-'.$num_post.'.php',
+				'params' => $datos,
+				'layout' => 'ly_home.php',
+				'titulo' => $titulos[$num_post-1]
+			);
+			$this->layouts->view($vista);
+		}
 	}
 }

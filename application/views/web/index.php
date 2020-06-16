@@ -146,7 +146,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid bg-dark mt-3 pt-2 w-100">
+<div class="container-fluid bg-dark mt-3 mb-3 pt-2 w-100">
     <?php
     if (isset($mensaje_confirmacion)) {
     ?>
@@ -164,32 +164,27 @@
     <div class="container bg-light">
         <!-- Three columns of text below the carousel -->
         <div class="row p-4">
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-                <p><a class="btn btn-outline-secondary" href="#" role="button">View details &raquo;</a></p>
+            <div class="col-12 col-lg-4">
+                    <img src="/images/post/ps5-vs-xbox-series-x.webp" class="img-fluid miniatura-post" alt="foto-post-1">
+                <h3 class="text-primary"><a href="/post/novedades/1">Un analista predice que PS5 venderá casi el doble que Xbox Series X para 2024</a></h3>
+                <p>La firma Ampere estima que PlayStation 5 venderá 66 millones de unidades para ese año...</p>
+                <p><a class="btn btn-outline-secondary" href="/post/novedades/1" role="button">Ver más &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
-                <h2>Heading</h2>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-                <p><a class="btn btn-outline-secondary" href="#" role="button">View details &raquo;</a></p>
+            <div class="col-12 col-lg-4">
+                <div class="">
+                    <img src="/images/post/silent-hill-dbd.jpg" class="img-fluid" alt="foto-post-2">
+                </div>
+                <h3 class="text-primary"><a href="/post/novedades/2">Silent Hill regresa por la puerta pequeña de la mano de una colaboración con Behaviour Interactive</a></h3>
+                <p>Aunque no es lo que muchos esperan, los creadores de Dead By Daylight nos traen...</p>
+                <p><a class="btn btn-outline-secondary" href="/post/novedades/2" role="button">Ver más &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-outline-secondary" href="#" role="button">View details &raquo;</a></p>
+            <div class="col-12 col-lg-4">
+                <div class="">
+                    <img src="/images/post/modern-warfare-1.webp" class="img-fluid" alt="foto-post-3">
+                </div>
+                <h3 class="text-primary"><a href="/post/novedades/1">La temporada 4 de ‘Call of Duty: Modern Warfare’ y ‘Warzone’ ya está aquí: estas son sus novedades</a></h3>
+                <p>La temporada 4 de de 'Call of Duty: Modern Warfare' y 'Warzone' ya se encuentra...</p>
+                <p><a class="btn btn-outline-secondary" href="/post/novedades/3" role="button">Ver más &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
 

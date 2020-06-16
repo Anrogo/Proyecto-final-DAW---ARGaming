@@ -21,7 +21,7 @@ $hora_post = $creado[1];//guarda la hora solamente
       <!-- Autor -->
       <p class="lead">
         By
-        <a href="#"><a href="/usuario/<?php echo $post['id_usuario']; ?>"><?php echo ($autor['username'] == '') ? 'Anónimo' : $autor['username']; ?></a></a>
+        <a href="/usuario/<?php echo $post['id_usuario']; ?>"><?php echo ($autor['username'] == '') ? 'Anónimo' : $autor['username']; ?></a>
       </p>
 
       <hr>
@@ -163,3 +163,4 @@ $hora_post = $creado[1];//guarda la hora solamente
         </div>
       </div>
     </div>
+  </div>

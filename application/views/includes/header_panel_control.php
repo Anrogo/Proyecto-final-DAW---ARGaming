@@ -46,6 +46,9 @@
                     <a href="/admin/panel-control/usuarios" class="nav-link">Usuarios</a>
                 </li>
                 <li class="nav-item dropdown">
+                    <a href="/admin/listado" class="nav-link">Usuarios con paginación</a>
+                </li>
+                <li class="nav-item dropdown">
                     <a href="/admin/panel-control/post" class="nav-link">Post</a>
                 </li>
                 <li class="nav-item">

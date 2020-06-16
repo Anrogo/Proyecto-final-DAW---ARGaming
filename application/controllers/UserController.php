@@ -530,34 +530,64 @@ class UserController extends CI_Controller
 	}
 	public function novedades()
 	{
-		//Post al que debemos redirigir:
-		$num_post = intval($this->uri->segment(3));
-
-		//Titulos de los post:
-		$titulos = ['PS5 vs XBOX series X','Silent Hill aparecerá en DbD','Novedades de Call of Duty'];
-
-
 		$datos = array();
 
 		$verif = comprobar_login();
 
-		if (!empty($verif)) {
-			$datos['rol'] = $verif['rol'];
-			$vista = array(
-				'vista' => 'web/novedades-'.$num_post.'.php',
-				'params' => $datos,
-				'layout' => 'ly_session.php',
-				'titulo' => $titulos[$num_post-1]
-			);
-			$this->layouts->view($vista);
+		if (($this->uri->segment(3) !== null) && ($this->uri->segment(3) == '1' || $this->uri->segment(3) == '2' || $this->uri->segment(3) == '3')) {
+			//Post al que debemos redirigir:
+			$num_post = intval($this->uri->segment(3));
+
+			//Titulos de los post:
+			$titulos = ['PS5 vs XBOX series X', 'Silent Hill aparecerá en DbD', 'Novedades de Call of Duty'];
+
+			if (!empty($verif)) {
+				
+				$datos['rol'] = $verif['rol'];
+				
+				$vista = array(
+					'vista' => 'web/novedades-' . $num_post . '.php',
+					'params' => $datos,
+					'layout' => 'ly_session.php',
+					'titulo' => $titulos[$num_post - 1]
+				);
+				$this->layouts->view($vista);
+			} else {
+				
+				$vista = array(
+					'vista' => 'web/novedades-' . $num_post . '.php',
+					'params' => $datos,
+					'layout' => 'ly_home.php',
+					'titulo' => $titulos[$num_post - 1]
+				);
+				$this->layouts->view($vista);
+			}
 		} else {
-			$vista = array(
-				'vista' => 'web/novedades-'.$num_post.'.php',
-				'params' => $datos,
-				'layout' => 'ly_home.php',
-				'titulo' => $titulos[$num_post-1]
-			);
-			$this->layouts->view($vista);
+
+			if (!empty($verif)) {
+
+				$datos['rol'] = $verif['rol'];
+
+				$vista = array(
+					'vista' => 'web/post-novedades.php',
+					'params' => $datos,
+					'layout' => 'ly_session.php',
+					'titulo' => 'Novedades'
+				);
+
+				$this->layouts->view($vista);
+
+			} else {
+
+				$vista = array(
+					'vista' => 'web/post-novedades.php',
+					'params' => $datos,
+					'layout' => 'ly_home.php',
+					'titulo' => 'Novedades'
+				);
+
+				$this->layouts->view($vista);
+			}
 		}
 	}
 }

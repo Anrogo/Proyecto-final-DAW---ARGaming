@@ -165,23 +165,19 @@
         <!-- Three columns of text below the carousel -->
         <div class="row p-4">
             <div class="col-12 col-lg-4">
-                    <img src="/images/post/ps5-vs-xbox-series-x.webp" class="img-fluid miniatura-post" alt="foto-post-1">
+                <img src="/images/post/ps5-vs-xbox-series-x.webp" class="img-fluid" alt="foto-post-1">
                 <h3 class="text-primary"><a href="/post/novedades/1">Un analista predice que PS5 venderá casi el doble que Xbox Series X para 2024</a></h3>
                 <p>La firma Ampere estima que PlayStation 5 venderá 66 millones de unidades para ese año...</p>
                 <p><a class="btn btn-outline-secondary" href="/post/novedades/1" role="button">Ver más &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-12 col-lg-4">
-                <div class="">
-                    <img src="/images/post/silent-hill-dbd.jpg" class="img-fluid" alt="foto-post-2">
-                </div>
+                <img src="/images/post/silent-hill-dbd.jpg" class="img-fluid" alt="foto-post-2">
                 <h3 class="text-primary"><a href="/post/novedades/2">Silent Hill regresa por la puerta pequeña de la mano de una colaboración con Behaviour Interactive</a></h3>
                 <p>Aunque no es lo que muchos esperan, los creadores de Dead By Daylight nos traen...</p>
                 <p><a class="btn btn-outline-secondary" href="/post/novedades/2" role="button">Ver más &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-12 col-lg-4">
-                <div class="">
-                    <img src="/images/post/modern-warfare-1.webp" class="img-fluid" alt="foto-post-3">
-                </div>
+                <img src="/images/post/warzone-portada.webp" class="img-fluid" alt="foto-post-3">
                 <h3 class="text-primary"><a href="/post/novedades/1">La temporada 4 de ‘Call of Duty: Modern Warfare’ y ‘Warzone’ ya está aquí: estas son sus novedades</a></h3>
                 <p>La temporada 4 de de 'Call of Duty: Modern Warfare' y 'Warzone' ya se encuentra...</p>
                 <p><a class="btn btn-outline-secondary" href="/post/novedades/3" role="button">Ver más &raquo;</a></p>

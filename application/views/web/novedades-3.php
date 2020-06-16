@@ -7,10 +7,10 @@
         <div class="col-12 col-lg-8">
 
             <ul class="breadcrumb">
-                <li class="breadcrumb-item small"><a href="#">Home</a></li>
-                <li class="breadcrumb-item small"><a href="#">Novedades</a></li>
+                <li class="breadcrumb-item small"><a href="/">Home</a></li>
+                <li class="breadcrumb-item small"><a href="/post/novedades">Novedades</a></li>
                 <li class="breadcrumb-item small"><a href="#">2020</a></li>
-                <li class="breadcrumb-item small"><a href="#">Call of Duyt: Modern Warfare y Warzone</a></li>
+                <li class="breadcrumb-item small"><a href="/post/novedades/3">Call of Duyt: Modern Warfare y Warzone</a></li>
             </ul>
 
             <!-- Titulo -->
@@ -62,17 +62,55 @@
             <p class="text-justify">
                 Warzone también tendrá una modalidad realista en la que el HUD solo mostrará elementos esenciales. Además, se incrementa significativamente el daño a la cabeza. Recuerda que la cuarta temporada viene acompaña de un nuevo Season Pass, el cual te ofrecerá desbloquear todo tipo de objetos cosméticos como skins para armas y operadores, relojes, llaveros y puntos CP. En el siguiente tráiler puedes ver gran parte de los objetos disponibles en el pase de temporada de Call of Duty: Modern Warfare y Warzone:
             </p>
-            
+
             <iframe width="740" height="441" src="https://www.youtube.com/embed/esbKS_7yqpw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
         </div>
         <!-- Sidebar Widgets Column -->
         <div class="col-12 col-lg-4">
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Post de usuarios</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="/post/2">¿Cómo unirse?</a>
+                                </li>
+                                <li>
+                                    <a href="/post/11">Final Fantasy VII: Remake</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="/post/1">Bienvenidos al blog!</a>
+                                </li>
+                                <li>
+                                    <a href="/post/8">Mi post con foto</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">GTA V, no hay que decir más</h5>
+                <div class="card-body">
+                    <iframe class="iframe-video" src="https://www.youtube.com/embed/hBvMSP7cI-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
             <!-- Links relacionados -->
             <div class="card my-4">
                 <h5 class="card-header">Otros enlaces que te pueden interesar</h5>
                 <div class="card-body">
                     <ul class="list-group">
+                        <li class="list-group-item"><a href="https://www.eurogamer.es/articles/2020-06-16-gta-5-juego-mas-vendido-mayo-en-espana" target="_blank">GTA V fue el videojuego más vendido durante el mes de mayo en España</a></li>
                         <li class="list-group-item"><a href="https://latam.historyplay.tv/hoy-en-la-historia/se-lanza-tennis-two-considerado-el-primer-videojuego-de-la-historia" target="_blank">Primer juego de la historia</a></li>
                         <li class="list-group-item"><a href="https://qpasa.com/actualidad/los-10-video-juegos-mas-populares-de-este-2020/" target="_blank">Los 10 videojuegos más exitosos del momento</a></li>
                         <li class="list-group-item"><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjkzvfhjvDpAhV0AWMBHWBNCf8QFjACegQIBBAB&url=https%3A%2F%2Fwww.20minutos.es%2Fvideojuegos%2Fnoticia%2F4059964%2F0%2Fgoogle-play-store-juego-mas-descargado-historia-subway-surfers%2F&usg=AOvVaw1yKoPGKJaOWVaIK09oBU8j" target="_blank">El juego con más descargas del 2019</a></li>

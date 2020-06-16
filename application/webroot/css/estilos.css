@@ -126,6 +126,12 @@ table caption {
 	width:60px;
 }
 
+.iframe-video {
+	width: 312px;
+	height: auto;
+}
+
+
 /* FORMULARIOS */
 .input {
 	border:none!important;
@@ -165,13 +171,6 @@ table caption {
 	-moz-box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.75);
 	box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.75);
 }
-
-/* Post index */
-.miniatura-post {
-	width:350px!important;
-	max-width:350px!important;
-}
-
 
 /* Mensajes de PHP */
 pre {

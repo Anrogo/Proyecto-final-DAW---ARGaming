@@ -153,7 +153,7 @@ class UserController extends CI_Controller
 		if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
 
 			$cadena = $this->input->post('buscar');
-
+			$cadena = str_replace(' ', '', trim($cadena));
 			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
 			$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=' . $cadena . '&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
 
@@ -169,15 +169,17 @@ class UserController extends CI_Controller
 				$datos['total'] = 0;
 				$datos['resultado'] = 'No se han encontrado resultados';
 			}
-		} else {
 
+		} else {
+			$cadena = 'game';
 			//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
-			$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=game&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+			$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=' . $cadena . '&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
 
 			//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
 			$juegos = json_decode($json, true);
 
 			//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+			$datos['etiqueta'] = $cadena;
 			$datos['juegos'] = $juegos['items'];
 			$datos['total'] = $juegos['total'];
 		}

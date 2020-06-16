@@ -60,6 +60,7 @@ $route['admin/panel-control'] = 'AdminController/panel_control';
 
 # Admin - juegos
 $route['admin/panel-control/juegos'] = 'AdminController/listado_juegos';
+$route['admin/panel-control/juegos/buscar'] = 'AdminController/listado_juegos';
 
 # Admin - usuarios
 $route['admin/panel-control/usuarios'] = 'AdminController/listado_usuarios';

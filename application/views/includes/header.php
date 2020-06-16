@@ -46,7 +46,7 @@
                         <div class="dropdown-menu">
                             <a href="/lista-post" class="dropdown-item">Post</a>
                             <div class="dropdown-divider"></div>
-                            <a href="/" class="dropdown-item">Autores</a>
+                            <a href="/autores" class="dropdown-item">Autores</a>
                         </div>
                     </li>
                     <li class="nav-item">

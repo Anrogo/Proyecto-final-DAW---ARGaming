@@ -65,21 +65,43 @@ class AdminController extends CI_Controller
 	}
 	public function listado_juegos()
 	{
-		//Leemos los datos recibidos en formato json
-		$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=dead&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
-
-		//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
-		$juegos = json_decode($json, true);
-
-		//Se almacenan los datos en el array para pasarselo a la vista que corresponda
-		$datos = array(
-			'juegos' => $juegos['items'],
-		);
-		//debug($datos);
 		$verif = comprobar_login();
 
 		if (!empty($verif) && $verif['rol'] == 'administrador') {
 			$datos['rol'] = $verif['rol'];
+			if (!empty($this->input->post('buscar'))) { //si se realiza cualquier búsqueda, pasa primero por aquí
+
+				$cadena = $this->input->post('buscar');
+				$cadena = str_replace(' ', '', trim($cadena));
+				//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
+				$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=' . $cadena . '&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+
+				//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+				$juegos = json_decode($json, true);
+
+				if (!empty($juegos)) { //si se encuentran registros coincidentes, se devuelven
+					$datos['etiqueta'] = $cadena;
+					$datos['total'] = $juegos['total'];
+					$datos['juegos'] = $juegos['items'];
+				} else { //si se busca pero no se encuentra, lo comunica
+					$datos['etiqueta'] = $cadena;
+					$datos['total'] = 0;
+					$datos['resultado'] = 'No se han encontrado resultados';
+				}
+			} else {
+				$cadena = 'game';
+				//Leemos los datos recibidos en formato json, introduciendo la cadena pasada por post desde la barra de búsqueda
+				$json = file_get_contents('https://videojuegos.fandom.com/api/v1/Search/List?query=' . $cadena . '&limit=10&minArticleQuality=10&batch=1&namespaces=0%2C14');
+
+				//Se "decodifican" del formato json y se almacenan en un array, los "items" que básicamente es el array que contiene los datos sobre los videojuegos
+				$juegos = json_decode($json, true);
+
+				//Se almacenan los datos en el array para pasarselo a la vista que corresponda
+				$datos['etiqueta'] = $cadena;
+				$datos['juegos'] = $juegos['items'];
+				$datos['total'] = $juegos['total'];
+			}
+			debug($datos);
 			$vista = array(
 				'vista' => 'admin/listado-videojuegos.php',
 				'params' => $datos,
@@ -89,15 +111,7 @@ class AdminController extends CI_Controller
 
 			$this->layouts->view($vista);
 		} else {
-
-			$vista = array(
-				'vista' => 'web/listado-videojuegos.php',
-				'params' => $datos,
-				'layout' => 'ly_home.php',
-				'titulo' => 'Videojuegos'
-			);
-
-			$this->layouts->view($vista);
+			header('Location: / ');
 		}
 	}
 	public function listado_usuarios()

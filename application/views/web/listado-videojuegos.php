@@ -40,7 +40,7 @@
                         $titulo = $juego['title'];
                         $snippet = $juego['snippet'];
                         $url = $juego['url'];
-                        $etiqueta = isset($juego['etiqueta']) ? $juego['etiqueta'] : 'Nada';
+                        $etiqueta = isset($etiqueta) ? $etiqueta : 'Nada';
 
                         //Y se muestran en forma de lista
                         echo "<tr id=\"" . $id . "\">

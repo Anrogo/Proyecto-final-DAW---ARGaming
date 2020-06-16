@@ -4,14 +4,17 @@
         <div class="col-5 text-center">
             <h1 class="">Listado de videojuegos</h1>
         </div>
-        <div class="col-4 text-center">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Busqueda...">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+        <div class="col-7 text-center">
+            <form class="form-inline my-2 my-lg-0" action="/panel-control/juegos/buscar" method="post">
+                <input class="form-control mr-sm-2 w-75" type="text" name="buscar" placeholder="Busqueda...">
+                <button class="btn btn-primary my-2 my-sm-2" type="submit">Buscar</button>
             </form>
         </div>
     </div>
     <div class="row">
+    <div class="col-12 text-center">
+            <span class="small font-weight-bold text-right">Resultados encontrados: <?php echo $total ?></span>
+        </div>
         <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
@@ -25,7 +28,7 @@
                                 <th class="th-sm">Título</th>
                                 <th class="th-sm">Descripción</th>
                                 <th class="th-sm">URL</th>
-                                <th class="th-sm">Etiquetas</th>
+                                <th class="th-sm">Etiqueta</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,14 +41,15 @@
                             $titulo = $juego['title'];
                             $snippet = $juego['snippet'];
                             $url = $juego['url'];
+                            $etiqueta = isset($etiqueta) ? $etiqueta : 'Nada';
 
                             //Y se muestran en forma de lista
                             echo "<tr id=\"" . $id . "\">
-                        <td>" . $id . "</td>
-                        <td>" . $titulo . "</td>
-                        <td>" . $snippet . " </td>
-                        <td><a href=\"" . $url . "\">Pulsa para ver más información.</a> 
-                        </td><td></td></tr>";
+                            <td>" . $id . "</td>
+                            <td>" . $titulo . "</td>
+                            <td>" . $snippet . " </td>
+                            <td><a href=\"" . $url . "\">Pulsa para ver más información.</a> 
+                            </td><td>" . $etiqueta . "</td></tr>";
                         }
                     } else {
                         echo "Algo ha fallado al obtener el listado... Disculpe las molestias";

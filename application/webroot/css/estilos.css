@@ -126,6 +126,11 @@ table caption {
 	width:60px;
 }
 
+.fondo-principal {
+	background-image: url('/images/fondos/skyrim-2.jpg');
+	background-size: cover;
+}
+
 .iframe-video {
 	width: 312px;
 	height: auto;

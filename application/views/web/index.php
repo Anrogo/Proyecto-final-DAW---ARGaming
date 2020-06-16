@@ -146,7 +146,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid bg-dark mt-3 mb-3 pt-2 w-100">
+<div class="container-fluid fondo-principal mt-3 mb-3 pt-2 w-100">
     <?php
     if (isset($mensaje_confirmacion)) {
     ?>
